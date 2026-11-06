@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Стартовий проєкт AI Code Challenge">
+  <title>NextLab — стартовий проєкт</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <script type="module" src="./js/main.js"></script>
+</head> 
+<body>
+  <a class="skip-link" href="#main">Перейти до вмісту</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html" aria-label="NextLab — головна">◈ NextLab</a>
+      <span class="tag">AI Code Challenge · Starter</span>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">МІСІЯ 00 · СТАРТОВЕ СЕРЕДОВИЩЕ</p>
+      <h1 id="hero-title">Твій продукт починається з рішення.</h1>
+      <p class="lead">Це не готовий застосунок. Це безпечний каркас, який ти поступово перетвориш на власний вебпродукт за допомогою ШІ-агента.</p>
+      <div class="actions">
+        <a class="button" href="#workspace">Перевірити середовище</a>
+        <a class="button button-secondary" href="#rules">Правила роботи</a>
+      </div>
+    </section>
+    <section id="workspace" class="panel" aria-labelledby="workspace-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">ПЕРША ПЕРЕВІРКА</p><h2 id="workspace-title">Середовище готове?</h2></div>
+        <span class="status" id="app-status" role="status">Перевірка…</span>
+      </div>
+      <p>Натисни кнопку. Якщо JavaScript завантажено, з’явиться повідомлення.</p>
+      <button id="check-button" class="button" type="button">Перевірити JavaScript</button>
+      <p id="check-result" class="result" role="status" aria-live="polite">Очікування перевірки.</p>
+    </section>
+    <section id="rules" class="panel" aria-labelledby="rules-title">
+      <p class="eyebrow">РОБОЧИЙ ПРИНЦИП</p>
+      <h2 id="rules-title">Агент пропонує. Ти вирішуєш.</h2>
+      <ol class="steps">
+        <li>Опиши задачу й критерії готовності.</li>
+        <li>Попроси агента спочатку скласти план.</li>
+        <li>Переглянь запропоновані зміни.</li>
+        <li>Перевір роботу в браузері й лише тоді створи коміт.</li>
+      </ol>
+    </section>
+  </main>
+  <footer class="container footer">Навчальний шаблон · Без персональних даних і зовнішніх сервісів</footer>
+</body>
+</html>
