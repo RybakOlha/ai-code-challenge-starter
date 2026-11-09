@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Місія 01 The Brief Is Broken для AI Code Challenge" name="description"/>
+<title>NextLab · Mission 01</title>
+<link href="./css/mission.css" rel="stylesheet"/>
+<script src="./js/mission-01.js" type="module"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти до вмісту</a>
+<header class="site-header">
+<div class="container header-inner">
+<div class="brand-wrap">
+<a aria-label="Повернутися на головну сторінку" class="brand" href="./index.html">◈ NextLab</a>
+<span class="tag">AI Code Challenge · Mission 01</span>
+</div>
+</div>
+</header>
+<main class="container mission-layout" id="main">
+<aside aria-label="Навігація по етапах місії" class="timeline">
+<h2>Етапи місії</h2>
+<nav class="step-nav">
+<button class="step-link active" data-target="stage-1" type="button">1. StudyFlow</button>
+<button class="step-link" data-target="stage-2" type="button">2. Copilot Plan</button>
+<button class="step-link" data-target="stage-3" type="button">3. Власний продукт</button>
+<button class="step-link" data-target="stage-4" type="button">4. Product Brief</button>
+<button class="step-link" data-target="stage-5" type="button">5. HTML/CSS</button>
+<button class="step-link" data-target="stage-6" type="button">6. Рефлексія</button>
+</nav>
+</aside>
+<div class="mission-content">
+<section class="stage active" data-stage="1" id="stage-1">
+<div class="stage-header">
+<p class="eyebrow">ЕТАП 1 · 15 хв · 0–15</p>
+<h1>StudyFlow: знайди проблему</h1>
+</div>
+<p class="field-help"><strong>Робоча версія 2.2.</strong> Не затверджено: після адаптації потрібна повна репетиція на Windows із фіксацією фактичного часу.</p><div class="panel"><h2>Мета</h2><p>Знайти суперечності у вимогах StudyFlow, критично перевірити Copilot, визначити власний MVP та створити один фрагмент HTML/CSS за Figma. Повний сайт сьогодні не створюємо.</p></div>
+<div class="panel">
+<h3>Спільний виклик StudyFlow</h3>
+<p>Це робота без Copilot. Спочатку самостійно знайди конфлікти, неоднозначності й обмеження в brief, а лише потім звертайся до ШІ.</p>
+<div aria-label="Навчальний brief" class="brief-box">
+<p><strong>StudyFlow</strong></p>
+<p>Створіть невеликий вебпродукт для учнів школи, який допоможе планувати навчальний тиждень. У продукті має бути календар, список справ, нагадування, можливість додавати дедлайни, а також “швидке меню для ментального відпочинку”. Він має бути простий, без реєстрації, без облікових записів, але з особистим кабінетом. Користувачі хочуть зберігати свої задачі локально у браузері, але в той же час бачити дані на всіх пристроях. Продукт має бути дуже легким і працювати без бекенду, але також містити “синхронізацію між пристроями” і “спільний доступ до планів”. Від дизайну ми не хочемо відступати: інтерактивний, сучасний, з анімаціями, але з мінімалістичним інтерфейсом. Обмеження: HTML, CSS, JavaScript без бекенду; два тижні на розробку.</p>
+</div>
+</div><div class="panel">
+<h3>Що ти маєш знайти</h3>
+<ol class="ordered-list">
+<li>Що в brief неясно або суперечно.</li>
+<li>Що є припущенням, а що — вимогою.</li>
+<li>Що треба уточнити, щоб не робити занадто багато відразу.</li>
+</ol>
+<label for="study-flow-issues">Запиши щонайменше дві суперечності або проблеми у вимогах. Поясни, чому вони важливі.</label>
+<textarea data-key="studyFlowIssues" id="study-flow-issues" placeholder="Вкажи дві вимоги, які складно виконати одночасно, і поясни чому."></textarea>
+<label for="study-flow-questions">Сформулюй щонайменше два уточнювальні запитання. Додаткові — за бажанням.</label>
+<textarea data-key="studyFlowQuestions" id="study-flow-questions" placeholder="Що необхідно уточнити в замовника перед початком розроблення?"></textarea>
+</div><div class="actions">
+<button class="button next-stage" type="button">Далі</button>
+</div>
+</section>
+<section class="stage" data-stage="2" id="stage-2">
+<div class="stage-header">
+<p class="eyebrow">ЕТАП 2 · 10 хв · 15–25</p>
+<h2>Copilot: перевіряємо план</h2>
+</div>
+<div class="panel">
+<h3>Робота в VS Code</h3>
+<ol class="ordered-list">
+<li>Відкрий GitHub Copilot у VS Code.</li>
+<li>Переведи його в режим Plan.</li>
+<li>Сформулюй запит так, щоб агент аналізував вимоги, а не створював продукт.</li>
+<li>Перевір відповідь критично: не приймайте її автоматично.</li>
+</ol>
+</div><div class="panel prompt-panel">
+<div class="panel-header">
+<h3>Prompt 1</h3>
+<button class="button secondary copy-prompt" data-copy="copilot-prompt-1" type="button">Копіювати</button>
+</div>
+<textarea class="prompt-area" id="copilot-prompt-1" readonly="">Проаналізуй цей brief як продуктовий аналітик. Не генеруй готовий вебпродукт або повний MVP. Зосередься на: 1) неоднозначностях, 2) суперечностях, 3) припущеннях, 4) питаннях, які треба уточнити, 5) вимогах, які варто залишити для MVP.
+
+BRIEF ДЛЯ АНАЛІЗУ:
+StudyFlow Створіть невеликий вебпродукт для учнів школи, який допоможе планувати навчальний тиждень. У продукті має бути календар, список справ, нагадування, можливість додавати дедлайни, а також “швидке меню для ментального відпочинку”. Він має бути простий, без реєстрації, без облікових записів, але з особистим кабінетом. Користувачі хочуть зберігати свої задачі локально у браузері, але в той же час бачити дані на всіх пристроях. Продукт має бути дуже легким і працювати без бекенду, але також містити “синхронізацію між пристроями” і “спільний доступ до планів”. Від дизайну ми не хочемо відступати: інтерактивний, сучасний, з анімаціями, але з мінімалістичним інтерфейсом. Обмеження: HTML, CSS, JavaScript без бекенду; два тижні на розробку.</textarea>
+</div><div class="panel prompt-panel"><p class="field-help"><strong>Додатково, якщо залишився час.</strong> Другий промпт не обов’язковий.</p>
+<div class="panel-header">
+<h3>Prompt 2</h3>
+<button class="button secondary copy-prompt" data-copy="copilot-prompt-2" type="button">Копіювати</button>
+</div>
+<textarea class="prompt-area" id="copilot-prompt-2" readonly="">Які вимоги в цьому brief є взаємовиключними? Які припущення потрібно перевірити, щоб не розвивати продукт у неправильному напрямку? Не пропонуй готове рішення. Поясни, що потрібно уточнити перед Product Brief.
+
+BRIEF ДЛЯ АНАЛІЗУ:
+StudyFlow Створіть невеликий вебпродукт для учнів школи, який допоможе планувати навчальний тиждень. У продукті має бути календар, список справ, нагадування, можливість додавати дедлайни, а також “швидке меню для ментального відпочинку”. Він має бути простий, без реєстрації, без облікових записів, але з особистим кабінетом. Користувачі хочуть зберігати свої задачі локально у браузері, але в той же час бачити дані на всіх пристроях. Продукт має бути дуже легким і працювати без бекенду, але також містити “синхронізацію між пристроями” і “спільний доступ до планів”. Від дизайну ми не хочемо відступати: інтерактивний, сучасний, з анімаціями, але з мінімалістичним інтерфейсом. Обмеження: HTML, CSS, JavaScript без бекенду; два тижні на розробку.</textarea>
+</div><div class="panel">
+<label for="copilot-correct">Що Copilot визначив правильно?</label>
+<textarea data-key="copilotCorrect" id="copilot-correct" placeholder="Наведи конкретне спостереження Copilot, яке підтверджується текстом StudyFlow."></textarea>
+<label for="copilot-assumptions">Яке припущення Copilot варто перевірити? (додатково)</label>
+<textarea data-key="copilotAssumptions" id="copilot-assumptions" placeholder="Яке твердження або пропозицію Copilot треба додатково перевірити?"></textarea>
+<label for="copilot-rejected">Що я відхиляю і чому?</label>
+<textarea data-key="copilotRejected" id="copilot-rejected" placeholder="Що ти приймаєш або відхиляєш? Поясни на підставі вимог."></textarea>
+</div><div class="actions">
+<button class="button secondary prev-stage" type="button">Назад</button>
+<button class="button next-stage" type="button">Далі</button>
+</div>
+</section>
+<section class="stage" data-stage="3" id="stage-3">
+<div class="stage-header">
+<p class="eyebrow">ЕТАП 3 · 10 хв · 25–35</p>
+<h2>Власний продукт: визначаємо межі</h2>
+</div>
+<div class="panel">
+<p>У тебе вже є власний дизайн сайту у Figma. Не вигадуй новий продукт: уточни його проблему, користувачів та дві посильні функції MVP. Дизайн використовуватимеш на етапі 5.</p>
+<label for="own-idea-name">Назва твого проєкту у Figma</label>
+<input data-key="ownIdeaName" id="own-idea-name" placeholder="Назва вже створеного макета" type="text"/>
+<label for="own-idea-problem">Яка проблема вирішується?</label>
+<textarea data-key="ownIdeaProblem" id="own-idea-problem" placeholder="Яку конкретну проблему користувача розв’язує твій сайт?"></textarea>
+<label for="own-idea-audience">Для кого продукт?</label>
+<textarea data-key="ownIdeaAudience" id="own-idea-audience" placeholder="Для кого призначений сайт?"></textarea><label for="own-idea-mvp">Дві функції MVP (обов’язково)</label><textarea data-key="ownIdeaMvp" id="own-idea-mvp" placeholder="Функція 1: що зможе зробити користувач? Функція 2: що ще він зможе зробити?"></textarea>
+<label for="own-idea-questions">Питання для уточнення (додатково)</label>
+<textarea data-key="ownIdeaQuestions" id="own-idea-questions" placeholder="Що треба уточнити до реалізації? Необов’язково."></textarea>
+</div><div class="panel prompt-panel">
+<div class="panel-header">
+<h3>Prompt для Copilot у Plan mode</h3>
+<button class="button secondary copy-prompt" data-copy="copilot-prompt-3" type="button">Копіювати</button>
+</div>
+<textarea class="prompt-area" id="copilot-prompt-3" readonly="">Перевір мої вимоги до вебпродукту, для якого я вже маю дизайн у Figma. Не змінюй ідею та не додавай функцій без погодження. Оціни, чи зрозумілі проблема й аудиторія, чи реалістичні дві функції MVP, і постав не більше двох уточнювальних запитань. Не пиши код. Мої дані я додам нижче.</textarea>
+</div><div class="actions">
+<button class="button secondary prev-stage" type="button">Назад</button>
+<button class="button next-stage" type="button">Далі</button>
+</div>
+</section>
+<section class="stage" data-stage="4" id="stage-4">
+<div class="stage-header">
+<p class="eyebrow">ЕТАП 4 · 10 хв · 35–45</p>
+<h2>Короткий Product Brief і рішення</h2>
+</div>
+<div class="panel">
+<h3>Product Brief</h3>
+<p class="field-help">Product Brief 0.1 — живий документ. Назва, проблема, аудиторія та дві функції автоматично переносяться з етапу 3; їх можна відредагувати. Зараз додай один критерій успіху, одне обмеження й один запис рішення.</p>
+<form aria-label="Форма Product Brief" id="product-brief-form">
+<label for="pb-name">Назва продукту</label>
+<input data-core="true" data-key="pbName" id="pb-name" type="text"/>
+<label for="pb-problem">Проблема</label>
+<textarea data-core="true" data-key="pbProblem" id="pb-problem"></textarea>
+<label for="pb-audience">Цільова аудиторія</label>
+<textarea data-core="true" data-key="pbAudience" id="pb-audience"></textarea>
+
+
+
+
+
+
+<label for="pb-mvp">Дві основні функції MVP</label>
+<small class="field-help inline">Не описуй повну функціональність — тільки найважливіше для першого релізу.</small>
+<textarea data-core="true" data-key="pbMvp" id="pb-mvp"></textarea>
+
+
+<label for="pb-acceptance">Критерії приймання</label>
+<small class="field-help inline">Зазнач, що саме має бути справжньо зроблено, щоб продукт вважався корисним.</small>
+<textarea data-core="true" data-key="pbAcceptance" id="pb-acceptance"></textarea>
+<label for="pb-limitations">Обмеження (можна доповнити після заняття)</label>
+<textarea data-core="true" data-key="pbLimitations" id="pb-limitations"></textarea>
+<details class="advanced-fields"><summary>Розширені поля Product Brief — можна заповнити після заняття</summary><div class="advanced-fields-inner"><label for="pb-assumptions">Припущення, які треба перевірити (можна доповнити після заняття)</label><small class="field-help inline">Наприклад: що користувачі вважають першим пріоритетом, які обмеження потрібно підтвердити перед реалізацією.</small><textarea data-key="pbAssumptions" id="pb-assumptions"></textarea><label for="pb-scenarios">Два ключові сценарії (можна доповнити після заняття)</label><small class="field-help inline">Опиши, як користувач починає роботу з продуктом і чого хоче досягти.</small><textarea data-key="pbScenarios" id="pb-scenarios"></textarea><label for="pb-out-of-scope">Що свідомо не входить до MVP (можна доповнити після заняття)</label><textarea data-key="pbOutOfScope" id="pb-out-of-scope"></textarea></div></details></form>
+</div><div class="panel">
+<div class="panel-header">
+<h3>Журнал рішень</h3>
+<button class="button secondary" id="add-decision" type="button">Додати запис</button>
+</div><p class="field-help">Журнал рішень — це коротка історія: що запропонував ШІ, що ти вирішив(-ла) та чому. Зараз достатньо одного запису; наступні додавай за потреби.</p>
+<div aria-live="polite" class="decisions-list" id="decisions-list"></div>
+</div><div class="actions">
+<button class="button secondary prev-stage" type="button">Назад</button>
+<button class="button next-stage" type="button">Далі</button>
+</div>
+</section>
+<section class="stage" data-stage="5" id="stage-5">
+<div class="stage-header">
+<p class="eyebrow">ЕТАП 5 · 35 хв · 45–80</p>
+<h2>Figma → HTML/CSS: перший фрагмент</h2>
+</div>
+<div class="panel practice-panel"><div class="stage-header"><p class="eyebrow">ПРАКТИКА · 35 хв</p><h3>П’ять кроків: Figma → HTML/CSS</h3></div>
+<p>Виконуй кроки послідовно. Відкривай наступний після завершення попереднього. Усі файли власного сайту — у <strong>student-app/</strong>. Навчальні файли NextLab не змінюй.</p>
+
+<details class="practice-step" open="">
+  <summary>Крок 1 · 45–50 хв · Підготуй Figma (5 хв)</summary>
+
+  <ol class="ordered-list">
+    <li>Відкрий VS Code. Обери <strong>File → Open Folder</strong> і відкрий кореневу папку розпакованого проєкту NextLab — ту, де розміщено <strong>mission-01.html</strong> та папку <strong>student-app</strong>. Не відкривай лише окремий HTML-файл.</li>
+    <li>Відкрий готовий дизайн свого сайту у Figma.</li>
+    <li>Обери один невеликий фрагмент: картку, шапку або секцію. Не потрібно реалізовувати весь сайт.</li>
+    <li>Експортуй обраний фрагмент у PNG та збережи його в папці <strong>student-app/assets/</strong>. Назви файл зрозуміло, наприклад <strong>my-hero.png</strong>.</li>
+    <li>Файл <strong>figma-reference.png</strong> у цій папці — демонстраційний приклад. Використовуй його лише за потреби, якщо ще не маєш власного макета.</li>
+    <li>Перевір, чи відкривається твоє зображення у VS Code. Якщо Copilot не бачить файл, додай його до чату або опиши структуру макета текстом.</li>
+  </ol>
+</details>
+
+<details class="practice-step"><summary>Крок 2 · 50–55 хв · Перевір Copilot Plan (5 хв)</summary>
+<p>У VS Code відкрий Copilot у режимі Plan. Скопіюй промпт, додай свій макет або його опис. <strong>Не дозволяй змінювати файли на цьому кроці.</strong> Перевір: чи відповідає план макету, чи є семантичний HTML, чи не пропонує агент зайвого.</p>
+<div class="panel-header"><h4>Промпт · Plan</h4><button class="button secondary copy-prompt" data-copy="copilot-plan-practice" type="button">Копіювати</button></div>
+<textarea class="prompt-area" id="copilot-plan-practice" readonly="">Маю готовий макет Figma. Проаналізуй лише обраний фрагмент (зображення або опис додам). Поки НЕ редагуй файли. Запропонуй короткий план реалізації за 15 хвилин: семантичні HTML-елементи, CSS-розміщення, можливі спрощення. Не додавай функцій і не змінюй інші частини сайту. Запитай погодження перед реалізацією.</textarea></details>
+<details class="practice-step"><summary>Крок 3 · 55–70 хв · Agent, запуск і порівняння (15 хв)</summary>
+<p>Передай погоджений план Agent. Переглянь зміни у двох дозволених файлах, а потім запусти сайт у <strong>другому терміналі VS Code</strong>. Перший сервер NextLab на порту 8000 залиш запущеним.</p>
+<div class="panel-header"><h4>Промпт · Agent</h4><button class="button secondary copy-prompt" data-copy="copilot-agent-practice" type="button">Копіювати</button></div>
+<textarea class="prompt-area" id="copilot-agent-practice" readonly="">Реалізуй лише погоджений фрагмент мого макета Figma. Редагуй ТІЛЬКИ student-app/index.html і student-app/css/style.css. Не змінюй NextLab, інші файли або налаштування. Використовуй семантичний HTML і простий CSS без бібліотек та зайвих функцій. Перед змінами назви файли, які редагуватимеш. Після змін поясни, що саме зроблено і як перевірити в браузері. Якщо потрібні інші файли — спочатку запитай.</textarea>
+<p><strong>Windows — команда для другого термінала:</strong></p><div class="command-row"><textarea class="prompt-area command-area" id="serve-command" readonly="">py -m http.server 8001 --bind 127.0.0.1 --directory student-app</textarea><button class="button secondary copy-prompt" data-copy="serve-command" type="button">Копіювати</button></div>
+<p class="field-help">Учнівський сайт: <strong>http://127.0.0.1:8001/</strong>. NextLab: <strong>http://127.0.0.1:8000/mission-01.html</strong>. Для macOS у другому терміналі: <code>python3 -m http.server 8001 --bind 127.0.0.1 --directory student-app</code>.</p>
+<p class="field-help">Якщо Copilot недоступний: склади короткий план самостійно й створи посильний HTML/CSS-фрагмент вручну. Зафіксуй технічну причину; оцінювання роботи з ШІ узгодь із учителем.</p></details>
+<details class="practice-step"><summary>Крок 4 · 70–77 хв · Без Copilot: зміни й поясни (7 хв)</summary>
+<p><strong>Закрий чат Copilot на час цього завдання.</strong> Знайди HTML-елемент і пов’язане CSS-правило. Перед зміною запиши прогноз, самостійно зміни одну властивість або елемент, онови браузер і зафіксуй спостереження.</p>
+<label for="manual-change">Що саме змінив(-ла)? (файл, елемент або правило)</label><textarea data-key="manualChange" id="manual-change" placeholder="Напиши назву файла та конкретне правило або елемент."></textarea>
+<label for="manual-prediction">Що очікував(-ла) побачити?</label><textarea data-key="manualPrediction" id="manual-prediction" placeholder="Опиши очікувану зміну до перевірки у браузері."></textarea>
+<label for="manual-observation">Що побачив(-ла) після оновлення сторінки?</label><textarea data-key="manualObservation" id="manual-observation" placeholder="Порівняй фактичний результат із прогнозом."></textarea></details>
+<details class="practice-step"><summary>Крок 5 · 77–80 хв · Перевір і зафіксуй (3 хв)</summary>
+<p>Повернися до журналу рішень (етап 4) і запиши рішення щодо коду або пропозиції Agent. Познач виконане нижче.</p>
+<div class="interactive-checklist">
+<label><input data-check="figma" type="checkbox"/> Макет збережено в student-app/assets/</label>
+<label><input data-check="fragment" type="checkbox"/> Один HTML/CSS-фрагмент реалізовано</label>
+<label><input data-check="browser" type="checkbox"/> Сторінка перевірена на порту 8001</label>
+<label><input data-check="independent" type="checkbox"/> Самостійна зміна та її пояснення записані</label>
+<label><input data-check="journal" type="checkbox"/> Рішення внесено до журналу</label>
+</div></details></div>
+<div class="actions">
+<button class="button secondary prev-stage" type="button">Назад</button>
+<button class="button next-stage" type="button">Далі</button>
+</div>
+</section>
+<section class="stage" data-stage="6" id="stage-6">
+<div class="stage-header">
+<p class="eyebrow">ЕТАП 6 · 10 хв · 80–90</p>
+<h2>Самоперевірка та рефлексія</h2>
+</div>
+<div class="panel">
+<h3>Самооцінювання за шкалою 12 балів</h3><p class="field-help"><strong>Це самооцінка, а не оцінка вчителя.</strong> Учитель перевіряє реальні файли, роботу сайту та твоє пояснення.</p>
+<p>Це самоперевірка учня, а не оцінка вчителя. 0 = не виконано, 1 = частково, 2 = чітко і повністю.</p>
+<div class="score-grid">
+<div class="score-item">
+<label for="score-1">1. Суперечності й уточнення StudyFlow</label>
+<p class="score-scale">0 — немає · 1 — частково · 2 — 2 суперечності та 2 змістовні запитання</p>
+<select data-score="1" id="score-1">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+</div>
+<div class="score-item">
+<label for="score-2">2. Критична перевірка Copilot</label>
+<p class="score-scale">0 — без аналізу · 1 — загальний коментар · 2 — конкретне прийняте або відхилене рішення з поясненням</p>
+<select data-score="2" id="score-2">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+</div>
+<div class="score-item">
+<label for="score-3">3. Product Brief і межі MVP</label>
+<p class="score-scale">0 — немає · 1 — нечітко · 2 — проблема, аудиторія, 2 функції та критерій успіху</p>
+<select data-score="3" id="score-3">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+</div>
+<div class="score-item">
+
+<label for="score-4">4. Працездатність HTML/CSS-фрагмента та перевірка на комп'ютері й телефоні</label>
+
+<p class="score-scale">0 — немає · 1 — неповний або не перевірено · 2 — працює у браузері й відповідає обраному фрагменту</p>
+<select data-score="4" id="score-4">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+</div>
+<div class="score-item">
+<label for="score-5">5. Самостійна зміна й пояснення коду</label>
+<p class="score-scale">0 — не виконано · 1 — зміна без пояснення/перевірки · 2 — самостійна зміна, перевірка і пояснення</p>
+<select data-score="5" id="score-5">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+</div>
+<div class="score-item">
+<label for="score-6">6. Журнал, перевірка й рефлексія</label>
+<p class="score-scale">0 — немає · 1 — частково · 2 — зафіксоване рішення, спосіб перевірки й висновок</p>
+<select data-score="6" id="score-6">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+</div>
+</div>
+<div class="score-summary">
+<p>Загальна сума: <strong id="score-total">0</strong> / 12</p>
+<p id="score-level">Рівень: не оцінено</p>
+</div>
+</div>
+<div class="panel">
+<h3>Рефлексія</h3>
+<label for="reflection-summary">Що допоміг зробити Copilot, а що я змінив(-ла) без нього?</label>
+<textarea data-key="reflectionSummary" id="reflection-summary" placeholder="Назви файл, що змінив Agent, і конкретну зміну HTML/CSS, яку ти зробив(-ла) без Copilot."></textarea>
+<label for="reflection-next">Як я перевірив(-ла) результат і що перенесу в наступну місію?</label>
+<textarea data-key="reflectionNext" id="reflection-next" placeholder="Як перевірив(-ла) результат у браузері? Що залишаєш для наступної місії?"></textarea>
+</div>
+<div class="panel controls-panel">
+<h3>Експорт і збереження</h3>
+<p class="field-help">Експортуй PRODUCT_BRIEF.md і DECISIONS.md, перемісти завантажені файли до папки docs/ та перевір їх у VS Code. Для перенесення всіх відповідей на інший ПК експортуй JSON; на новому ПК імпортуй його. Експорт не змінює файли проєкту автоматично.</p>
+<div class="actions export-actions">
+<button class="button" id="export-product-brief" type="button">Експорт PRODUCT_BRIEF.md</button>
+<button class="button secondary" id="export-decisions" type="button">Експорт DECISIONS.md</button>
+<button class="button secondary" id="save-progress" type="button">Зберегти прогрес</button><button class="button secondary" id="export-json" type="button">Експорт прогресу JSON</button><label class="button secondary file-import" for="import-json">Імпорт JSON<input accept=".json,application/json" hidden="" id="import-json" type="file"/></label>
+<button class="button danger" id="reset-progress" title="Скидання всіх відповідей після підтвердження" type="button">Скинути</button>
+</div>
+<p aria-live="polite" class="save-status" id="save-status">Прогрес ще не збережено.</p>
+<p aria-live="polite" class="save-status" id="brief-check-status"></p>
+</div>
+<div class="actions">
+<button class="button secondary prev-stage" type="button">Назад</button>
+</div>
+</section>
+</div>
+</main>
+<footer class="site-footer container">
+<p>Місія 01 · The Brief Is Broken · NextLab</p>
+</footer>
+</body>
+</html>
