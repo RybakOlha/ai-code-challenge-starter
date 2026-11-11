@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.vscode/
+
+
+# Резервні матеріали розроблення
+/development-backup/
+/fleetster-demo-backup/
+
+# Локальні експорти прогресу NextLab
+/NEXTLAB_MISSION01_PROGRESS*.json
+
+# Тимчасові файли
+*.tmp
+*.bak
