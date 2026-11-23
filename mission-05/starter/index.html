@@ -1,57 +1,433 @@
 <!DOCTYPE html>
-
 <html lang="uk">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Навчальний демонстраційний сайт шкільної їдальні: меню та асинхронне завантаження даних." name="description"/>
-<title>Шкільна їдальня | NextLab</title>
-<link href="css/style.css" rel="stylesheet"/>
-<script defer="" src="js/order.js"></script>
-<script defer="" src="js/app.js"></script>
-</head>
-<body>
-<a class="skip-link" href="#main">Перейти до вмісту</a>
-<header class="site-header">
-<div class="container header-inner">
-<a aria-label="Шкільна їдальня — головна" class="brand" href="index.html"> <span aria-hidden="true" class="brand-icon">✳</span><span>NextLab <small>/ Canteen Lab</small></span></a>
-<nav aria-label="Основна навігація"><ul class="nav-list"><li><a href="#about">Про їдальню</a></li><li><a href="#menu">Меню</a></li><li><a href="#order">Замовлення</a></li><li><a href="#how-it-works">Як це працює</a></li></ul></nav>
-</div>
-</header>
-<main id="main">
-<section aria-labelledby="hero-title" class="hero container">
-<div class="hero-content"><p class="eyebrow">Навчальний вебпроєкт · 11 клас</p><h1 id="hero-title">Смачно. Зручно.<br/><span>Щодня.</span></h1><p class="lead">Сучасна сторінка шкільної їдальні. Переглядай меню, знайомся зі стравами та досліджуй, як JavaScript отримує дані асинхронно.</p><a class="primary-link" href="#menu">Переглянути меню <span aria-hidden="true">↗</span></a><p class="hero-note">Демонстраційний проєкт: меню та ціни вигадані для навчання.</p></div>
-<div aria-hidden="true" class="hero-art"><div class="plate"><span class="food food-a">🥗</span><span class="food food-b">🥕</span><span class="food food-c">🥔</span></div><div class="art-caption">Свіжі ідеї — щодня</div></div>
-</section>
-<section aria-labelledby="about-title" class="section container" id="about"><div class="section-heading"><p class="eyebrow">Про проєкт</p><h2 id="about-title">Обід без зайвих запитань</h2></div><div class="feature-grid"><article class="feature"><span aria-hidden="true" class="feature-icon">01</span><h3>Меню в один клік</h3><p>Завантажуй перелік страв без перезавантаження сторінки.</p></article><article class="feature"><span aria-hidden="true" class="feature-icon">02</span><h3>Зрозумілі стани</h3><p>Бачиш, коли система очікує відповідь, а коли дані вже готові.</p></article><article class="feature"><span aria-hidden="true" class="feature-icon">03</span><h3>Помилки під контролем</h3><p>Навіть якщо завантаження не вдалося, можна повторити спробу.</p></article></div></section>
-<section aria-labelledby="menu-title" class="menu-section" id="menu"><div class="container"><div class="menu-header"><div><p class="eyebrow">Меню їдальні</p><h2 id="menu-title">Що сьогодні на обід?</h2><p class="muted">Досліджуємо пошук, фільтрацію та перевірку навчального замовлення.</p></div><span class="demo-tag">ДЕМО · без сервера</span></div>
-<div class="menu-toolbar"><div class="toolbar-copy"><strong>Меню дня</strong><span>Натисни кнопку, щоб імітувати отримання даних</span></div><div class="toolbar-actions"><button class="button button-primary" id="loadMenuBtn" type="button">Завантажити меню</button><button class="button button-outline" id="errorBtn" type="button">Імітувати помилку</button></div></div>
-<div aria-label="Фільтри меню" class="filters-panel">
-<div class="filter-field"><label for="searchInput">Пошук за назвою</label><input disabled="" id="searchInput" placeholder="Назва страви" type="search"/></div>
-<div class="filter-field"><label for="categoryFilter">Категорія</label><select disabled="" id="categoryFilter"><option value="all">Усі категорії</option><option value="Перша страва">Перша страва</option><option value="Основна страва">Основна страва</option><option value="Гарнір">Гарнір</option><option value="Салат">Салат</option><option value="Напій">Напій</option></select></div>
-<div class="filter-field"><label for="priceFilter">Максимальна ціна</label><select disabled="" id="priceFilter"><option value="all">Будь-яка</option><option value="30">До 30 грн</option><option value="50">До 50 грн</option><option value="75">До 75 грн</option><option value="100">До 100 грн</option></select></div>
-<label class="filter-check"><input disabled="" id="vegetarianFilter" type="checkbox"/> Лише вегетаріанські страви</label>
-<button class="button button-outline" disabled="" id="resetFiltersBtn" type="button">Скинути фільтри</button>
-</div>
-<p aria-live="polite" class="muted" id="resultCount">Завантажте меню, щоб почати пошук.</p>
-<p aria-live="polite" class="status" id="menuStatus" role="status">Меню ще не завантажено.</p><div aria-busy="false" aria-live="polite" class="menu-grid" id="menuResults"></div><div class="error-panel" hidden="" id="menuError" role="alert"><strong>Не вдалося отримати меню.</strong><p>Це навчальна імітація помилки. Спробуй завантажити меню ще раз.</p></div>
-</div></section>
-<section aria-labelledby="order-title" class="section container order-section" id="order">
-<div class="section-heading"><p class="eyebrow">Місія 05 · навчальна форма</p><h2 id="order-title">Замовлення без помилок</h2><p class="muted">Обери страву в меню. Використовуй вигадані дані: нічого не надсилається і не зберігається на сервері.</p></div>
-<div class="order-layout"><div class="order-card">
-<form id="orderForm" novalidate="">
-<div class="order-field"><label for="studentName">Ім'я учня <span aria-hidden="true">*</span></label><input aria-describedby="nameError" autocomplete="off" id="studentName" name="studentName" placeholder="Наприклад, Анна" required="" type="text"/><p aria-live="polite" class="field-error" id="nameError"></p></div>
-<div class="order-field"><label for="studentClass">Клас <span aria-hidden="true">*</span></label><select aria-describedby="classError" id="studentClass" name="studentClass" required=""><option value="">Оберіть клас</option><option value="10-А">10-А</option><option value="10-Б">10-Б</option><option value="11-А">11-А</option><option value="11-Б">11-Б</option><option value="11-В">11-В</option><option value="11-Г">11-Г</option></select><p aria-live="polite" class="field-error" id="classError"></p></div>
-<div class="order-field"><label for="selectedDish">Обрана страва <span aria-hidden="true">*</span></label><input aria-describedby="dishError" id="selectedDish" name="selectedDish" placeholder="Натисніть «Замовити» в меню" readonly="" type="text"/><p aria-live="polite" class="field-error" id="dishError"></p></div>
-<div class="order-field"><label for="quantity">Кількість порцій (1–5) <span aria-hidden="true">*</span></label><input aria-describedby="quantityError" id="quantity" max="5" min="1" name="quantity" required="" step="1" type="number" value="1"/><p aria-live="polite" class="field-error" id="quantityError"></p></div>
-<div class="order-field"><label for="comment">Коментар (необов'язково)</label><textarea id="comment" name="comment" placeholder="Навчальний коментар" rows="3"></textarea></div>
-<p aria-live="polite" class="order-price" id="orderPrice">Вартість: оберіть страву</p>
-<button class="button button-primary" type="submit">Перевірити замовлення</button>
-</form>
-</div><aside aria-labelledby="order-info-title" class="order-info"><h3 id="order-info-title">Навчальний режим</h3><p>Форма працює локально. Не вводьте справжні персональні дані.</p><p>Ваше завдання — додати валідацію, розрахунок і стани інтерфейсу у файлі <code>js/order.js</code>.</p><div aria-live="polite" class="order-summary" hidden="" id="orderSummary" role="status"></div></aside></div>
-</section>
-<section aria-labelledby="how-title" class="section container" id="how-it-works"><div class="section-heading"><p class="eyebrow">За лаштунками</p><h2 id="how-title">Що відбувається після натискання?</h2></div><ol class="steps"><li><strong>Запит</strong><p>JavaScript запускає асинхронну функцію.</p></li><li><strong>Очікування</strong><p>Promise імітує затримку 1500 мс, а кнопки блокуються.</p></li><li><strong>Результат</strong><p>Меню відображається або помилка обробляється через catch.</p></li><li><strong>Відновлення</strong><p>finally повертає інтерфейс до робочого стану.</p></li></ol></section>
-</main>
-<footer class="site-footer"><div class="container footer-inner"><span>NextLab · AI Code Challenge</span><span>Навчальний прототип · 2026</span></div></footer>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="&Ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &dcy;&iecy;&mcy;&ocy;&ncy;&scy;&tcy;&rcy;&acy;&tscy;&iukcy;&jcy;&ncy;&icy;&jcy; &scy;&acy;&jcy;&tcy; &shcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&ocy;&yicy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&iukcy;: &mcy;&iecy;&ncy;&yucy; &tcy;&acy; &acy;&scy;&icy;&ncy;&khcy;&rcy;&ocy;&ncy;&ncy;&iecy; &zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&iecy;&ncy;&ncy;&yacy; &dcy;&acy;&ncy;&icy;&khcy;." name="description">
+    <title>
+      &SHcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&acy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yacy; | NextLab
+    </title>
+    <link href="css/style.css" rel="stylesheet">
+    <script defer src="js/order.js">
+    </script>
+    <script defer src="js/app.js">
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      &Pcy;&iecy;&rcy;&iecy;&jcy;&tcy;&icy; &dcy;&ocy; &vcy;&mcy;&iukcy;&scy;&tcy;&ucy;
+    </a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a aria-label="&SHcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&acy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yacy; &mdash; &gcy;&ocy;&lcy;&ocy;&vcy;&ncy;&acy;" class="brand" href="index.html">
+          <span aria-hidden="true" class="brand-icon">
+            ✳
+          </span>
+          <span>
+            NextLab
+            <small>
+              / Canteen Lab
+            </small>
+          </span>
+        </a>
+        <nav aria-label="&Ocy;&scy;&ncy;&ocy;&vcy;&ncy;&acy; &ncy;&acy;&vcy;&iukcy;&gcy;&acy;&tscy;&iukcy;&yacy;">
+          <ul class="nav-list">
+            <li>
+              <a href="#about">
+                &Pcy;&rcy;&ocy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yucy;
+              </a>
+            </li>
+            <li>
+              <a href="#menu">
+                &Mcy;&iecy;&ncy;&yucy;
+              </a>
+            </li>
+            <li>
+              <a href="#order">
+                &Zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;
+              </a>
+            </li>
+            <li>
+              <a href="#how-it-works">
+                &YAcy;&kcy; &tscy;&iecy; &pcy;&rcy;&acy;&tscy;&yucy;&jukcy;
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section aria-labelledby="hero-title" class="hero container">
+        <div class="hero-content">
+          <p class="eyebrow">
+            &Ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &vcy;&iecy;&bcy;&pcy;&rcy;&ocy;&jukcy;&kcy;&tcy; &middot; 11 &kcy;&lcy;&acy;&scy;
+          </p>
+          <h1 id="hero-title">
+            &Scy;&mcy;&acy;&chcy;&ncy;&ocy;. &Zcy;&rcy;&ucy;&chcy;&ncy;&ocy;.
+            <br>
+            <span>
+              &SHCHcy;&ocy;&dcy;&ncy;&yacy;.
+            </span>
+          </h1>
+          <p class="lead">
+            &Scy;&ucy;&chcy;&acy;&scy;&ncy;&acy; &scy;&tcy;&ocy;&rcy;&iukcy;&ncy;&kcy;&acy; &shcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&ocy;&yicy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&iukcy;. &Pcy;&iecy;&rcy;&iecy;&gcy;&lcy;&yacy;&dcy;&acy;&jcy; &mcy;&iecy;&ncy;&yucy;, &zcy;&ncy;&acy;&jcy;&ocy;&mcy;&scy;&yacy; &zcy;&iukcy; &scy;&tcy;&rcy;&acy;&vcy;&acy;&mcy;&icy; &tcy;&acy; &dcy;&ocy;&scy;&lcy;&iukcy;&dcy;&zhcy;&ucy;&jcy;, &yacy;&kcy; JavaScript &ocy;&tcy;&rcy;&icy;&mcy;&ucy;&jukcy; &dcy;&acy;&ncy;&iukcy; &acy;&scy;&icy;&ncy;&khcy;&rcy;&ocy;&ncy;&ncy;&ocy;.
+          </p>
+          <a class="primary-link" href="#menu">
+            &Pcy;&iecy;&rcy;&iecy;&gcy;&lcy;&yacy;&ncy;&ucy;&tcy;&icy; &mcy;&iecy;&ncy;&yucy;
+            <span aria-hidden="true">
+              &nearrow;
+            </span>
+          </a>
+          <p class="hero-note">
+            &Dcy;&iecy;&mcy;&ocy;&ncy;&scy;&tcy;&rcy;&acy;&tscy;&iukcy;&jcy;&ncy;&icy;&jcy; &pcy;&rcy;&ocy;&jukcy;&kcy;&tcy;: &mcy;&iecy;&ncy;&yucy; &tcy;&acy; &tscy;&iukcy;&ncy;&icy; &vcy;&icy;&gcy;&acy;&dcy;&acy;&ncy;&iukcy; &dcy;&lcy;&yacy; &ncy;&acy;&vcy;&chcy;&acy;&ncy;&ncy;&yacy;.
+          </p>
+        </div>
+        <div aria-hidden="true" class="hero-art">
+          <div class="plate">
+            <span class="food food-a">
+              🥗
+            </span>
+            <span class="food food-b">
+              🥕
+            </span>
+            <span class="food food-c">
+              🥔
+            </span>
+          </div>
+          <div class="art-caption">
+            &Scy;&vcy;&iukcy;&zhcy;&iukcy; &iukcy;&dcy;&iecy;&yicy; &mdash; &shchcy;&ocy;&dcy;&ncy;&yacy;
+          </div>
+        </div>
+      </section>
+      <section aria-labelledby="about-title" class="section container" id="about">
+        <div class="section-heading">
+          <p class="eyebrow">
+            &Pcy;&rcy;&ocy; &pcy;&rcy;&ocy;&jukcy;&kcy;&tcy;
+          </p>
+          <h2 id="about-title">
+            &Ocy;&bcy;&iukcy;&dcy; &bcy;&iecy;&zcy; &zcy;&acy;&jcy;&vcy;&icy;&khcy; &zcy;&acy;&pcy;&icy;&tcy;&acy;&ncy;&softcy;
+          </h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <span aria-hidden="true" class="feature-icon">
+              01
+            </span>
+            <h3>
+              &Mcy;&iecy;&ncy;&yucy; &vcy; &ocy;&dcy;&icy;&ncy; &kcy;&lcy;&iukcy;&kcy;
+            </h3>
+            <p>
+              &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&ucy;&jcy; &pcy;&iecy;&rcy;&iecy;&lcy;&iukcy;&kcy; &scy;&tcy;&rcy;&acy;&vcy; &bcy;&iecy;&zcy; &pcy;&iecy;&rcy;&iecy;&zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&iecy;&ncy;&ncy;&yacy; &scy;&tcy;&ocy;&rcy;&iukcy;&ncy;&kcy;&icy;.
+            </p>
+          </article>
+          <article class="feature">
+            <span aria-hidden="true" class="feature-icon">
+              02
+            </span>
+            <h3>
+              &Zcy;&rcy;&ocy;&zcy;&ucy;&mcy;&iukcy;&lcy;&iukcy; &scy;&tcy;&acy;&ncy;&icy;
+            </h3>
+            <p>
+              &Bcy;&acy;&chcy;&icy;&shcy;, &kcy;&ocy;&lcy;&icy; &scy;&icy;&scy;&tcy;&iecy;&mcy;&acy; &ocy;&chcy;&iukcy;&kcy;&ucy;&jukcy; &vcy;&iukcy;&dcy;&pcy;&ocy;&vcy;&iukcy;&dcy;&softcy;, &acy; &kcy;&ocy;&lcy;&icy; &dcy;&acy;&ncy;&iukcy; &vcy;&zhcy;&iecy; &gcy;&ocy;&tcy;&ocy;&vcy;&iukcy;.
+            </p>
+          </article>
+          <article class="feature">
+            <span aria-hidden="true" class="feature-icon">
+              03
+            </span>
+            <h3>
+              &Pcy;&ocy;&mcy;&icy;&lcy;&kcy;&icy; &pcy;&iukcy;&dcy; &kcy;&ocy;&ncy;&tcy;&rcy;&ocy;&lcy;&iecy;&mcy;
+            </h3>
+            <p>
+              &Ncy;&acy;&vcy;&iukcy;&tcy;&softcy; &yacy;&kcy;&shchcy;&ocy; &zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&iecy;&ncy;&ncy;&yacy; &ncy;&iecy; &vcy;&dcy;&acy;&lcy;&ocy;&scy;&yacy;, &mcy;&ocy;&zhcy;&ncy;&acy; &pcy;&ocy;&vcy;&tcy;&ocy;&rcy;&icy;&tcy;&icy; &scy;&pcy;&rcy;&ocy;&bcy;&ucy;.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section aria-labelledby="menu-title" class="menu-section" id="menu">
+        <div class="container">
+          <div class="menu-header">
+            <div>
+              <p class="eyebrow">
+                &Mcy;&iecy;&ncy;&yucy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&iukcy;
+              </p>
+              <h2 id="menu-title">
+                &SHCHcy;&ocy; &scy;&softcy;&ocy;&gcy;&ocy;&dcy;&ncy;&iukcy; &ncy;&acy; &ocy;&bcy;&iukcy;&dcy;?
+              </h2>
+              <p class="muted">
+                &Dcy;&ocy;&scy;&lcy;&iukcy;&dcy;&zhcy;&ucy;&jukcy;&mcy;&ocy; &pcy;&ocy;&shcy;&ucy;&kcy;, &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&acy;&tscy;&iukcy;&yucy; &tcy;&acy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&ucy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&ocy;&gcy;&ocy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;.
+              </p>
+            </div>
+            <span class="demo-tag">
+              &Dcy;&IEcy;&Mcy;&Ocy; &middot; &bcy;&iecy;&zcy; &scy;&iecy;&rcy;&vcy;&iecy;&rcy;&acy;
+            </span>
+          </div>
+          <div class="menu-toolbar">
+            <div class="toolbar-copy">
+              <strong>
+                &Mcy;&iecy;&ncy;&yucy; &dcy;&ncy;&yacy;
+              </strong>
+              <span>
+                &Ncy;&acy;&tcy;&icy;&scy;&ncy;&icy; &kcy;&ncy;&ocy;&pcy;&kcy;&ucy;, &shchcy;&ocy;&bcy; &iukcy;&mcy;&iukcy;&tcy;&ucy;&vcy;&acy;&tcy;&icy; &ocy;&tcy;&rcy;&icy;&mcy;&acy;&ncy;&ncy;&yacy; &dcy;&acy;&ncy;&icy;&khcy;
+              </span>
+            </div>
+            <div class="toolbar-actions">
+              <button class="button button-primary" id="loadMenuBtn" type="button">
+                &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&icy;&tcy;&icy; &mcy;&iecy;&ncy;&yucy;
+              </button>
+              <button class="button button-outline" id="errorBtn" type="button">
+                &Iukcy;&mcy;&iukcy;&tcy;&ucy;&vcy;&acy;&tcy;&icy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&ucy;
+              </button>
+            </div>
+          </div>
+          <div aria-label="&Fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy; &mcy;&iecy;&ncy;&yucy;" class="filters-panel">
+            <div class="filter-field">
+              <label for="searchInput">
+                &Pcy;&ocy;&shcy;&ucy;&kcy; &zcy;&acy; &ncy;&acy;&zcy;&vcy;&ocy;&yucy;
+              </label>
+              <input disabled id="searchInput" placeholder="&Ncy;&acy;&zcy;&vcy;&acy; &scy;&tcy;&rcy;&acy;&vcy;&icy;" type="search">
+            </div>
+            <div class="filter-field">
+              <label for="categoryFilter">
+                &Kcy;&acy;&tcy;&iecy;&gcy;&ocy;&rcy;&iukcy;&yacy;
+              </label>
+              <select disabled id="categoryFilter">
+                <option value="all">
+                  &Ucy;&scy;&iukcy; &kcy;&acy;&tcy;&iecy;&gcy;&ocy;&rcy;&iukcy;&yicy;
+                </option>
+                <option value="&Pcy;&iecy;&rcy;&shcy;&acy; &scy;&tcy;&rcy;&acy;&vcy;&acy;">
+                  &Pcy;&iecy;&rcy;&shcy;&acy; &scy;&tcy;&rcy;&acy;&vcy;&acy;
+                </option>
+                <option value="&Ocy;&scy;&ncy;&ocy;&vcy;&ncy;&acy; &scy;&tcy;&rcy;&acy;&vcy;&acy;">
+                  &Ocy;&scy;&ncy;&ocy;&vcy;&ncy;&acy; &scy;&tcy;&rcy;&acy;&vcy;&acy;
+                </option>
+                <option value="&Gcy;&acy;&rcy;&ncy;&iukcy;&rcy;">
+                  &Gcy;&acy;&rcy;&ncy;&iukcy;&rcy;
+                </option>
+                <option value="&Scy;&acy;&lcy;&acy;&tcy;">
+                  &Scy;&acy;&lcy;&acy;&tcy;
+                </option>
+                <option value="&Ncy;&acy;&pcy;&iukcy;&jcy;">
+                  &Ncy;&acy;&pcy;&iukcy;&jcy;
+                </option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="priceFilter">
+                &Mcy;&acy;&kcy;&scy;&icy;&mcy;&acy;&lcy;&softcy;&ncy;&acy; &tscy;&iukcy;&ncy;&acy;
+              </label>
+              <select disabled id="priceFilter">
+                <option value="all">
+                  &Bcy;&ucy;&dcy;&softcy;-&yacy;&kcy;&acy;
+                </option>
+                <option value="30">
+                  &Dcy;&ocy; 30 &gcy;&rcy;&ncy;
+                </option>
+                <option value="50">
+                  &Dcy;&ocy; 50 &gcy;&rcy;&ncy;
+                </option>
+                <option value="75">
+                  &Dcy;&ocy; 75 &gcy;&rcy;&ncy;
+                </option>
+                <option value="100">
+                  &Dcy;&ocy; 100 &gcy;&rcy;&ncy;
+                </option>
+              </select>
+            </div>
+            <label class="filter-check">
+              <input disabled id="vegetarianFilter" type="checkbox">
+              &Lcy;&icy;&shcy;&iecy; &vcy;&iecy;&gcy;&iecy;&tcy;&acy;&rcy;&iukcy;&acy;&ncy;&scy;&softcy;&kcy;&iukcy; &scy;&tcy;&rcy;&acy;&vcy;&icy;
+            </label>
+            <button class="button button-outline" disabled id="resetFiltersBtn" type="button">
+              &Scy;&kcy;&icy;&ncy;&ucy;&tcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;
+            </button>
+          </div>
+          <p aria-live="polite" class="muted" id="resultCount">
+            &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&tcy;&iecy; &mcy;&iecy;&ncy;&yucy;, &shchcy;&ocy;&bcy; &pcy;&ocy;&chcy;&acy;&tcy;&icy; &pcy;&ocy;&shcy;&ucy;&kcy;.
+          </p>
+          <p aria-live="polite" class="status" id="menuStatus" role="status">
+            &Mcy;&iecy;&ncy;&yucy; &shchcy;&iecy; &ncy;&iecy; &zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&iecy;&ncy;&ocy;.
+          </p>
+          <div aria-busy="false" aria-live="polite" class="menu-grid" id="menuResults">
+          </div>
+          <div class="error-panel" hidden id="menuError" role="alert">
+            <strong>
+              &Ncy;&iecy; &vcy;&dcy;&acy;&lcy;&ocy;&scy;&yacy; &ocy;&tcy;&rcy;&icy;&mcy;&acy;&tcy;&icy; &mcy;&iecy;&ncy;&yucy;.
+            </strong>
+            <p>
+              &TScy;&iecy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&acy; &iukcy;&mcy;&iukcy;&tcy;&acy;&tscy;&iukcy;&yacy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&icy;. &Scy;&pcy;&rcy;&ocy;&bcy;&ucy;&jcy; &zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&icy;&tcy;&icy; &mcy;&iecy;&ncy;&yucy; &shchcy;&iecy; &rcy;&acy;&zcy;.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section aria-labelledby="order-title" class="section container order-section" id="order">
+        <div class="section-heading">
+          <p class="eyebrow">
+            &Mcy;&iukcy;&scy;&iukcy;&yacy; 05 &middot; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&acy; &fcy;&ocy;&rcy;&mcy;&acy;
+          </p>
+          <h2 id="order-title">
+            &Zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &bcy;&iecy;&zcy; &pcy;&ocy;&mcy;&icy;&lcy;&ocy;&kcy;
+          </h2>
+          <p class="muted">
+            &Ocy;&bcy;&iecy;&rcy;&icy; &scy;&tcy;&rcy;&acy;&vcy;&ucy; &vcy; &mcy;&iecy;&ncy;&yucy;. &Vcy;&icy;&kcy;&ocy;&rcy;&icy;&scy;&tcy;&ocy;&vcy;&ucy;&jcy; &vcy;&icy;&gcy;&acy;&dcy;&acy;&ncy;&iukcy; &dcy;&acy;&ncy;&iukcy;: &ncy;&iukcy;&chcy;&ocy;&gcy;&ocy; &ncy;&iecy; &ncy;&acy;&dcy;&scy;&icy;&lcy;&acy;&jukcy;&tcy;&softcy;&scy;&yacy; &iukcy; &ncy;&iecy; &zcy;&bcy;&iecy;&rcy;&iukcy;&gcy;&acy;&jukcy;&tcy;&softcy;&scy;&yacy; &ncy;&acy; &scy;&iecy;&rcy;&vcy;&iecy;&rcy;&iukcy;.
+          </p>
+        </div>
+        <div class="order-layout">
+          <div class="order-card">
+            <form id="orderForm" novalidate>
+              <div class="order-field">
+                <label for="studentName">
+                  &Iukcy;&mcy;'&yacy; &ucy;&chcy;&ncy;&yacy;
+                  <span aria-hidden="true">
+                    *
+                  </span>
+                </label>
+                <input aria-describedby="nameError" autocomplete="off" id="studentName" name="studentName" placeholder="&Ncy;&acy;&pcy;&rcy;&icy;&kcy;&lcy;&acy;&dcy;, &Acy;&ncy;&ncy;&acy;" required type="text">
+                <p aria-live="polite" class="field-error" id="nameError">
+                </p>
+              </div>
+              <div class="order-field">
+                <label for="studentClass">
+                  &Kcy;&lcy;&acy;&scy;
+                  <span aria-hidden="true">
+                    *
+                  </span>
+                </label>
+                <select aria-describedby="classError" id="studentClass" name="studentClass" required>
+                  <option value>
+                    &Ocy;&bcy;&iecy;&rcy;&iukcy;&tcy;&softcy; &kcy;&lcy;&acy;&scy;
+                  </option>
+                  <option value="10-&Acy;">
+                    10-&Acy;
+                  </option>
+                  <option value="10-&Bcy;">
+                    10-&Bcy;
+                  </option>
+                  <option value="11-&Acy;">
+                    11-&Acy;
+                  </option>
+                  <option value="11-&Bcy;">
+                    11-&Bcy;
+                  </option>
+                  <option value="11-&Vcy;">
+                    11-&Vcy;
+                  </option>
+                  <option value="11-&Gcy;">
+                    11-&Gcy;
+                  </option>
+                </select>
+                <p aria-live="polite" class="field-error" id="classError">
+                </p>
+              </div>
+              <div class="order-field">
+                <label for="selectedDish">
+                  &Ocy;&bcy;&rcy;&acy;&ncy;&acy; &scy;&tcy;&rcy;&acy;&vcy;&acy;
+                  <span aria-hidden="true">
+                    *
+                  </span>
+                </label>
+                <input aria-describedby="dishError" id="selectedDish" name="selectedDish" placeholder="&Ncy;&acy;&tcy;&icy;&scy;&ncy;&iukcy;&tcy;&softcy; &laquo;&Zcy;&acy;&mcy;&ocy;&vcy;&icy;&tcy;&icy;&raquo; &vcy; &mcy;&iecy;&ncy;&yucy;" readonly type="text">
+                <p aria-live="polite" class="field-error" id="dishError">
+                </p>
+              </div>
+              <div class="order-field">
+                <label for="quantity">
+                  &Kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy; &pcy;&ocy;&rcy;&tscy;&iukcy;&jcy; (1&ndash;5)
+                  <span aria-hidden="true">
+                    *
+                  </span>
+                </label>
+                <input aria-describedby="quantityError" id="quantity" max="5" min="1" name="quantity" required step="1" type="number" value="1">
+                <p aria-live="polite" class="field-error" id="quantityError">
+                </p>
+              </div>
+              <div class="order-field">
+                <label for="comment">
+                  &Kcy;&ocy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy; (&ncy;&iecy;&ocy;&bcy;&ocy;&vcy;'&yacy;&zcy;&kcy;&ocy;&vcy;&ocy;)
+                </label>
+                <textarea id="comment" name="comment" placeholder="&Ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &kcy;&ocy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy;" rows="3"></textarea>
+              </div>
+              <p aria-live="polite" class="order-price" id="orderPrice">
+                &Vcy;&acy;&rcy;&tcy;&iukcy;&scy;&tcy;&softcy;: &ocy;&bcy;&iecy;&rcy;&iukcy;&tcy;&softcy; &scy;&tcy;&rcy;&acy;&vcy;&ucy;
+              </p>
+              <button class="button button-primary" type="submit">
+                &Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&icy;&tcy;&icy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;
+              </button>
+            </form>
+          </div>
+          <aside aria-labelledby="order-info-title" class="order-info">
+            <h3 id="order-info-title">
+              &Ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &rcy;&iecy;&zhcy;&icy;&mcy;
+            </h3>
+            <p>
+              &Fcy;&ocy;&rcy;&mcy;&acy; &pcy;&rcy;&acy;&tscy;&yucy;&jukcy; &lcy;&ocy;&kcy;&acy;&lcy;&softcy;&ncy;&ocy;. &Ncy;&iecy; &vcy;&vcy;&ocy;&dcy;&softcy;&tcy;&iecy; &scy;&pcy;&rcy;&acy;&vcy;&zhcy;&ncy;&iukcy; &pcy;&iecy;&rcy;&scy;&ocy;&ncy;&acy;&lcy;&softcy;&ncy;&iukcy; &dcy;&acy;&ncy;&iukcy;.
+            </p>
+            <p>
+              &Vcy;&acy;&shcy;&iecy; &zcy;&acy;&vcy;&dcy;&acy;&ncy;&ncy;&yacy; &mdash; &dcy;&ocy;&dcy;&acy;&tcy;&icy; &vcy;&acy;&lcy;&iukcy;&dcy;&acy;&tscy;&iukcy;&yucy;, &rcy;&ocy;&zcy;&rcy;&acy;&khcy;&ucy;&ncy;&ocy;&kcy; &iukcy; &scy;&tcy;&acy;&ncy;&icy; &iukcy;&ncy;&tcy;&iecy;&rcy;&fcy;&iecy;&jcy;&scy;&ucy; &ucy; &fcy;&acy;&jcy;&lcy;&iukcy;
+              <code>
+                js/order.js
+              </code>
+              .
+            </p>
+            <div aria-live="polite" class="order-summary" hidden id="orderSummary" role="status">
+            </div>
+          </aside>
+        </div>
+      </section>
+      <section aria-labelledby="how-title" class="section container" id="how-it-works">
+        <div class="section-heading">
+          <p class="eyebrow">
+            &Zcy;&acy; &lcy;&acy;&shcy;&tcy;&ucy;&ncy;&kcy;&acy;&mcy;&icy;
+          </p>
+          <h2 id="how-title">
+            &SHCHcy;&ocy; &vcy;&iukcy;&dcy;&bcy;&ucy;&vcy;&acy;&jukcy;&tcy;&softcy;&scy;&yacy; &pcy;&iukcy;&scy;&lcy;&yacy; &ncy;&acy;&tcy;&icy;&scy;&kcy;&acy;&ncy;&ncy;&yacy;?
+          </h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <strong>
+              &Zcy;&acy;&pcy;&icy;&tcy;
+            </strong>
+            <p>
+              JavaScript &zcy;&acy;&pcy;&ucy;&scy;&kcy;&acy;&jukcy; &acy;&scy;&icy;&ncy;&khcy;&rcy;&ocy;&ncy;&ncy;&ucy; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yucy;.
+            </p>
+          </li>
+          <li>
+            <strong>
+              &Ocy;&chcy;&iukcy;&kcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy;
+            </strong>
+            <p>
+              Promise &iukcy;&mcy;&iukcy;&tcy;&ucy;&jukcy; &zcy;&acy;&tcy;&rcy;&icy;&mcy;&kcy;&ucy; 1500 &mcy;&scy;, &acy; &kcy;&ncy;&ocy;&pcy;&kcy;&icy; &bcy;&lcy;&ocy;&kcy;&ucy;&yucy;&tcy;&softcy;&scy;&yacy;.
+            </p>
+          </li>
+          <li>
+            <strong>
+              &Rcy;&iecy;&zcy;&ucy;&lcy;&softcy;&tcy;&acy;&tcy;
+            </strong>
+            <p>
+              &Mcy;&iecy;&ncy;&yucy; &vcy;&iukcy;&dcy;&ocy;&bcy;&rcy;&acy;&zhcy;&acy;&jukcy;&tcy;&softcy;&scy;&yacy; &acy;&bcy;&ocy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&acy; &ocy;&bcy;&rcy;&ocy;&bcy;&lcy;&yacy;&jukcy;&tcy;&softcy;&scy;&yacy; &chcy;&iecy;&rcy;&iecy;&zcy; catch.
+            </p>
+          </li>
+          <li>
+            <strong>
+              &Vcy;&iukcy;&dcy;&ncy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;
+            </strong>
+            <p>
+              finally &pcy;&ocy;&vcy;&iecy;&rcy;&tcy;&acy;&jukcy; &iukcy;&ncy;&tcy;&iecy;&rcy;&fcy;&iecy;&jcy;&scy; &dcy;&ocy; &rcy;&ocy;&bcy;&ocy;&chcy;&ocy;&gcy;&ocy; &scy;&tcy;&acy;&ncy;&ucy;.
+            </p>
+          </li>
+        </ol>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>
+          NextLab &middot; AI Code Challenge
+        </span>
+        <span>
+          &Ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &pcy;&rcy;&ocy;&tcy;&ocy;&tcy;&icy;&pcy; &middot; 2026
+        </span>
+      </div>
+    </footer>
+  </body>
 </html>

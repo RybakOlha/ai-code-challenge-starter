@@ -1,31 +1,122 @@
 "use strict";
-const KEY='nextlab-mission05-v1', VERSION=1;
-const FORM=[["F01", "Коректне замовлення", "Анна, 11-А, 2 порції страви по 65 грн", "Успіх, 130 грн"], ["F02", "Порожнє ім’я", "Ім’я порожнє", "Помилка біля імені"], ["F03", "Один символ", "Ім’я: А", "Помилка довжини"], ["F04", "Лише пробіли", "Ім’я: три пробіли", "Помилка після trim()"], ["F05", "Без класу", "Клас не обрано", "Помилка класу"], ["F06", "Нуль порцій", "Кількість: 0", "Відхилити"], ["F07", "Від’ємна кількість", "Кількість: −2", "Відхилити"], ["F08", "Дробова кількість", "Кількість: 2.5", "Відхилити"], ["F09", "Межі", "1, 5, 6 порцій", "1 і 5 прийняти; 6 відхилити"], ["F10", "Зміна після успіху", "Після підтвердження змінити кількість", "Старий успіх зникає"]], REG=[["R01", "Живий пошук", "Ввести частину назви", "Лише відповідні страви"], ["R02", "Категорія", "Обрати категорію", "Лише ця категорія"], ["R03", "Максимальна ціна", "Встановити поріг", "Немає дорожчих страв"], ["R04", "Вегетаріанські", "Увімкнути перемикач", "Лише вегетаріанські"], ["R05", "Комбінація", "Поєднати два фільтри", "Усі умови діють одночасно"], ["R06", "Скидання", "Натиснути скидання", "Повне меню відновлено"], ["R07", "Порожній результат", "Запит без збігів", "Повідомлення «Нічого не знайдено»"], ["R08", "Замовлення після фільтрації", "Відфільтрувати й натиснути «Замовити»", "Правильна страва у формі"]];
-const $=id=>document.getElementById(id);
-const fresh=()=>({version:VERSION,mission:'mission-05',fields:{},checks:{},tests:{},decisions:[],quiz:{},theme:'light',step:1});
-let state=fresh();
-function validRecord(v){return v&&typeof v==='object'&&!Array.isArray(v)}
-function validate(obj){if(!validRecord(obj)||obj.version!==VERSION||obj.mission!=='mission-05'||!validRecord(obj.fields)||!validRecord(obj.checks)||!validRecord(obj.tests)||!Array.isArray(obj.decisions)||!obj.decisions.every(d=>validRecord(d)&&['problem','solution','reason','source','test'].every(k=>typeof d[k]==='string')))throw Error('Невідповідний формат файлу Місії 05');if(Object.keys(obj.fields).length>100||obj.decisions.length>100||Object.keys(obj.tests).length>100)throw Error('Надто великий набір даних');return {...fresh(),fields:obj.fields,checks:obj.checks,tests:obj.tests,decisions:obj.decisions,quiz:validRecord(obj.quiz)?obj.quiz:{},theme:obj.theme==='dark'?'dark':'light',step:1}}
-try{const raw=localStorage.getItem(KEY);if(raw)state=validate(JSON.parse(raw));}catch(_e){state=fresh()}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));$('saveStatus').textContent='Збережено на цьому пристрої';}catch(_e){$('saveStatus').textContent='Автозбереження недоступне — експортуйте JSON';}progress()}
-function progress(){const fields=[...document.querySelectorAll('[data-field]')].filter(e=>!e.dataset.field.startsWith('rubric'));const checks=[...document.querySelectorAll('[data-check]')];const tests=[...FORM,...REG];const total=fields.length+checks.length+tests.length+2;const done=fields.filter(e=>e.value.trim()).length+checks.filter(e=>e.checked).length+tests.filter(t=>state.tests[t[0]]?.status&&state.tests[t[0]].status!=='notrun').length+Math.min(2,state.decisions.length);const pct=Math.round(done/total*100);$('progressText').textContent=`Прогрес: ${pct}%`;$('progressFill').style.width=pct+'%'}
-function go(n,scroll=true){state.step=Math.min(6,Math.max(1,n));document.querySelectorAll('[data-stage]').forEach(e=>e.hidden=Number(e.dataset.stage)!==state.step);document.querySelectorAll('[data-step]').forEach(e=>{if(Number(e.dataset.step)===state.step)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current')});$('stageCounter').textContent=`Етап ${state.step} із 6`;$('prevStep').disabled=state.step===1;$('nextStep').disabled=state.step===6;save();if(scroll)document.querySelector('.mission-content').scrollIntoView({behavior:'smooth',block:'start'})}
-document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.step)));$('prevStep').addEventListener('click',()=>go(state.step-1));$('nextStep').addEventListener('click',()=>go(state.step+1));
-function updateScore(){let sum=0;for(let i=1;i<=4;i++)sum+=Number($('rubric'+i).value)||0;$('score').textContent=sum;return sum}
-document.querySelectorAll('[data-field]').forEach(e=>{e.value=state.fields[e.dataset.field]??(e.tagName==='SELECT'?'0':'');e.addEventListener('input',()=>{state.fields[e.dataset.field]=e.value;updateScore();save()});e.addEventListener('change',()=>{state.fields[e.dataset.field]=e.value;updateScore();save()})});
-document.querySelectorAll('[data-check]').forEach(e=>{e.checked=!!state.checks[e.dataset.check];e.addEventListener('change',()=>{state.checks[e.dataset.check]=e.checked;save()})});
-function theme(){document.documentElement.dataset.theme=state.theme;document.querySelectorAll('[data-theme-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeChoice===state.theme)))}document.querySelectorAll('[data-theme-choice]').forEach(b=>b.addEventListener('click',()=>{state.theme=b.dataset.themeChoice;theme();save()}));theme();
-document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const value=$(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(value);b.textContent='Скопійовано ✓'}catch(_e){b.textContent='Виділіть текст і скопіюйте вручну'}}));
-$('brokenSubmit').addEventListener('click',()=>{$('brokenResult').textContent=`⚠ Демонстрація підтвердила «${$('brokenDish').selectedOptions[0].textContent}» для ${$('brokenClass').value || 'необраного класу'} (кількість: ${$('brokenQty').value || 'порожньо'}), навіть якщо дані некоректні. Чому це помилка?`});
-const quizAnswers={quiz1:'0',quiz2:'1',quiz3:'2'};document.querySelectorAll('#miniQuiz input[type=radio]').forEach(e=>{e.checked=state.quiz[e.name]===e.value;e.addEventListener('change',()=>{state.quiz[e.name]=e.value;save()})});$('checkQuiz').addEventListener('click',()=>{const answered=Object.keys(quizAnswers).filter(k=>state.quiz[k]!==undefined).length;const right=Object.keys(quizAnswers).filter(k=>state.quiz[k]===quizAnswers[k]).length;$('quizResult').textContent=`Правильних відповідей: ${right}/3. Заповнено: ${answered}/3. ${right===3?'Чудово!':'Переглянь теорію та спробуй ще.'}`});
-function renderTests(list,id){const host=$(id);list.forEach(([key,title,input,expected])=>{const box=document.createElement('article');box.className='test-item';const h=document.createElement('h4');h.textContent=key+' · '+title;box.append(h);for(const [label,value] of [['Дія / дані',input],['Очікувано',expected]]){const p=document.createElement('p');const strong=document.createElement('strong');strong.textContent=label+': ';p.append(strong,document.createTextNode(value));box.append(p)}const wrap=document.createElement('div');wrap.className='test-inputs';const sl=document.createElement('label');sl.textContent='Статус';const select=document.createElement('select');select.setAttribute('aria-label','Статус '+key);for(const [v,t] of [['notrun','Не виконано'],['pass','Пройдено'],['fail','Помилка']]){const o=document.createElement('option');o.value=v;o.textContent=t;select.append(o)}select.value=state.tests[key]?.status||'notrun';sl.append(select);const fl=document.createElement('label');fl.textContent='Фактично / примітка';const note=document.createElement('textarea');note.rows=2;note.placeholder='Що реально відбулося?';note.value=state.tests[key]?.actual||'';fl.append(note);wrap.append(sl,fl);box.append(wrap);host.append(box);const sync=()=>{state.tests[key]={status:select.value,actual:note.value,expected};save();testSummary()};select.addEventListener('change',sync);note.addEventListener('input',sync)})}
-function testSummary(){const all=[...FORM,...REG];const pass=all.filter(t=>state.tests[t[0]]?.status==='pass').length,fail=all.filter(t=>state.tests[t[0]]?.status==='fail').length;$('testSummary').textContent=`Пройдено: ${pass}/${all.length} · Помилки: ${fail} · Не виконано: ${all.length-pass-fail}`}
-renderTests(FORM,'functionalTests');renderTests(REG,'regressionTests');testSummary();
-function renderDecisions(){const host=$('decisionList');host.replaceChildren();state.decisions.forEach((d,i)=>{const box=document.createElement('article');box.className='decision-entry';const title=document.createElement('strong');title.textContent=`Запис ${i+1}`;box.append(title);for(const [key,label] of [['problem','Проблема'],['solution','Рішення'],['reason','Підстава'],['source','Джерело'],['test','Перевірка']]){const p=document.createElement('p');const s=document.createElement('strong');s.textContent=label+': ';p.append(s,document.createTextNode(d[key]));box.append(p)}const row=document.createElement('div');row.className='decision-buttons';for(const [label,action] of [['Редагувати','edit'],['Видалити','delete']]){const b=document.createElement('button');b.type='button';b.className='secondary-action';b.textContent=label;b.addEventListener('click',()=>{if(action==='delete'){if(!confirm('Видалити цей запис?'))return;state.decisions.splice(i,1)}else{for(const k of ['problem','solution','reason','source','test'])$('decision-'+k).value=d[k];state.decisions.splice(i,1);$('decisionStatus').textContent='Запис перенесено у поля. Відредагуйте й натисніть «Додати запис».'}save();renderDecisions()});row.append(b)}box.append(row);host.append(box)})}
-$('addDecision').addEventListener('click',()=>{const d={};for(const k of ['problem','solution','reason','source','test'])d[k]=$('decision-'+k).value.trim();if(Object.values(d).some(v=>!v)){$('decisionStatus').textContent='Заповніть усі п’ять полів';return}d.createdAt=new Date().toISOString();state.decisions.push(d);for(const k of ['problem','solution','reason','source','test'])$('decision-'+k).value='';$('decisionStatus').textContent='Запис додано';save();renderDecisions()});renderDecisions();
-function download(name,content,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function exportData(){return {...state,schemaVersion:'1.0',title:'Шкільна їдальня 3.0',exportedAt:new Date().toISOString(),selfAssessment:{k1:+(state.fields.rubric1||0),k2:+(state.fields.rubric2||0),k3:+(state.fields.rubric3||0),k4:+(state.fields.rubric4||0),total:updateScore()}}}
-$('exportJson').addEventListener('click',()=>{download('NEXTLAB_MISSION05_PROGRESS.json',JSON.stringify(exportData(),null,2),'application/json;charset=utf-8');$('exportStatus').textContent='JSON експортовано'});
-$('exportMd').addEventListener('click',()=>{const out=['# NextLab · Місія 05 · Шкільна їдальня 3.0','','## Відповіді'];document.querySelectorAll('[data-field]').forEach(e=>out.push(`### ${e.closest('label')?.textContent?.trim()||e.dataset.field}\n${e.value||'—'}\n`));out.push('## Чеклісти');document.querySelectorAll('[data-check]').forEach(e=>out.push(`- [${e.checked?'x':' '}] ${e.closest('label')?.textContent.trim()}`));out.push('','## Мініперевірка');Object.entries(state.quiz).forEach(([k,v])=>out.push(`- ${k}: варіант ${+v+1}`));out.push('','## Тести');[...FORM,...REG].forEach(([id,title,,expected])=>{const t=state.tests[id]||{};out.push(`- **${id} ${title}** — ${t.status||'notrun'}; очікувано: ${expected}; фактично: ${t.actual||'—'}`)});out.push('','## Журнал рішень');state.decisions.forEach((d,i)=>out.push(`### Рішення ${i+1}\n- Проблема: ${d.problem}\n- Рішення: ${d.solution}\n- Підстава: ${d.reason}\n- Джерело: ${d.source}\n- Перевірка: ${d.test}`));out.push('','## Самооцінка',`${updateScore()}/12`);download('NEXTLAB_MISSION05_PROGRESS.md',out.join('\n'),'text/markdown;charset=utf-8');$('exportStatus').textContent='Markdown експортовано'});
-$('importJson').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>1024*1024)throw Error('Файл завеликий (максимум 1 МБ)');const next=validate(JSON.parse(await file.text()));if(!confirm('Імпорт замінить поточний прогрес Місії 05. Рекомендуємо спочатку експортувати резервну копію. Продовжити?'))return;state=next;save();location.reload()}catch(err){$('exportStatus').textContent='Імпорт не виконано: '+err.message}finally{e.target.value=''}});
-updateScore();go(1,false);
+const KEY = 'nextlab-mission05-v1', VERSION = 1;
+const FORM = [["F01", "Коректне замовлення", "Анна, 11-А, 2 порції страви по 65 грн", "Успіх, 130 грн"], ["F02", "Порожнє ім’я", "Ім’я порожнє", "Помилка біля імені"], ["F03", "Один символ", "Ім’я: А", "Помилка довжини"], ["F04", "Лише пробіли", "Ім’я: три пробіли", "Помилка після trim()"], ["F05", "Без класу", "Клас не обрано", "Помилка класу"], ["F06", "Нуль порцій", "Кількість: 0", "Відхилити"], ["F07", "Від’ємна кількість", "Кількість: −2", "Відхилити"], ["F08", "Дробова кількість", "Кількість: 2.5", "Відхилити"], ["F09", "Межі", "1, 5, 6 порцій", "1 і 5 прийняти; 6 відхилити"], ["F10", "Зміна після успіху", "Після підтвердження змінити кількість", "Старий успіх зникає"]], REG = [["R01", "Живий пошук", "Ввести частину назви", "Лише відповідні страви"], ["R02", "Категорія", "Обрати категорію", "Лише ця категорія"], ["R03", "Максимальна ціна", "Встановити поріг", "Немає дорожчих страв"], ["R04", "Вегетаріанські", "Увімкнути перемикач", "Лише вегетаріанські"], ["R05", "Комбінація", "Поєднати два фільтри", "Усі умови діють одночасно"], ["R06", "Скидання", "Натиснути скидання", "Повне меню відновлено"], ["R07", "Порожній результат", "Запит без збігів", "Повідомлення «Нічого не знайдено»"], ["R08", "Замовлення після фільтрації", "Відфільтрувати й натиснути «Замовити»", "Правильна страва у формі"]];
+const $ = id => document.getElementById(id);
+const fresh = () => ({ version: VERSION, mission: 'mission-05', fields: {}, checks: {}, tests: {}, decisions: [], quiz: {}, theme: 'light', step: 1 });
+let state = fresh();
+function validRecord(v) { return v && typeof v === 'object' && !Array.isArray(v); }
+function validate(obj) { if (!validRecord(obj) || obj.version !== VERSION || obj.mission !== 'mission-05' || !validRecord(obj.fields) || !validRecord(obj.checks) || !validRecord(obj.tests) || !Array.isArray(obj.decisions) || !obj.decisions.every(d => validRecord(d) && ['problem', 'solution', 'reason', 'source', 'test'].every(k => typeof d[k] === 'string')))
+    throw Error('Невідповідний формат файлу Місії 05'); if (Object.keys(obj.fields).length > 100 || obj.decisions.length > 100 || Object.keys(obj.tests).length > 100)
+    throw Error('Надто великий набір даних'); return { ...fresh(), fields: obj.fields, checks: obj.checks, tests: obj.tests, decisions: obj.decisions, quiz: validRecord(obj.quiz) ? obj.quiz : {}, theme: obj.theme === 'dark' ? 'dark' : 'light', step: 1 }; }
+try {
+    const raw = localStorage.getItem(KEY);
+    if (raw)
+        state = validate(JSON.parse(raw));
+}
+catch (_e) {
+    state = fresh();
+}
+function save() { try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+    $('saveStatus').textContent = 'Збережено на цьому пристрої';
+}
+catch (_e) {
+    $('saveStatus').textContent = 'Автозбереження недоступне — експортуйте JSON';
+} progress(); }
+function progress() { const fields = [...document.querySelectorAll('[data-field]')].filter(e => !e.dataset.field.startsWith('rubric')); const checks = [...document.querySelectorAll('[data-check]')]; const tests = [...FORM, ...REG]; const total = fields.length + checks.length + tests.length + 2; const done = fields.filter(e => e.value.trim()).length + checks.filter(e => e.checked).length + tests.filter(t => state.tests[t[0]]?.status && state.tests[t[0]].status !== 'notrun').length + Math.min(2, state.decisions.length); const pct = Math.round(done / total * 100); $('progressText').textContent = `Прогрес: ${pct}%`; $('progressFill').style.width = pct + '%'; }
+function go(n, scroll = true) { state.step = Math.min(6, Math.max(1, n)); document.querySelectorAll('[data-stage]').forEach(e => e.hidden = Number(e.dataset.stage) !== state.step); document.querySelectorAll('[data-step]').forEach(e => { if (Number(e.dataset.step) === state.step)
+    e.setAttribute('aria-current', 'step');
+else
+    e.removeAttribute('aria-current'); }); $('stageCounter').textContent = `Етап ${state.step} із 6`; $('prevStep').disabled = state.step === 1; $('nextStep').disabled = state.step === 6; save(); if (scroll)
+    document.querySelector('.mission-content').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => go(+b.dataset.step)));
+$('prevStep').addEventListener('click', () => go(state.step - 1));
+$('nextStep').addEventListener('click', () => go(state.step + 1));
+function updateScore() { let sum = 0; for (let i = 1; i <= 4; i++)
+    sum += Number($('rubric' + i).value) || 0; $('score').textContent = sum; return sum; }
+document.querySelectorAll('[data-field]').forEach(e => { e.value = state.fields[e.dataset.field] ?? (e.tagName === 'SELECT' ? '0' : ''); e.addEventListener('input', () => { state.fields[e.dataset.field] = e.value; updateScore(); save(); }); e.addEventListener('change', () => { state.fields[e.dataset.field] = e.value; updateScore(); save(); }); });
+document.querySelectorAll('[data-check]').forEach(e => { e.checked = !!state.checks[e.dataset.check]; e.addEventListener('change', () => { state.checks[e.dataset.check] = e.checked; save(); }); });
+function theme() { document.documentElement.dataset.theme = state.theme; document.querySelectorAll('[data-theme-choice]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeChoice === state.theme))); }
+document.querySelectorAll('[data-theme-choice]').forEach(b => b.addEventListener('click', () => { state.theme = b.dataset.themeChoice; theme(); save(); }));
+theme();
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => { const value = $(b.dataset.copy).textContent; try {
+    await navigator.clipboard.writeText(value);
+    b.textContent = 'Скопійовано ✓';
+}
+catch (_e) {
+    b.textContent = 'Виділіть текст і скопіюйте вручну';
+} }));
+$('brokenSubmit').addEventListener('click', () => { $('brokenResult').textContent = `⚠ Демонстрація підтвердила «${$('brokenDish').selectedOptions[0].textContent}» для ${$('brokenClass').value || 'необраного класу'} (кількість: ${$('brokenQty').value || 'порожньо'}), навіть якщо дані некоректні. Чому це помилка?`; });
+const quizAnswers = { quiz1: '0', quiz2: '1', quiz3: '2' };
+document.querySelectorAll('#miniQuiz input[type=radio]').forEach(e => { e.checked = state.quiz[e.name] === e.value; e.addEventListener('change', () => { state.quiz[e.name] = e.value; save(); }); });
+$('checkQuiz').addEventListener('click', () => { const answered = Object.keys(quizAnswers).filter(k => state.quiz[k] !== undefined).length; const right = Object.keys(quizAnswers).filter(k => state.quiz[k] === quizAnswers[k]).length; $('quizResult').textContent = `Правильних відповідей: ${right}/3. Заповнено: ${answered}/3. ${right === 3 ? 'Чудово!' : 'Переглянь теорію та спробуй ще.'}`; });
+function renderTests(list, id) { const host = $(id); list.forEach(([key, title, input, expected]) => { const box = document.createElement('article'); box.className = 'test-item'; const h = document.createElement('h4'); h.textContent = key + ' · ' + title; box.append(h); for (const [label, value] of [['Дія / дані', input], ['Очікувано', expected]]) {
+    const p = document.createElement('p');
+    const strong = document.createElement('strong');
+    strong.textContent = label + ': ';
+    p.append(strong, document.createTextNode(value));
+    box.append(p);
+} const wrap = document.createElement('div'); wrap.className = 'test-inputs'; const sl = document.createElement('label'); sl.textContent = 'Статус'; const select = document.createElement('select'); select.setAttribute('aria-label', 'Статус ' + key); for (const [v, t] of [['notrun', 'Не виконано'], ['pass', 'Пройдено'], ['fail', 'Помилка']]) {
+    const o = document.createElement('option');
+    o.value = v;
+    o.textContent = t;
+    select.append(o);
+} select.value = state.tests[key]?.status || 'notrun'; sl.append(select); const fl = document.createElement('label'); fl.textContent = 'Фактично / примітка'; const note = document.createElement('textarea'); note.rows = 2; note.placeholder = 'Що реально відбулося?'; note.value = state.tests[key]?.actual || ''; fl.append(note); wrap.append(sl, fl); box.append(wrap); host.append(box); const sync = () => { state.tests[key] = { status: select.value, actual: note.value, expected }; save(); testSummary(); }; select.addEventListener('change', sync); note.addEventListener('input', sync); }); }
+function testSummary() { const all = [...FORM, ...REG]; const pass = all.filter(t => state.tests[t[0]]?.status === 'pass').length, fail = all.filter(t => state.tests[t[0]]?.status === 'fail').length; $('testSummary').textContent = `Пройдено: ${pass}/${all.length} · Помилки: ${fail} · Не виконано: ${all.length - pass - fail}`; }
+renderTests(FORM, 'functionalTests');
+renderTests(REG, 'regressionTests');
+testSummary();
+function renderDecisions() { const host = $('decisionList'); host.replaceChildren(); state.decisions.forEach((d, i) => { const box = document.createElement('article'); box.className = 'decision-entry'; const title = document.createElement('strong'); title.textContent = `Запис ${i + 1}`; box.append(title); for (const [key, label] of [['problem', 'Проблема'], ['solution', 'Рішення'], ['reason', 'Підстава'], ['source', 'Джерело'], ['test', 'Перевірка']]) {
+    const p = document.createElement('p');
+    const s = document.createElement('strong');
+    s.textContent = label + ': ';
+    p.append(s, document.createTextNode(d[key]));
+    box.append(p);
+} const row = document.createElement('div'); row.className = 'decision-buttons'; for (const [label, action] of [['Редагувати', 'edit'], ['Видалити', 'delete']]) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'secondary-action';
+    b.textContent = label;
+    b.addEventListener('click', () => { if (action === 'delete') {
+        if (!confirm('Видалити цей запис?'))
+            return;
+        state.decisions.splice(i, 1);
+    }
+    else {
+        for (const k of ['problem', 'solution', 'reason', 'source', 'test'])
+            $('decision-' + k).value = d[k];
+        state.decisions.splice(i, 1);
+        $('decisionStatus').textContent = 'Запис перенесено у поля. Відредагуйте й натисніть «Додати запис».';
+    } save(); renderDecisions(); });
+    row.append(b);
+} box.append(row); host.append(box); }); }
+$('addDecision').addEventListener('click', () => { const d = {}; for (const k of ['problem', 'solution', 'reason', 'source', 'test'])
+    d[k] = $('decision-' + k).value.trim(); if (Object.values(d).some(v => !v)) {
+    $('decisionStatus').textContent = 'Заповніть усі п’ять полів';
+    return;
+} d.createdAt = new Date().toISOString(); state.decisions.push(d); for (const k of ['problem', 'solution', 'reason', 'source', 'test'])
+    $('decision-' + k).value = ''; $('decisionStatus').textContent = 'Запис додано'; save(); renderDecisions(); });
+renderDecisions();
+function download(name, content, type) { const blob = new Blob([content], { type }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = name; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
+function exportData() { return { ...state, schemaVersion: '1.0', title: 'Шкільна їдальня 3.0', exportedAt: new Date().toISOString(), selfAssessment: { k1: +(state.fields.rubric1 || 0), k2: +(state.fields.rubric2 || 0), k3: +(state.fields.rubric3 || 0), k4: +(state.fields.rubric4 || 0), total: updateScore() } }; }
+$('exportJson').addEventListener('click', () => { download('NEXTLAB_MISSION05_PROGRESS.json', JSON.stringify(exportData(), null, 2), 'application/json;charset=utf-8'); $('exportStatus').textContent = 'JSON експортовано'; });
+$('exportMd').addEventListener('click', () => { const out = ['# NextLab · Місія 05 · Шкільна їдальня 3.0', '', '## Відповіді']; document.querySelectorAll('[data-field]').forEach(e => out.push(`### ${e.closest('label')?.textContent?.trim() || e.dataset.field}\n${e.value || '—'}\n`)); out.push('## Чеклісти'); document.querySelectorAll('[data-check]').forEach(e => out.push(`- [${e.checked ? 'x' : ' '}] ${e.closest('label')?.textContent.trim()}`)); out.push('', '## Мініперевірка'); Object.entries(state.quiz).forEach(([k, v]) => out.push(`- ${k}: варіант ${+v + 1}`)); out.push('', '## Тести'); [...FORM, ...REG].forEach(([id, title, , expected]) => { const t = state.tests[id] || {}; out.push(`- **${id} ${title}** — ${t.status || 'notrun'}; очікувано: ${expected}; фактично: ${t.actual || '—'}`); }); out.push('', '## Журнал рішень'); state.decisions.forEach((d, i) => out.push(`### Рішення ${i + 1}\n- Проблема: ${d.problem}\n- Рішення: ${d.solution}\n- Підстава: ${d.reason}\n- Джерело: ${d.source}\n- Перевірка: ${d.test}`)); out.push('', '## Самооцінка', `${updateScore()}/12`); download('NEXTLAB_MISSION05_PROGRESS.md', out.join('\n'), 'text/markdown;charset=utf-8'); $('exportStatus').textContent = 'Markdown експортовано'; });
+$('importJson').addEventListener('change', async (e) => { const file = e.target.files?.[0]; if (!file)
+    return; try {
+    if (file.size > 1024 * 1024)
+        throw Error('Файл завеликий (максимум 1 МБ)');
+    const next = validate(JSON.parse(await file.text()));
+    if (!confirm('Імпорт замінить поточний прогрес Місії 05. Рекомендуємо спочатку експортувати резервну копію. Продовжити?'))
+        return;
+    state = next;
+    save();
+    location.reload();
+}
+catch (err) {
+    $('exportStatus').textContent = 'Імпорт не виконано: ' + err.message;
+}
+finally {
+    e.target.value = '';
+} });
+updateScore();
+go(1, false);

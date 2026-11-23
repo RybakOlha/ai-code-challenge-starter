@@ -1,106 +1,485 @@
-/* Only Mission 04-specific widgets. Mission 03's CSS is copied byte-for-byte. */
-.stage[hidden],.teacher-note[hidden]{display:none!important}
-.demo{border:1px solid var(--line);border-radius:var(--radius);padding:1rem;margin:1rem 0;background:var(--surface)}
-.demo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
-.demo-grid label{display:grid;gap:.35rem;font-weight:600}
-.demo-grid input:not([type=checkbox]),.demo-grid select{width:100%;padding:.7rem;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink)}
-.demo-grid .checkline{display:flex;align-items:center;gap:.5rem}
-.demo-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:1rem 0}
-.dish-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.7rem}
-.dish-card{border:1px solid var(--line);border-radius:12px;padding:.8rem;display:grid;gap:.3rem;background:var(--surface)}
-.dish-card small{color:var(--muted)}.price{font-weight:700;color:var(--accent)}
-.stage .task-check,.test-case{display:flex;align-items:center;gap:.65rem;padding:.8rem;background:var(--accent-soft);border-radius:10px;margin:.7rem 0;font-weight:600}
-.stage .task-check input,.test-case input{flex:none}
-.stage label:not(.task-check):not(.checkline):not(.test-case){display:block;font-weight:600;margin:.9rem 0 .3rem}
-.stage textarea,.stage input[type=text],.stage input[type=url],.stage select{width:100%;max-width:100%;padding:.75rem;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink)}
-.stage textarea{min-height:115px}
-.prompt-wrap{border:1px solid var(--line);border-radius:12px;padding:1rem;margin:.8rem 0;background:var(--surface)}
-.prompt-wrap summary{font-weight:700;cursor:pointer}.prompt-wrap p{white-space:pre-wrap}
-.callout{padding:1rem;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:8px}
-.test-cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
-.test-case{margin:0;font-weight:500}
-.rubric{display:grid;gap:.7rem}.decision-entry{border:1px solid var(--line);border-radius:10px;padding:.8rem;margin:.5rem 0}
-.stage-actions{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin:1.2rem 0}
-.stage-actions #nextStep{background:var(--accent);color:white;border:0;border-radius:10px;padding:.8rem 1.2rem;cursor:pointer}
-.stage-actions #nextStep:disabled,.stage-actions #prevStep:disabled{opacity:.45;cursor:not-allowed}
-@media(max-width:700px){.demo-grid,.test-cases{grid-template-columns:1fr}}
+/*Only Mission 04-specific widgets. Mission 03's CSS is copied byte-for-byte.*/
 
-/* Mission 04: checkbox next to its label, in both themes. */
+.stage[hidden],.teacher-note[hidden] {
+  display: none !important;
+}
+
+.demo {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 1rem 0;
+  background: var(--surface);
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .8rem;
+}
+
+.demo-grid label {
+  display: grid;
+  gap: .35rem;
+  font-weight: 600;
+}
+
+.demo-grid input:not([type=checkbox]),.demo-grid select {
+  width: 100%;
+  padding: .7rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.demo-grid .checkline {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.demo-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.dish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(170px,1fr));
+  gap: .7rem;
+}
+
+.dish-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: .8rem;
+  display: grid;
+  gap: .3rem;
+  background: var(--surface);
+}
+
+.dish-card small {
+  color: var(--muted);
+}
+
+.price {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stage .task-check,.test-case {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .8rem;
+  background: var(--accent-soft);
+  border-radius: 10px;
+  margin: .7rem 0;
+  font-weight: 600;
+}
+
+.stage .task-check input,.test-case input {
+  flex: none;
+}
+
+.stage label:not(.task-check):not(.checkline):not(.test-case) {
+  display: block;
+  font-weight: 600;
+  margin: .9rem 0 .3rem;
+}
+
+.stage textarea,.stage input[type=text],.stage input[type=url],.stage select {
+  width: 100%;
+  max-width: 100%;
+  padding: .75rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.stage textarea {
+  min-height: 115px;
+}
+
+.prompt-wrap {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: .8rem 0;
+  background: var(--surface);
+}
+
+.prompt-wrap summary {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.prompt-wrap p {
+  white-space: pre-wrap;
+}
+
+.callout {
+  padding: 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 8px;
+}
+
+.test-cases {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: .5rem;
+}
+
+.test-case {
+  margin: 0;
+  font-weight: 500;
+}
+
+.rubric {
+  display: grid;
+  gap: .7rem;
+}
+
+.decision-entry {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: .8rem;
+  margin: .5rem 0;
+}
+
+.stage-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7rem;
+  flex-wrap: wrap;
+  margin: 1.2rem 0;
+}
+
+.stage-actions #nextStep {
+  background: var(--accent);
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: .8rem 1.2rem;
+  cursor: pointer;
+}
+
+.stage-actions #nextStep:disabled,.stage-actions #prevStep:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+@media (max-width:700px) {
+  .demo-grid,.test-cases {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*Mission 04: checkbox next to its label, in both themes.*/
+
 .stage .panel label.task-check,
 .stage .panel label.test-case,
 .stage .panel label.checkline {
-  display:flex!important;
-  flex-direction:row!important;
-  align-items:center!important;
-  justify-content:flex-start;
-  gap:.75rem;
-  cursor:pointer;
-  text-align:left;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start;
+  gap: .75rem;
+  cursor: pointer;
+  text-align: left;
 }
+
 .stage .panel label.task-check input[type="checkbox"],
 .stage .panel label.test-case input[type="checkbox"],
 .stage .panel label.checkline input[type="checkbox"] {
-  appearance:none;
-  -webkit-appearance:none;
-  display:inline-block;
-  box-sizing:border-box;
-  width:20px!important;
-  height:20px!important;
-  min-width:20px;
-  flex:0 0 20px!important;
-  margin:0!important;
-  padding:0!important;
-  border:2px solid var(--accent,#4055df);
-  border-radius:5px;
-  background:var(--surface,#fff);
-  position:relative;
-  cursor:pointer;
-  vertical-align:middle;
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px;
+  flex: 0 0 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 2px solid var(--accent,#4055df);
+  border-radius: 5px;
+  background: var(--surface,#fff);
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
 }
+
 .stage .panel label.task-check input[type="checkbox"]:checked,
 .stage .panel label.test-case input[type="checkbox"]:checked,
 .stage .panel label.checkline input[type="checkbox"]:checked {
-  background:var(--accent,#4055df);
-  border-color:var(--accent,#4055df);
+  background: var(--accent,#4055df);
+  border-color: var(--accent,#4055df);
 }
+
 .stage .panel label.task-check input[type="checkbox"]:checked::after,
 .stage .panel label.test-case input[type="checkbox"]:checked::after,
 .stage .panel label.checkline input[type="checkbox"]:checked::after {
-  content:"";
-  position:absolute;
-  left:5px;
-  top:1px;
-  width:5px;
-  height:10px;
-  border:solid #fff;
-  border-width:0 2px 2px 0;
-  transform:rotate(45deg);
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
+
 .stage .panel label.task-check input[type="checkbox"]:focus-visible,
 .stage .panel label.test-case input[type="checkbox"]:focus-visible,
 .stage .panel label.checkline input[type="checkbox"]:focus-visible {
-  outline:3px solid #f0a83e;
-  outline-offset:3px;
+  outline: 3px solid #f0a83e;
+  outline-offset: 3px;
 }
-.stage .panel label.task-check:has(input:checked),
-.stage .panel label.test-case:has(input:checked) {border:1px solid var(--accent,#4055df);}
 
-/* Mission 04: fixed-in-view header while scrolling; original Mission 03 CSS remains unchanged. */
+.stage .panel label.task-check:has(input:checked),
+.stage .panel label.test-case:has(input:checked) {
+  border: 1px solid var(--accent,#4055df);
+}
+
+/*Mission 04: fixed-in-view header while scrolling; original Mission 03 CSS remains unchanged.*/
+
 .site-header {
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-/* Account for the sticky header when navigating between stages. */
-html { scroll-padding-top: 112px; }
-.mission-content, .stage, #main { scroll-margin-top: 112px; }
-@media (max-width: 700px) { html { scroll-padding-top: 150px; } .mission-content, .stage, #main { scroll-margin-top: 150px; } }
+/*Account for the sticky header when navigating between stages.*/
 
-/* Mission 05 additions */
-.stage[hidden]{display:none!important} .mission-content{min-width:0}.quiz-field{border:1px solid var(--line);border-radius:12px;margin:1rem 0;padding:1rem}.quiz-option{display:flex!important;gap:.6rem;align-items:center;margin:.5rem 0!important;font-weight:400!important}.quiz-option input{width:auto!important}.test-grid{display:grid;gap:.7rem}.test-item{border:1px solid var(--line);border-radius:12px;padding:1rem;background:var(--surface)}.test-item h4{margin:0 0 .4rem}.test-item p{margin:.3rem 0}.test-item select{max-width:260px}.test-item textarea{min-height:65px}.test-item .test-inputs{display:grid;grid-template-columns:minmax(160px,1fr) minmax(190px,2fr);gap:.7rem;align-items:start}.rubric-hint{display:block;font-weight:400;color:var(--muted);margin:.4rem 0}.decision-entry{position:relative}.decision-entry p{margin:.35rem 0;overflow-wrap:anywhere}.decision-entry .decision-buttons{display:flex;gap:.5rem;flex-wrap:wrap}.stage details{margin:.65rem 0;padding:.75rem 1rem;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.stage details summary{cursor:pointer;font-weight:700}.stage details[open] summary{margin-bottom:.7rem}.stage input[type=number]{width:100%;padding:.75rem;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink)}.stage textarea,.stage input{box-sizing:border-box}.stage{scroll-margin-top:100px}.mission-content{scroll-margin-top:105px}.stage .panel{overflow-wrap:anywhere}.test-item label{display:block!important;margin:.4rem 0!important}.test-item .test-inputs label{font-weight:600}.test-item .test-inputs textarea{width:100%}.stage .panel a{overflow-wrap:anywhere}@media(max-width:700px){.test-item .test-inputs{grid-template-columns:1fr}.stage-actions{gap:.5rem}.mission-content{width:100%}}
+html {
+  scroll-padding-top: 112px;
+}
 
-/* Mission 05: student download and code exploration */
-.download-guide{margin:1rem 0;padding:1rem 1.2rem;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
-.download-guide h3{margin-top:0}.download-guide li{margin:.4rem 0}.download-link{display:inline-block;padding:.75rem 1rem;border-radius:10px;background:var(--accent,#4055df);color:white!important;font-weight:700;text-decoration:none}.download-link:hover{filter:brightness(1.1)}
-.stage .prompt-accordion{margin:.8rem 0}.stage .prompt-accordion p{white-space:pre-wrap;overflow-wrap:anywhere}.stage pre{max-width:100%;overflow-x:auto;padding:1rem;border-radius:10px;background:rgba(110,110,140,.10)}
+.mission-content, .stage, #main {
+  scroll-margin-top: 112px;
+}
+
+@media (max-width: 700px) {
+  html {
+    scroll-padding-top: 150px;
+  }
+  .mission-content, .stage, #main {
+    scroll-margin-top: 150px;
+  }
+}
+
+/*Mission 05 additions*/
+
+.stage[hidden] {
+  display: none !important;
+}
+
+.mission-content {
+  min-width: 0;
+}
+
+.quiz-field {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.quiz-option {
+  display: flex !important;
+  gap: .6rem;
+  align-items: center;
+  margin: .5rem 0 !important;
+  font-weight: 400 !important;
+}
+
+.quiz-option input {
+  width: auto !important;
+}
+
+.test-grid {
+  display: grid;
+  gap: .7rem;
+}
+
+.test-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem;
+  background: var(--surface);
+}
+
+.test-item h4 {
+  margin: 0 0 .4rem;
+}
+
+.test-item p {
+  margin: .3rem 0;
+}
+
+.test-item select {
+  max-width: 260px;
+}
+
+.test-item textarea {
+  min-height: 65px;
+}
+
+.test-item .test-inputs {
+  display: grid;
+  grid-template-columns: minmax(160px,1fr) minmax(190px,2fr);
+  gap: .7rem;
+  align-items: start;
+}
+
+.rubric-hint {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+  margin: .4rem 0;
+}
+
+.decision-entry {
+  position: relative;
+}
+
+.decision-entry p {
+  margin: .35rem 0;
+  overflow-wrap: anywhere;
+}
+
+.decision-entry .decision-buttons {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.stage details {
+  margin: .65rem 0;
+  padding: .75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.stage details summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.stage details[open] summary {
+  margin-bottom: .7rem;
+}
+
+.stage input[type=number] {
+  width: 100%;
+  padding: .75rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.stage textarea,.stage input {
+  box-sizing: border-box;
+}
+
+.stage {
+  scroll-margin-top: 100px;
+}
+
+.mission-content {
+  scroll-margin-top: 105px;
+}
+
+.stage .panel {
+  overflow-wrap: anywhere;
+}
+
+.test-item label {
+  display: block !important;
+  margin: .4rem 0 !important;
+}
+
+.test-item .test-inputs label {
+  font-weight: 600;
+}
+
+.test-item .test-inputs textarea {
+  width: 100%;
+}
+
+.stage .panel a {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width:700px) {
+  .test-item .test-inputs {
+    grid-template-columns: 1fr;
+  }
+  .stage-actions {
+    gap: .5rem;
+  }
+  .mission-content {
+    width: 100%;
+  }
+}
+
+/*Mission 05: student download and code exploration*/
+
+.download-guide {
+  margin: 1rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.download-guide h3 {
+  margin-top: 0;
+}
+
+.download-guide li {
+  margin: .4rem 0;
+}
+
+.download-link {
+  display: inline-block;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  background: var(--accent,#4055df);
+  color: white !important;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.download-link:hover {
+  filter: brightness(1.1);
+}
+
+.stage .prompt-accordion {
+  margin: .8rem 0;
+}
+
+.stage .prompt-accordion p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.stage pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(110,110,140,.10);
+}

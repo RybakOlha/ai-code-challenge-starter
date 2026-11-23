@@ -1,13 +1,984 @@
 <!DOCTYPE html>
-
-<html data-theme="light" lang="uk"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="NextLab · Місія 05 · Шкільна їдальня 3.0 — замовлення без помилок" name="description"/><title>NextLab · Місія 05 · Шкільна їдальня 3.0</title><link href="css/style.css" rel="stylesheet"/><link href="css/mission05.css" rel="stylesheet"/><script defer="" src="js/app.js"></script></head><body><a class="skip-link" href="#main">Перейти до вмісту</a><header class="site-header"><div class="container header-inner"><div class="brand-wrap"><a class="brand" href="../index.html">◈ NextLab</a><span class="tag">AI Code Challenge · Mission 05</span></div><span class="tag">11 клас · 90 хв</span><div aria-label="Тема оформлення" class="theme-control" role="group"><button aria-pressed="true" class="theme-option" data-theme-choice="light" type="button">☀ Денна</button><button aria-pressed="false" class="theme-option" data-theme-choice="dark" type="button">☾ Нічна</button></div></div></header><main class="container mission-layout" id="main"><aside aria-label="Етапи місії" class="timeline"><h2>Етапи місії</h2><nav class="step-nav" id="steps"><button class="step-link" data-step="1" type="button">1. Замовлення · 10 хв</button><button class="step-link" data-step="2" type="button">2. Як працює форма замовлення · 15 хв</button><button class="step-link" data-step="3" type="button">3. ASK → PLAN · 10 хв</button><button class="step-link" data-step="4" type="button">4. BUILD WITH AGENT · 30 хв</button><button class="step-link" data-step="5" type="button">5. Знайди помилку — виправ її · 15 хв</button><button class="step-link" data-step="6" type="button">6. Підсумки та рефлексія · 10 хв</button></nav><div class="progress-panel"><strong>Прогрес місії</strong><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><span aria-live="polite" id="progressText">Прогрес: 0%</span><p class="field-help" id="saveStatus">Автозбереження увімкнено</p></div></aside><div class="mission-content"><div class="hero"><p class="eyebrow">МІСІЯ 05 · AI CODE CHALLENGE</p><h1>Шкільна їдальня 3.0 — замовлення без помилок</h1><p>Перетвори меню з чотирма фільтрами на навчальний застосунок із формою замовлення. Перевір дані, протестуй межі, збережи працездатність фільтрів. Керуй Copilot, а не навпаки.</p><div class="hero-meta"><span>6 етапів</span><span>90 хвилин</span><span>VS Code · Copilot · JavaScript</span></div></div><section aria-labelledby="title-1" class="stage" data-stage="1" hidden="" id="stage-1"><div class="stage-header"><p class="eyebrow">Етап 01 · 10 хв</p><h2 id="title-1">Замовлення</h2></div><section aria-labelledby="workspaceTitle" class="panel"><h2 id="workspaceTitle">Твій робочий простір</h2><p>Завантаж <a download="" href="starter/NextLab_Mission05_Student_Starter.zip">ZIP стартового застосунку</a>, розпакуй і відкрий папку у VS Code. Для перегляду доступна також <a href="starter/index.html" rel="noopener" target="_blank">демонстрація у браузері</a>. Чотири фільтри вже працюють. Знайди <code>TODO</code> у <code>js/order.js</code>.</p><div class="download-guide"><h3>Отримай стартовий проєкт для VS Code</h3><p><a class="download-link" download="" href="starter/NextLab_Mission05_Student_Starter.zip">⬇ Завантажити ZIP стартового застосунку</a></p><ol><li>Завантаж ZIP і розпакуй архів.</li><li>У VS Code вибери <strong>File → Open Folder</strong> і відкрий папку з <code>index.html</code>.</li><li>Відкрий термінал VS Code та запусти <code>python -m http.server 8000</code> (або <code>python3 -m http.server 8000</code>).</li><li>У браузері відкрий <code>http://localhost:8000</code>.</li><li>Завантаж меню, перевір усі чотири фільтри, потім відкрий <code>js/app.js</code> і <code>js/order.js</code>.</li></ol><p class="field-help">Завантаження ZIP і перегляд демонстрації — різні дії. Для редагування коду потрібна розпакована папка.</p></div><div class="callout"><strong>Безпека:</strong> використовуйте вигадані імена. Замовлення навчальні, не надсилаються, платежів та бекенду немає. Уся робота NextLab зберігається локально у вашому браузері.</div></section><section class="panel"><p><strong>Виклик:</strong> розробник запевняє, що форма замовлення готова, але вона підтверджує некоректні дані. Досліди помилки, перш ніж писати код.</p><div class="callout">Це спеціально несправна демонстрація, не справжня форма. Вводь лише вигадані дані. Замовлення нікуди не надсилається.</div><div class="demo"><h3>Шкільна їдальня · навчальне замовлення</h3><p>Це навчальна копія форми їдальні: обери страву, введи дані та досліди, чому некоректне замовлення підтверджується. У справжньому стартовому застосунку ти виправлятимеш цю поведінку.</p><div class="demo-grid"><label>Страва<select id="brokenDish"><option value="65">Котлета куряча · 65 грн</option><option value="48">Борщ український · 48 грн</option><option value="39">Салат овочевий · 39 грн</option></select></label><label>Ім’я<input id="brokenName" placeholder="Можна залишити порожнім" type="text"/></label><label>Клас<select id="brokenClass"><option value="">Не обрано</option><option>11-А</option><option>11-Б</option><option>11-В</option><option>11-Г</option></select></label><label>Кількість<input id="brokenQty" step="any" type="number" value="0"/></label></div><button id="brokenSubmit" type="button">Спробувати підтвердити</button><p aria-live="polite" id="brokenResult" role="status"></p></div><label class="task-check"><input data-check="s1-try" type="checkbox"/> Я перевірив(ла) порожнє ім’я, відсутній клас, нульову та дробову кількість.</label><label for="s1-contradictions">Які щонайменше три суперечності виявлено?</label><textarea data-field="s1-contradictions" id="s1-contradictions" placeholder="Назви фактичну й очікувану поведінку" rows="3"></textarea><label for="s1-questions">Які питання потрібно уточнити перед реалізацією?</label><textarea data-field="s1-questions" id="s1-questions" placeholder="Наприклад: що робити після зміни кількості?" rows="3"></textarea><details><summary>Самоперевірка · Відкрити після власного аналізу</summary><p>Некоректні значення не повинні призводити до успішного підтвердження; потрібно перевіряти ім’я після trim(), клас, цілу кількість 1–5 і показувати повідомлення біля поля.</p></details></section></section><section aria-labelledby="title-2" class="stage" data-stage="2" hidden="" id="stage-2"><div class="stage-header"><p class="eyebrow">Етап 02 · 15 хв</p><h2 id="title-2">Як працює форма замовлення</h2></div><section class="panel"><p>Вивчи короткі блоки теорії, зокрема новий метод trim(). Усі акордеони спочатку закриті. Після цього виконай мініперевірку.</p><details><summary>Що робить <code>trim()</code> і навіщо він потрібен?</summary><p><code>trim()</code> — метод рядка JavaScript. Він повертає новий рядок без пробільних символів на початку й наприкінці. Початковий рядок не змінюється. Пробіли між словами зберігаються.</p><pre><code>const name = "   Анна   ";
+<html data-theme="light" lang="uk">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <meta content="NextLab &middot; &Mcy;&iukcy;&scy;&iukcy;&yacy; 05 &middot; &SHcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&acy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yacy; 3.0 &mdash; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &bcy;&iecy;&zcy; &pcy;&ocy;&mcy;&icy;&lcy;&ocy;&kcy;" name="description">
+    <title>
+      NextLab &middot; &Mcy;&iukcy;&scy;&iukcy;&yacy; 05 &middot; &SHcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&acy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yacy; 3.0
+    </title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/mission05.css" rel="stylesheet">
+    <script defer src="js/app.js">
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      &Pcy;&iecy;&rcy;&iecy;&jcy;&tcy;&icy; &dcy;&ocy; &vcy;&mcy;&iukcy;&scy;&tcy;&ucy;
+    </a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand-wrap">
+          <a class="brand" href="../index.html">
+            ◈ NextLab
+          </a>
+          <span class="tag">
+            AI Code Challenge &middot; Mission 05
+          </span>
+        </div>
+        <span class="tag">
+          11 &kcy;&lcy;&acy;&scy; &middot; 90 &khcy;&vcy;
+        </span>
+        <div aria-label="&Tcy;&iecy;&mcy;&acy; &ocy;&fcy;&ocy;&rcy;&mcy;&lcy;&iecy;&ncy;&ncy;&yacy;" class="theme-control" role="group">
+          <button aria-pressed="true" class="theme-option" data-theme-choice="light" type="button">
+            ☀ &Dcy;&iecy;&ncy;&ncy;&acy;
+          </button>
+          <button aria-pressed="false" class="theme-option" data-theme-choice="dark" type="button">
+            ☾ &Ncy;&iukcy;&chcy;&ncy;&acy;
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="container mission-layout" id="main">
+      <aside aria-label="&IEcy;&tcy;&acy;&pcy;&icy; &mcy;&iukcy;&scy;&iukcy;&yicy;" class="timeline">
+        <h2>
+          &IEcy;&tcy;&acy;&pcy;&icy; &mcy;&iukcy;&scy;&iukcy;&yicy;
+        </h2>
+        <nav class="step-nav" id="steps">
+          <button class="step-link" data-step="1" type="button">
+            1. &Zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &middot; 10 &khcy;&vcy;
+          </button>
+          <button class="step-link" data-step="2" type="button">
+            2. &YAcy;&kcy; &pcy;&rcy;&acy;&tscy;&yucy;&jukcy; &fcy;&ocy;&rcy;&mcy;&acy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &middot; 15 &khcy;&vcy;
+          </button>
+          <button class="step-link" data-step="3" type="button">
+            3. ASK &rarr; PLAN &middot; 10 &khcy;&vcy;
+          </button>
+          <button class="step-link" data-step="4" type="button">
+            4. BUILD WITH AGENT &middot; 30 &khcy;&vcy;
+          </button>
+          <button class="step-link" data-step="5" type="button">
+            5. &Zcy;&ncy;&acy;&jcy;&dcy;&icy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&ucy; &mdash; &vcy;&icy;&pcy;&rcy;&acy;&vcy; &yicy;&yicy; &middot; 15 &khcy;&vcy;
+          </button>
+          <button class="step-link" data-step="6" type="button">
+            6. &Pcy;&iukcy;&dcy;&scy;&ucy;&mcy;&kcy;&icy; &tcy;&acy; &rcy;&iecy;&fcy;&lcy;&iecy;&kcy;&scy;&iukcy;&yacy; &middot; 10 &khcy;&vcy;
+          </button>
+        </nav>
+        <div class="progress-panel">
+          <strong>
+            &Pcy;&rcy;&ocy;&gcy;&rcy;&iecy;&scy; &mcy;&iukcy;&scy;&iukcy;&yicy;
+          </strong>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill">
+            </div>
+          </div>
+          <span aria-live="polite" id="progressText">
+            &Pcy;&rcy;&ocy;&gcy;&rcy;&iecy;&scy;: 0%
+          </span>
+          <p class="field-help" id="saveStatus">
+            &Acy;&vcy;&tcy;&ocy;&zcy;&bcy;&iecy;&rcy;&iecy;&zhcy;&iecy;&ncy;&ncy;&yacy; &ucy;&vcy;&iukcy;&mcy;&kcy;&ncy;&iecy;&ncy;&ocy;
+          </p>
+        </div>
+      </aside>
+      <div class="mission-content">
+        <div class="hero">
+          <p class="eyebrow">
+            &Mcy;&Iukcy;&Scy;&Iukcy;&YAcy; 05 &middot; AI CODE CHALLENGE
+          </p>
+          <h1>
+            &SHcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&acy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yacy; 3.0 &mdash; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &bcy;&iecy;&zcy; &pcy;&ocy;&mcy;&icy;&lcy;&ocy;&kcy;
+          </h1>
+          <p>
+            &Pcy;&iecy;&rcy;&iecy;&tcy;&vcy;&ocy;&rcy;&icy; &mcy;&iecy;&ncy;&yucy; &zcy; &chcy;&ocy;&tcy;&icy;&rcy;&mcy;&acy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&acy;&mcy;&icy; &ncy;&acy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&ocy;&kcy; &iukcy;&zcy; &fcy;&ocy;&rcy;&mcy;&ocy;&yucy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;. &Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy; &dcy;&acy;&ncy;&iukcy;, &pcy;&rcy;&ocy;&tcy;&iecy;&scy;&tcy;&ucy;&jcy; &mcy;&iecy;&zhcy;&iukcy;, &zcy;&bcy;&iecy;&rcy;&iecy;&zhcy;&icy; &pcy;&rcy;&acy;&tscy;&iecy;&zcy;&dcy;&acy;&tcy;&ncy;&iukcy;&scy;&tcy;&softcy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&iukcy;&vcy;. &Kcy;&iecy;&rcy;&ucy;&jcy; Copilot, &acy; &ncy;&iecy; &ncy;&acy;&vcy;&pcy;&acy;&kcy;&icy;.
+          </p>
+          <div class="hero-meta">
+            <span>
+              6 &iecy;&tcy;&acy;&pcy;&iukcy;&vcy;
+            </span>
+            <span>
+              90 &khcy;&vcy;&icy;&lcy;&icy;&ncy;
+            </span>
+            <span>
+              VS Code &middot; Copilot &middot; JavaScript
+            </span>
+          </div>
+        </div>
+        <section aria-labelledby="title-1" class="stage" data-stage="1" hidden id="stage-1">
+          <div class="stage-header">
+            <p class="eyebrow">
+              &IEcy;&tcy;&acy;&pcy; 01 &middot; 10 &khcy;&vcy;
+            </p>
+            <h2 id="title-1">
+              &Zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;
+            </h2>
+          </div>
+          <section aria-labelledby="workspaceTitle" class="panel">
+            <h2 id="workspaceTitle">
+              &Tcy;&vcy;&iukcy;&jcy; &rcy;&ocy;&bcy;&ocy;&chcy;&icy;&jcy; &pcy;&rcy;&ocy;&scy;&tcy;&iukcy;&rcy;
+            </h2>
+            <p>
+              &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;
+              <a download href="starter/NextLab_Mission05_Student_Starter.zip">
+                ZIP &scy;&tcy;&acy;&rcy;&tcy;&ocy;&vcy;&ocy;&gcy;&ocy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&kcy;&ucy;
+              </a>
+              , &rcy;&ocy;&zcy;&pcy;&acy;&kcy;&ucy;&jcy; &iukcy; &vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&jcy; &pcy;&acy;&pcy;&kcy;&ucy; &ucy; VS Code. &Dcy;&lcy;&yacy; &pcy;&iecy;&rcy;&iecy;&gcy;&lcy;&yacy;&dcy;&ucy; &dcy;&ocy;&scy;&tcy;&ucy;&pcy;&ncy;&acy; &tcy;&acy;&kcy;&ocy;&zhcy;
+              <a href="starter/index.html" rel="noopener" target="_blank">
+                &dcy;&iecy;&mcy;&ocy;&ncy;&scy;&tcy;&rcy;&acy;&tscy;&iukcy;&yacy; &ucy; &bcy;&rcy;&acy;&ucy;&zcy;&iecy;&rcy;&iukcy;
+              </a>
+              . &CHcy;&ocy;&tcy;&icy;&rcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy; &vcy;&zhcy;&iecy; &pcy;&rcy;&acy;&tscy;&yucy;&yucy;&tcy;&softcy;. &Zcy;&ncy;&acy;&jcy;&dcy;&icy;
+              <code>
+                TODO
+              </code>
+              &ucy;
+              <code>
+                js/order.js
+              </code>
+              .
+            </p>
+            <div class="download-guide">
+              <h3>
+                &Ocy;&tcy;&rcy;&icy;&mcy;&acy;&jcy; &scy;&tcy;&acy;&rcy;&tcy;&ocy;&vcy;&icy;&jcy; &pcy;&rcy;&ocy;&jukcy;&kcy;&tcy; &dcy;&lcy;&yacy; VS Code
+              </h3>
+              <p>
+                <a class="download-link" download href="starter/NextLab_Mission05_Student_Starter.zip">
+                  ⬇ &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&icy;&tcy;&icy; ZIP &scy;&tcy;&acy;&rcy;&tcy;&ocy;&vcy;&ocy;&gcy;&ocy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&kcy;&ucy;
+                </a>
+              </p>
+              <ol>
+                <li>
+                  &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy; ZIP &iukcy; &rcy;&ocy;&zcy;&pcy;&acy;&kcy;&ucy;&jcy; &acy;&rcy;&khcy;&iukcy;&vcy;.
+                </li>
+                <li>
+                  &Ucy; VS Code &vcy;&icy;&bcy;&iecy;&rcy;&icy;
+                  <strong>
+                    File &rarr; Open Folder
+                  </strong>
+                  &iukcy; &vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&jcy; &pcy;&acy;&pcy;&kcy;&ucy; &zcy;
+                  <code>
+                    index.html
+                  </code>
+                  .
+                </li>
+                <li>
+                  &Vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&jcy; &tcy;&iecy;&rcy;&mcy;&iukcy;&ncy;&acy;&lcy; VS Code &tcy;&acy; &zcy;&acy;&pcy;&ucy;&scy;&tcy;&icy;
+                  <code>
+                    python -m http.server 8000
+                  </code>
+                  (&acy;&bcy;&ocy;
+                  <code>
+                    python3 -m http.server 8000
+                  </code>
+                  ).
+                </li>
+                <li>
+                  &Ucy; &bcy;&rcy;&acy;&ucy;&zcy;&iecy;&rcy;&iukcy; &vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&jcy;
+                  <code>
+                    http://localhost:8000
+                  </code>
+                  .
+                </li>
+                <li>
+                  &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy; &mcy;&iecy;&ncy;&yucy;, &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy; &ucy;&scy;&iukcy; &chcy;&ocy;&tcy;&icy;&rcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;, &pcy;&ocy;&tcy;&iukcy;&mcy; &vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&jcy;
+                  <code>
+                    js/app.js
+                  </code>
+                  &iukcy;
+                  <code>
+                    js/order.js
+                  </code>
+                  .
+                </li>
+              </ol>
+              <p class="field-help">
+                &Zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&iecy;&ncy;&ncy;&yacy; ZIP &iukcy; &pcy;&iecy;&rcy;&iecy;&gcy;&lcy;&yacy;&dcy; &dcy;&iecy;&mcy;&ocy;&ncy;&scy;&tcy;&rcy;&acy;&tscy;&iukcy;&yicy; &mdash; &rcy;&iukcy;&zcy;&ncy;&iukcy; &dcy;&iukcy;&yicy;. &Dcy;&lcy;&yacy; &rcy;&iecy;&dcy;&acy;&gcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy; &kcy;&ocy;&dcy;&ucy; &pcy;&ocy;&tcy;&rcy;&iukcy;&bcy;&ncy;&acy; &rcy;&ocy;&zcy;&pcy;&acy;&kcy;&ocy;&vcy;&acy;&ncy;&acy; &pcy;&acy;&pcy;&kcy;&acy;.
+              </p>
+            </div>
+            <div class="callout">
+              <strong>
+                &Bcy;&iecy;&zcy;&pcy;&iecy;&kcy;&acy;:
+              </strong>
+              &vcy;&icy;&kcy;&ocy;&rcy;&icy;&scy;&tcy;&ocy;&vcy;&ucy;&jcy;&tcy;&iecy; &vcy;&icy;&gcy;&acy;&dcy;&acy;&ncy;&iukcy; &iukcy;&mcy;&iecy;&ncy;&acy;. &Zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&iukcy;, &ncy;&iecy; &ncy;&acy;&dcy;&scy;&icy;&lcy;&acy;&yucy;&tcy;&softcy;&scy;&yacy;, &pcy;&lcy;&acy;&tcy;&iecy;&zhcy;&iukcy;&vcy; &tcy;&acy; &bcy;&iecy;&kcy;&iecy;&ncy;&dcy;&ucy; &ncy;&iecy;&mcy;&acy;&jukcy;. &Ucy;&scy;&yacy; &rcy;&ocy;&bcy;&ocy;&tcy;&acy; NextLab &zcy;&bcy;&iecy;&rcy;&iukcy;&gcy;&acy;&jukcy;&tcy;&softcy;&scy;&yacy; &lcy;&ocy;&kcy;&acy;&lcy;&softcy;&ncy;&ocy; &ucy; &vcy;&acy;&shcy;&ocy;&mcy;&ucy; &bcy;&rcy;&acy;&ucy;&zcy;&iecy;&rcy;&iukcy;.
+            </div>
+          </section>
+          <section class="panel">
+            <p>
+              <strong>
+                &Vcy;&icy;&kcy;&lcy;&icy;&kcy;:
+              </strong>
+              &rcy;&ocy;&zcy;&rcy;&ocy;&bcy;&ncy;&icy;&kcy; &zcy;&acy;&pcy;&iecy;&vcy;&ncy;&yacy;&jukcy;, &shchcy;&ocy; &fcy;&ocy;&rcy;&mcy;&acy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &gcy;&ocy;&tcy;&ocy;&vcy;&acy;, &acy;&lcy;&iecy; &vcy;&ocy;&ncy;&acy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&zhcy;&ucy;&jukcy; &ncy;&iecy;&kcy;&ocy;&rcy;&iecy;&kcy;&tcy;&ncy;&iukcy; &dcy;&acy;&ncy;&iukcy;. &Dcy;&ocy;&scy;&lcy;&iukcy;&dcy;&icy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&icy;, &pcy;&iecy;&rcy;&shcy; &ncy;&iukcy;&zhcy; &pcy;&icy;&scy;&acy;&tcy;&icy; &kcy;&ocy;&dcy;.
+            </p>
+            <div class="callout">
+              &TScy;&iecy; &scy;&pcy;&iecy;&tscy;&iukcy;&acy;&lcy;&softcy;&ncy;&ocy; &ncy;&iecy;&scy;&pcy;&rcy;&acy;&vcy;&ncy;&acy; &dcy;&iecy;&mcy;&ocy;&ncy;&scy;&tcy;&rcy;&acy;&tscy;&iukcy;&yacy;, &ncy;&iecy; &scy;&pcy;&rcy;&acy;&vcy;&zhcy;&ncy;&yacy; &fcy;&ocy;&rcy;&mcy;&acy;. &Vcy;&vcy;&ocy;&dcy;&softcy; &lcy;&icy;&shcy;&iecy; &vcy;&icy;&gcy;&acy;&dcy;&acy;&ncy;&iukcy; &dcy;&acy;&ncy;&iukcy;. &Zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &ncy;&iukcy;&kcy;&ucy;&dcy;&icy; &ncy;&iecy; &ncy;&acy;&dcy;&scy;&icy;&lcy;&acy;&jukcy;&tcy;&softcy;&scy;&yacy;.
+            </div>
+            <div class="demo">
+              <h3>
+                &SHcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&acy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yacy; &middot; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&iecy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;
+              </h3>
+              <p>
+                &TScy;&iecy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&acy; &kcy;&ocy;&pcy;&iukcy;&yacy; &fcy;&ocy;&rcy;&mcy;&icy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&iukcy;: &ocy;&bcy;&iecy;&rcy;&icy; &scy;&tcy;&rcy;&acy;&vcy;&ucy;, &vcy;&vcy;&iecy;&dcy;&icy; &dcy;&acy;&ncy;&iukcy; &tcy;&acy; &dcy;&ocy;&scy;&lcy;&iukcy;&dcy;&icy;, &chcy;&ocy;&mcy;&ucy; &ncy;&iecy;&kcy;&ocy;&rcy;&iecy;&kcy;&tcy;&ncy;&iecy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&zhcy;&ucy;&jukcy;&tcy;&softcy;&scy;&yacy;. &Ucy; &scy;&pcy;&rcy;&acy;&vcy;&zhcy;&ncy;&softcy;&ocy;&mcy;&ucy; &scy;&tcy;&acy;&rcy;&tcy;&ocy;&vcy;&ocy;&mcy;&ucy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&kcy;&ucy; &tcy;&icy; &vcy;&icy;&pcy;&rcy;&acy;&vcy;&lcy;&yacy;&tcy;&icy;&mcy;&iecy;&shcy; &tscy;&yucy; &pcy;&ocy;&vcy;&iecy;&dcy;&iukcy;&ncy;&kcy;&ucy;.
+              </p>
+              <div class="demo-grid">
+                <label>
+                  &Scy;&tcy;&rcy;&acy;&vcy;&acy;
+                  <select id="brokenDish">
+                    <option value="65">
+                      &Kcy;&ocy;&tcy;&lcy;&iecy;&tcy;&acy; &kcy;&ucy;&rcy;&yacy;&chcy;&acy; &middot; 65 &gcy;&rcy;&ncy;
+                    </option>
+                    <option value="48">
+                      &Bcy;&ocy;&rcy;&shchcy; &ucy;&kcy;&rcy;&acy;&yicy;&ncy;&scy;&softcy;&kcy;&icy;&jcy; &middot; 48 &gcy;&rcy;&ncy;
+                    </option>
+                    <option value="39">
+                      &Scy;&acy;&lcy;&acy;&tcy; &ocy;&vcy;&ocy;&chcy;&iecy;&vcy;&icy;&jcy; &middot; 39 &gcy;&rcy;&ncy;
+                    </option>
+                  </select>
+                </label>
+                <label>
+                  &Iukcy;&mcy;&rsquo;&yacy;
+                  <input id="brokenName" placeholder="&Mcy;&ocy;&zhcy;&ncy;&acy; &zcy;&acy;&lcy;&icy;&shcy;&icy;&tcy;&icy; &pcy;&ocy;&rcy;&ocy;&zhcy;&ncy;&iukcy;&mcy;" type="text">
+                </label>
+                <label>
+                  &Kcy;&lcy;&acy;&scy;
+                  <select id="brokenClass">
+                    <option value>
+                      &Ncy;&iecy; &ocy;&bcy;&rcy;&acy;&ncy;&ocy;
+                    </option>
+                    <option>
+                      11-&Acy;
+                    </option>
+                    <option>
+                      11-&Bcy;
+                    </option>
+                    <option>
+                      11-&Vcy;
+                    </option>
+                    <option>
+                      11-&Gcy;
+                    </option>
+                  </select>
+                </label>
+                <label>
+                  &Kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy;
+                  <input id="brokenQty" step="any" type="number" value="0">
+                </label>
+              </div>
+              <button id="brokenSubmit" type="button">
+                &Scy;&pcy;&rcy;&ocy;&bcy;&ucy;&vcy;&acy;&tcy;&icy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&icy;&tcy;&icy;
+              </button>
+              <p aria-live="polite" id="brokenResult" role="status">
+              </p>
+            </div>
+            <label class="task-check">
+              <input data-check="s1-try" type="checkbox">
+              &YAcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&icy;&vcy;(&lcy;&acy;) &pcy;&ocy;&rcy;&ocy;&zhcy;&ncy;&jukcy; &iukcy;&mcy;&rsquo;&yacy;, &vcy;&iukcy;&dcy;&scy;&ucy;&tcy;&ncy;&iukcy;&jcy; &kcy;&lcy;&acy;&scy;, &ncy;&ucy;&lcy;&softcy;&ocy;&vcy;&ucy; &tcy;&acy; &dcy;&rcy;&ocy;&bcy;&ocy;&vcy;&ucy; &kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy;.
+            </label>
+            <label for="s1-contradictions">
+              &YAcy;&kcy;&iukcy; &shchcy;&ocy;&ncy;&acy;&jcy;&mcy;&iecy;&ncy;&shcy;&iecy; &tcy;&rcy;&icy; &scy;&ucy;&pcy;&iecy;&rcy;&iecy;&chcy;&ncy;&ocy;&scy;&tcy;&iukcy; &vcy;&icy;&yacy;&vcy;&lcy;&iecy;&ncy;&ocy;?
+            </label>
+            <textarea data-field="s1-contradictions" id="s1-contradictions" placeholder="&Ncy;&acy;&zcy;&vcy;&icy; &fcy;&acy;&kcy;&tcy;&icy;&chcy;&ncy;&ucy; &jcy; &ocy;&chcy;&iukcy;&kcy;&ucy;&vcy;&acy;&ncy;&ucy; &pcy;&ocy;&vcy;&iecy;&dcy;&iukcy;&ncy;&kcy;&ucy;" rows="3"></textarea>
+            <label for="s1-questions">
+              &YAcy;&kcy;&iukcy; &pcy;&icy;&tcy;&acy;&ncy;&ncy;&yacy; &pcy;&ocy;&tcy;&rcy;&iukcy;&bcy;&ncy;&ocy; &ucy;&tcy;&ocy;&chcy;&ncy;&icy;&tcy;&icy; &pcy;&iecy;&rcy;&iecy;&dcy; &rcy;&iecy;&acy;&lcy;&iukcy;&zcy;&acy;&tscy;&iukcy;&jukcy;&yucy;?
+            </label>
+            <textarea data-field="s1-questions" id="s1-questions" placeholder="&Ncy;&acy;&pcy;&rcy;&icy;&kcy;&lcy;&acy;&dcy;: &shchcy;&ocy; &rcy;&ocy;&bcy;&icy;&tcy;&icy; &pcy;&iukcy;&scy;&lcy;&yacy; &zcy;&mcy;&iukcy;&ncy;&icy; &kcy;&iukcy;&lcy;&softcy;&kcy;&ocy;&scy;&tcy;&iukcy;?" rows="3"></textarea>
+            <details>
+              <summary>
+                &Scy;&acy;&mcy;&ocy;&pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy; &middot; &Vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&tcy;&icy; &pcy;&iukcy;&scy;&lcy;&yacy; &vcy;&lcy;&acy;&scy;&ncy;&ocy;&gcy;&ocy; &acy;&ncy;&acy;&lcy;&iukcy;&zcy;&ucy;
+              </summary>
+              <p>
+                &Ncy;&iecy;&kcy;&ocy;&rcy;&iecy;&kcy;&tcy;&ncy;&iukcy; &zcy;&ncy;&acy;&chcy;&iecy;&ncy;&ncy;&yacy; &ncy;&iecy; &pcy;&ocy;&vcy;&icy;&ncy;&ncy;&iukcy; &pcy;&rcy;&icy;&zcy;&vcy;&ocy;&dcy;&icy;&tcy;&icy; &dcy;&ocy; &ucy;&scy;&pcy;&iukcy;&shcy;&ncy;&ocy;&gcy;&ocy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&zhcy;&iecy;&ncy;&ncy;&yacy;; &pcy;&ocy;&tcy;&rcy;&iukcy;&bcy;&ncy;&ocy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&yacy;&tcy;&icy; &iukcy;&mcy;&rsquo;&yacy; &pcy;&iukcy;&scy;&lcy;&yacy; trim(), &kcy;&lcy;&acy;&scy;, &tscy;&iukcy;&lcy;&ucy; &kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy; 1&ndash;5 &iukcy; &pcy;&ocy;&kcy;&acy;&zcy;&ucy;&vcy;&acy;&tcy;&icy; &pcy;&ocy;&vcy;&iukcy;&dcy;&ocy;&mcy;&lcy;&iecy;&ncy;&ncy;&yacy; &bcy;&iukcy;&lcy;&yacy; &pcy;&ocy;&lcy;&yacy;.
+              </p>
+            </details>
+          </section>
+        </section>
+        <section aria-labelledby="title-2" class="stage" data-stage="2" hidden id="stage-2">
+          <div class="stage-header">
+            <p class="eyebrow">
+              &IEcy;&tcy;&acy;&pcy; 02 &middot; 15 &khcy;&vcy;
+            </p>
+            <h2 id="title-2">
+              &YAcy;&kcy; &pcy;&rcy;&acy;&tscy;&yucy;&jukcy; &fcy;&ocy;&rcy;&mcy;&acy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;
+            </h2>
+          </div>
+          <section class="panel">
+            <p>
+              &Vcy;&icy;&vcy;&chcy;&icy; &kcy;&ocy;&rcy;&ocy;&tcy;&kcy;&iukcy; &bcy;&lcy;&ocy;&kcy;&icy; &tcy;&iecy;&ocy;&rcy;&iukcy;&yicy;, &zcy;&ocy;&kcy;&rcy;&iecy;&mcy;&acy; &ncy;&ocy;&vcy;&icy;&jcy; &mcy;&iecy;&tcy;&ocy;&dcy; trim(). &Ucy;&scy;&iukcy; &acy;&kcy;&ocy;&rcy;&dcy;&iecy;&ocy;&ncy;&icy; &scy;&pcy;&ocy;&chcy;&acy;&tcy;&kcy;&ucy; &zcy;&acy;&kcy;&rcy;&icy;&tcy;&iukcy;. &Pcy;&iukcy;&scy;&lcy;&yacy; &tscy;&softcy;&ocy;&gcy;&ocy; &vcy;&icy;&kcy;&ocy;&ncy;&acy;&jcy; &mcy;&iukcy;&ncy;&iukcy;&pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&ucy;.
+            </p>
+            <details>
+              <summary>
+                &SHCHcy;&ocy; &rcy;&ocy;&bcy;&icy;&tcy;&softcy;
+                <code>
+                  trim()
+                </code>
+                &iukcy; &ncy;&acy;&vcy;&iukcy;&shchcy;&ocy; &vcy;&iukcy;&ncy; &pcy;&ocy;&tcy;&rcy;&iukcy;&bcy;&iecy;&ncy;?
+              </summary>
+              <p>
+                <code>
+                  trim()
+                </code>
+                &mdash; &mcy;&iecy;&tcy;&ocy;&dcy; &rcy;&yacy;&dcy;&kcy;&acy; JavaScript. &Vcy;&iukcy;&ncy; &pcy;&ocy;&vcy;&iecy;&rcy;&tcy;&acy;&jukcy; &ncy;&ocy;&vcy;&icy;&jcy; &rcy;&yacy;&dcy;&ocy;&kcy; &bcy;&iecy;&zcy; &pcy;&rcy;&ocy;&bcy;&iukcy;&lcy;&softcy;&ncy;&icy;&khcy; &scy;&icy;&mcy;&vcy;&ocy;&lcy;&iukcy;&vcy; &ncy;&acy; &pcy;&ocy;&chcy;&acy;&tcy;&kcy;&ucy; &jcy; &ncy;&acy;&pcy;&rcy;&icy;&kcy;&iukcy;&ncy;&tscy;&iukcy;. &Pcy;&ocy;&chcy;&acy;&tcy;&kcy;&ocy;&vcy;&icy;&jcy; &rcy;&yacy;&dcy;&ocy;&kcy; &ncy;&iecy; &zcy;&mcy;&iukcy;&ncy;&yucy;&jukcy;&tcy;&softcy;&scy;&yacy;. &Pcy;&rcy;&ocy;&bcy;&iukcy;&lcy;&icy; &mcy;&iukcy;&zhcy; &scy;&lcy;&ocy;&vcy;&acy;&mcy;&icy; &zcy;&bcy;&iecy;&rcy;&iukcy;&gcy;&acy;&yucy;&tcy;&softcy;&scy;&yacy;.
+              </p>
+              <pre><code>const name = "   &Acy;&ncy;&ncy;&acy;   ";
 const cleanName = name.trim();
-console.log(cleanName); // "Анна"
-console.log("   ".trim()); // ""</code></pre><p>Перевірка <code>name.length &gt;= 2</code> помилково прийме рядок із трьох пробілів. Тому спочатку виконай <code>trim()</code>, а потім перевір довжину очищеного рядка.</p><p><strong>Спробуй у консолі:</strong> <code>" Оля ".trim()</code>, <code>"   ".trim()</code>, <code>"Анна Марія".trim()</code>. Поясни результати.</p></details><details><summary>Правила перевірки</summary><p>Ім’я після trim() має містити щонайменше два символи. Клас має бути обраний із доступних значень. Кількість — ціле число 1–5. Коментар необов’язковий.</p></details><details><summary>HTML і JavaScript</summary><p>Атрибути required, min, max, step допомагають браузеру перевіряти поля. JavaScript додатково перевіряє бізнес-правила. Порожнє значення слід перевірити до Number(), адже Number('') дорівнює 0.</p></details><details><summary>Події форми</summary><p>input спрацьовує під час редагування, change — під час зміни вибраного значення, submit — при відправленні форми. preventDefault() запобігає звичайному надсиланню й перезавантаженню сторінки.</p></details><details><summary>Стани інтерфейсу</summary><p>Початковий → редагування → помилка або успіх. Після редагування даних попередній успіх має бути скинутий; підтвердження можливе лише після нової перевірки.</p></details><details><summary>Доступність</summary><p>Повідомлення про помилку розміщують біля поля та пов’язують через aria-describedby; aria-invalid позначає некоректне поле, aria-live сповіщає про зміну статусу. Не покладайся лише на колір.</p></details><h3>Мініперевірка · 3 запитання</h3><div id="miniQuiz"><fieldset class="quiz-field"><legend>1. Чому Number('') потребує окремої перевірки порожнього поля?</legend><label class="quiz-option"><input name="quiz1" type="radio" value="0"/> Тому що результат 0</label><label class="quiz-option"><input name="quiz1" type="radio" value="1"/> Тому що результат NaN</label><label class="quiz-option"><input name="quiz1" type="radio" value="2"/> Тому що виникає виняток</label></fieldset><fieldset class="quiz-field"><legend>2. Яка подія обробляє підтвердження форми?</legend><label class="quiz-option"><input name="quiz2" type="radio" value="0"/> change</label><label class="quiz-option"><input name="quiz2" type="radio" value="1"/> submit</label><label class="quiz-option"><input name="quiz2" type="radio" value="2"/> click на body</label></fieldset><fieldset class="quiz-field"><legend>3. Що слід зробити після зміни кількості вже підтвердженого замовлення?</legend><label class="quiz-option"><input name="quiz3" type="radio" value="0"/> Залишити старий успіх</label><label class="quiz-option"><input name="quiz3" type="radio" value="1"/> Автоматично надіслати дані</label><label class="quiz-option"><input name="quiz3" type="radio" value="2"/> Скинути попередній успіх</label></fieldset><button class="secondary-action" id="checkQuiz" type="button">Перевірити відповіді</button><p aria-live="polite" id="quizResult"></p></div><label class="task-check"><input data-check="s2-study" type="checkbox"/> Я опрацював(ла) п’ять теоретичних блоків і виконав(ла) мініперевірку.</label></section></section><section aria-labelledby="title-3" class="stage" data-stage="3" hidden="" id="stage-3"><div class="stage-header"><p class="eyebrow">Етап 03 · 10 хв</p><h2 id="title-3">ASK → PLAN</h2></div><section class="panel"><p>Спочатку досліди готовий JavaScript (орієнтовно 3 хв), потім сформулюй власні вимоги й використай ASK → PLAN. До погодження плану не дозволяй агенту змінювати файли.</p><details class="code-research"><summary>Досліди наданий JavaScript-код перед роботою з Copilot</summary><p>Відкрий у VS Code <code>js/app.js</code> і <code>js/order.js</code> з розпакованого стартового проєкту. Не змінюй код, доки не з'ясуєш, як він організований.</p><ol><li>Знайди навчальні дані страв. Які властивості має кожен об'єкт?</li><li>Знайди <code>filterDishes()</code>, <code>applyFilters()</code> і <code>renderMenu()</code>. За що відповідає кожна функція?</li><li>Знайди, як кнопка «Замовити» передає вибрану страву до <code>selectDish()</code>.</li><li>Знайди в <code>order.js</code> усі позначки <code>TODO</code> та функцію <code>isValidQuantity()</code>.</li><li>Поясни, які частини коду вже працюють і чому не варто переписувати чотири фільтри.</li></ol><p><strong>Орієнтири в коді (не готове розв'язання):</strong></p><pre><code>function isValidQuantity(value) {
-  // TODO: напиши перевірку самостійно
-  return false;
+console.log(cleanName); // "&Acy;&ncy;&ncy;&acy;"
+console.log("   ".trim()); // ""</code></pre>
+              <p>
+                &Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy;
+                <code>
+                  name.length &gt;= 2
+                </code>
+                &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&ocy;&vcy;&ocy; &pcy;&rcy;&icy;&jcy;&mcy;&iecy; &rcy;&yacy;&dcy;&ocy;&kcy; &iukcy;&zcy; &tcy;&rcy;&softcy;&ocy;&khcy; &pcy;&rcy;&ocy;&bcy;&iukcy;&lcy;&iukcy;&vcy;. &Tcy;&ocy;&mcy;&ucy; &scy;&pcy;&ocy;&chcy;&acy;&tcy;&kcy;&ucy; &vcy;&icy;&kcy;&ocy;&ncy;&acy;&jcy;
+                <code>
+                  trim()
+                </code>
+                , &acy; &pcy;&ocy;&tcy;&iukcy;&mcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy; &dcy;&ocy;&vcy;&zhcy;&icy;&ncy;&ucy; &ocy;&chcy;&icy;&shchcy;&iecy;&ncy;&ocy;&gcy;&ocy; &rcy;&yacy;&dcy;&kcy;&acy;.
+              </p>
+              <p>
+                <strong>
+                  &Scy;&pcy;&rcy;&ocy;&bcy;&ucy;&jcy; &ucy; &kcy;&ocy;&ncy;&scy;&ocy;&lcy;&iukcy;:
+                </strong>
+                <code>
+                  " &Ocy;&lcy;&yacy; ".trim()
+                </code>
+                ,
+                <code>
+                  "   ".trim()
+                </code>
+                ,
+                <code>
+                  "&Acy;&ncy;&ncy;&acy; &Mcy;&acy;&rcy;&iukcy;&yacy;".trim()
+                </code>
+                . &Pcy;&ocy;&yacy;&scy;&ncy;&icy; &rcy;&iecy;&zcy;&ucy;&lcy;&softcy;&tcy;&acy;&tcy;&icy;.
+              </p>
+            </details>
+            <details>
+              <summary>
+                &Pcy;&rcy;&acy;&vcy;&icy;&lcy;&acy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&icy;
+              </summary>
+              <p>
+                &Iukcy;&mcy;&rsquo;&yacy; &pcy;&iukcy;&scy;&lcy;&yacy; trim() &mcy;&acy;&jukcy; &mcy;&iukcy;&scy;&tcy;&icy;&tcy;&icy; &shchcy;&ocy;&ncy;&acy;&jcy;&mcy;&iecy;&ncy;&shcy;&iecy; &dcy;&vcy;&acy; &scy;&icy;&mcy;&vcy;&ocy;&lcy;&icy;. &Kcy;&lcy;&acy;&scy; &mcy;&acy;&jukcy; &bcy;&ucy;&tcy;&icy; &ocy;&bcy;&rcy;&acy;&ncy;&icy;&jcy; &iukcy;&zcy; &dcy;&ocy;&scy;&tcy;&ucy;&pcy;&ncy;&icy;&khcy; &zcy;&ncy;&acy;&chcy;&iecy;&ncy;&softcy;. &Kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy; &mdash; &tscy;&iukcy;&lcy;&iecy; &chcy;&icy;&scy;&lcy;&ocy; 1&ndash;5. &Kcy;&ocy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy; &ncy;&iecy;&ocy;&bcy;&ocy;&vcy;&rsquo;&yacy;&zcy;&kcy;&ocy;&vcy;&icy;&jcy;.
+              </p>
+            </details>
+            <details>
+              <summary>
+                HTML &iukcy; JavaScript
+              </summary>
+              <p>
+                &Acy;&tcy;&rcy;&icy;&bcy;&ucy;&tcy;&icy; required, min, max, step &dcy;&ocy;&pcy;&ocy;&mcy;&acy;&gcy;&acy;&yucy;&tcy;&softcy; &bcy;&rcy;&acy;&ucy;&zcy;&iecy;&rcy;&ucy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&yacy;&tcy;&icy; &pcy;&ocy;&lcy;&yacy;. JavaScript &dcy;&ocy;&dcy;&acy;&tcy;&kcy;&ocy;&vcy;&ocy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&yacy;&jukcy; &bcy;&iukcy;&zcy;&ncy;&iecy;&scy;-&pcy;&rcy;&acy;&vcy;&icy;&lcy;&acy;. &Pcy;&ocy;&rcy;&ocy;&zhcy;&ncy;&jukcy; &zcy;&ncy;&acy;&chcy;&iecy;&ncy;&ncy;&yacy; &scy;&lcy;&iukcy;&dcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&icy;&tcy;&icy; &dcy;&ocy; Number(), &acy;&dcy;&zhcy;&iecy; Number('') &dcy;&ocy;&rcy;&iukcy;&vcy;&ncy;&yucy;&jukcy; 0.
+              </p>
+            </details>
+            <details>
+              <summary>
+                &Pcy;&ocy;&dcy;&iukcy;&yicy; &fcy;&ocy;&rcy;&mcy;&icy;
+              </summary>
+              <p>
+                input &scy;&pcy;&rcy;&acy;&tscy;&softcy;&ocy;&vcy;&ucy;&jukcy; &pcy;&iukcy;&dcy; &chcy;&acy;&scy; &rcy;&iecy;&dcy;&acy;&gcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy;, change &mdash; &pcy;&iukcy;&dcy; &chcy;&acy;&scy; &zcy;&mcy;&iukcy;&ncy;&icy; &vcy;&icy;&bcy;&rcy;&acy;&ncy;&ocy;&gcy;&ocy; &zcy;&ncy;&acy;&chcy;&iecy;&ncy;&ncy;&yacy;, submit &mdash; &pcy;&rcy;&icy; &vcy;&iukcy;&dcy;&pcy;&rcy;&acy;&vcy;&lcy;&iecy;&ncy;&ncy;&iukcy; &fcy;&ocy;&rcy;&mcy;&icy;. preventDefault() &zcy;&acy;&pcy;&ocy;&bcy;&iukcy;&gcy;&acy;&jukcy; &zcy;&vcy;&icy;&chcy;&acy;&jcy;&ncy;&ocy;&mcy;&ucy; &ncy;&acy;&dcy;&scy;&icy;&lcy;&acy;&ncy;&ncy;&yucy; &jcy; &pcy;&iecy;&rcy;&iecy;&zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&iecy;&ncy;&ncy;&yucy; &scy;&tcy;&ocy;&rcy;&iukcy;&ncy;&kcy;&icy;.
+              </p>
+            </details>
+            <details>
+              <summary>
+                &Scy;&tcy;&acy;&ncy;&icy; &iukcy;&ncy;&tcy;&iecy;&rcy;&fcy;&iecy;&jcy;&scy;&ucy;
+              </summary>
+              <p>
+                &Pcy;&ocy;&chcy;&acy;&tcy;&kcy;&ocy;&vcy;&icy;&jcy; &rarr; &rcy;&iecy;&dcy;&acy;&gcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy; &rarr; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&acy; &acy;&bcy;&ocy; &ucy;&scy;&pcy;&iukcy;&khcy;. &Pcy;&iukcy;&scy;&lcy;&yacy; &rcy;&iecy;&dcy;&acy;&gcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy; &dcy;&acy;&ncy;&icy;&khcy; &pcy;&ocy;&pcy;&iecy;&rcy;&iecy;&dcy;&ncy;&iukcy;&jcy; &ucy;&scy;&pcy;&iukcy;&khcy; &mcy;&acy;&jukcy; &bcy;&ucy;&tcy;&icy; &scy;&kcy;&icy;&ncy;&ucy;&tcy;&icy;&jcy;; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&zhcy;&iecy;&ncy;&ncy;&yacy; &mcy;&ocy;&zhcy;&lcy;&icy;&vcy;&iecy; &lcy;&icy;&shcy;&iecy; &pcy;&iukcy;&scy;&lcy;&yacy; &ncy;&ocy;&vcy;&ocy;&yicy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&icy;.
+              </p>
+            </details>
+            <details>
+              <summary>
+                &Dcy;&ocy;&scy;&tcy;&ucy;&pcy;&ncy;&iukcy;&scy;&tcy;&softcy;
+              </summary>
+              <p>
+                &Pcy;&ocy;&vcy;&iukcy;&dcy;&ocy;&mcy;&lcy;&iecy;&ncy;&ncy;&yacy; &pcy;&rcy;&ocy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&ucy; &rcy;&ocy;&zcy;&mcy;&iukcy;&shchcy;&ucy;&yucy;&tcy;&softcy; &bcy;&iukcy;&lcy;&yacy; &pcy;&ocy;&lcy;&yacy; &tcy;&acy; &pcy;&ocy;&vcy;&rsquo;&yacy;&zcy;&ucy;&yucy;&tcy;&softcy; &chcy;&iecy;&rcy;&iecy;&zcy; aria-describedby; aria-invalid &pcy;&ocy;&zcy;&ncy;&acy;&chcy;&acy;&jukcy; &ncy;&iecy;&kcy;&ocy;&rcy;&iecy;&kcy;&tcy;&ncy;&iecy; &pcy;&ocy;&lcy;&iecy;, aria-live &scy;&pcy;&ocy;&vcy;&iukcy;&shchcy;&acy;&jukcy; &pcy;&rcy;&ocy; &zcy;&mcy;&iukcy;&ncy;&ucy; &scy;&tcy;&acy;&tcy;&ucy;&scy;&ucy;. &Ncy;&iecy; &pcy;&ocy;&kcy;&lcy;&acy;&dcy;&acy;&jcy;&scy;&yacy; &lcy;&icy;&shcy;&iecy; &ncy;&acy; &kcy;&ocy;&lcy;&iukcy;&rcy;.
+              </p>
+            </details>
+            <h3>
+              &Mcy;&iukcy;&ncy;&iukcy;&pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy; &middot; 3 &zcy;&acy;&pcy;&icy;&tcy;&acy;&ncy;&ncy;&yacy;
+            </h3>
+            <div id="miniQuiz">
+              <fieldset class="quiz-field">
+                <legend>
+                  1. &CHcy;&ocy;&mcy;&ucy; Number('') &pcy;&ocy;&tcy;&rcy;&iecy;&bcy;&ucy;&jukcy; &ocy;&kcy;&rcy;&iecy;&mcy;&ocy;&yicy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&icy; &pcy;&ocy;&rcy;&ocy;&zhcy;&ncy;&softcy;&ocy;&gcy;&ocy; &pcy;&ocy;&lcy;&yacy;?
+                </legend>
+                <label class="quiz-option">
+                  <input name="quiz1" type="radio" value="0">
+                  &Tcy;&ocy;&mcy;&ucy; &shchcy;&ocy; &rcy;&iecy;&zcy;&ucy;&lcy;&softcy;&tcy;&acy;&tcy; 0
+                </label>
+                <label class="quiz-option">
+                  <input name="quiz1" type="radio" value="1">
+                  &Tcy;&ocy;&mcy;&ucy; &shchcy;&ocy; &rcy;&iecy;&zcy;&ucy;&lcy;&softcy;&tcy;&acy;&tcy; NaN
+                </label>
+                <label class="quiz-option">
+                  <input name="quiz1" type="radio" value="2">
+                  &Tcy;&ocy;&mcy;&ucy; &shchcy;&ocy; &vcy;&icy;&ncy;&icy;&kcy;&acy;&jukcy; &vcy;&icy;&ncy;&yacy;&tcy;&ocy;&kcy;
+                </label>
+              </fieldset>
+              <fieldset class="quiz-field">
+                <legend>
+                  2. &YAcy;&kcy;&acy; &pcy;&ocy;&dcy;&iukcy;&yacy; &ocy;&bcy;&rcy;&ocy;&bcy;&lcy;&yacy;&jukcy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&zhcy;&iecy;&ncy;&ncy;&yacy; &fcy;&ocy;&rcy;&mcy;&icy;?
+                </legend>
+                <label class="quiz-option">
+                  <input name="quiz2" type="radio" value="0">
+                  change
+                </label>
+                <label class="quiz-option">
+                  <input name="quiz2" type="radio" value="1">
+                  submit
+                </label>
+                <label class="quiz-option">
+                  <input name="quiz2" type="radio" value="2">
+                  click &ncy;&acy; body
+                </label>
+              </fieldset>
+              <fieldset class="quiz-field">
+                <legend>
+                  3. &SHCHcy;&ocy; &scy;&lcy;&iukcy;&dcy; &zcy;&rcy;&ocy;&bcy;&icy;&tcy;&icy; &pcy;&iukcy;&scy;&lcy;&yacy; &zcy;&mcy;&iukcy;&ncy;&icy; &kcy;&iukcy;&lcy;&softcy;&kcy;&ocy;&scy;&tcy;&iukcy; &vcy;&zhcy;&iecy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&zhcy;&iecy;&ncy;&ocy;&gcy;&ocy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;?
+                </legend>
+                <label class="quiz-option">
+                  <input name="quiz3" type="radio" value="0">
+                  &Zcy;&acy;&lcy;&icy;&shcy;&icy;&tcy;&icy; &scy;&tcy;&acy;&rcy;&icy;&jcy; &ucy;&scy;&pcy;&iukcy;&khcy;
+                </label>
+                <label class="quiz-option">
+                  <input name="quiz3" type="radio" value="1">
+                  &Acy;&vcy;&tcy;&ocy;&mcy;&acy;&tcy;&icy;&chcy;&ncy;&ocy; &ncy;&acy;&dcy;&iukcy;&scy;&lcy;&acy;&tcy;&icy; &dcy;&acy;&ncy;&iukcy;
+                </label>
+                <label class="quiz-option">
+                  <input name="quiz3" type="radio" value="2">
+                  &Scy;&kcy;&icy;&ncy;&ucy;&tcy;&icy; &pcy;&ocy;&pcy;&iecy;&rcy;&iecy;&dcy;&ncy;&iukcy;&jcy; &ucy;&scy;&pcy;&iukcy;&khcy;
+                </label>
+              </fieldset>
+              <button class="secondary-action" id="checkQuiz" type="button">
+                &Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&icy;&tcy;&icy; &vcy;&iukcy;&dcy;&pcy;&ocy;&vcy;&iukcy;&dcy;&iukcy;
+              </button>
+              <p aria-live="polite" id="quizResult">
+              </p>
+            </div>
+            <label class="task-check">
+              <input data-check="s2-study" type="checkbox">
+              &YAcy; &ocy;&pcy;&rcy;&acy;&tscy;&yucy;&vcy;&acy;&vcy;(&lcy;&acy;) &pcy;&rsquo;&yacy;&tcy;&softcy; &tcy;&iecy;&ocy;&rcy;&iecy;&tcy;&icy;&chcy;&ncy;&icy;&khcy; &bcy;&lcy;&ocy;&kcy;&iukcy;&vcy; &iukcy; &vcy;&icy;&kcy;&ocy;&ncy;&acy;&vcy;(&lcy;&acy;) &mcy;&iukcy;&ncy;&iukcy;&pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&ucy;.
+            </label>
+          </section>
+        </section>
+        <section aria-labelledby="title-3" class="stage" data-stage="3" hidden id="stage-3">
+          <div class="stage-header">
+            <p class="eyebrow">
+              &IEcy;&tcy;&acy;&pcy; 03 &middot; 10 &khcy;&vcy;
+            </p>
+            <h2 id="title-3">
+              ASK &rarr; PLAN
+            </h2>
+          </div>
+          <section class="panel">
+            <p>
+              &Scy;&pcy;&ocy;&chcy;&acy;&tcy;&kcy;&ucy; &dcy;&ocy;&scy;&lcy;&iukcy;&dcy;&icy; &gcy;&ocy;&tcy;&ocy;&vcy;&icy;&jcy; JavaScript (&ocy;&rcy;&iukcy;&jukcy;&ncy;&tcy;&ocy;&vcy;&ncy;&ocy; 3 &khcy;&vcy;), &pcy;&ocy;&tcy;&iukcy;&mcy; &scy;&fcy;&ocy;&rcy;&mcy;&ucy;&lcy;&yucy;&jcy; &vcy;&lcy;&acy;&scy;&ncy;&iukcy; &vcy;&icy;&mcy;&ocy;&gcy;&icy; &jcy; &vcy;&icy;&kcy;&ocy;&rcy;&icy;&scy;&tcy;&acy;&jcy; ASK &rarr; PLAN. &Dcy;&ocy; &pcy;&ocy;&gcy;&ocy;&dcy;&zhcy;&iecy;&ncy;&ncy;&yacy; &pcy;&lcy;&acy;&ncy;&ucy; &ncy;&iecy; &dcy;&ocy;&zcy;&vcy;&ocy;&lcy;&yacy;&jcy; &acy;&gcy;&iecy;&ncy;&tcy;&ucy; &zcy;&mcy;&iukcy;&ncy;&yucy;&vcy;&acy;&tcy;&icy; &fcy;&acy;&jcy;&lcy;&icy;.
+            </p>
+            <details class="code-research">
+              <summary>
+                &Dcy;&ocy;&scy;&lcy;&iukcy;&dcy;&icy; &ncy;&acy;&dcy;&acy;&ncy;&icy;&jcy; JavaScript-&kcy;&ocy;&dcy; &pcy;&iecy;&rcy;&iecy;&dcy; &rcy;&ocy;&bcy;&ocy;&tcy;&ocy;&yucy; &zcy; Copilot
+              </summary>
+              <p>
+                &Vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&jcy; &ucy; VS Code
+                <code>
+                  js/app.js
+                </code>
+                &iukcy;
+                <code>
+                  js/order.js
+                </code>
+                &zcy; &rcy;&ocy;&zcy;&pcy;&acy;&kcy;&ocy;&vcy;&acy;&ncy;&ocy;&gcy;&ocy; &scy;&tcy;&acy;&rcy;&tcy;&ocy;&vcy;&ocy;&gcy;&ocy; &pcy;&rcy;&ocy;&jukcy;&kcy;&tcy;&ucy;. &Ncy;&iecy; &zcy;&mcy;&iukcy;&ncy;&yucy;&jcy; &kcy;&ocy;&dcy;, &dcy;&ocy;&kcy;&icy; &ncy;&iecy; &zcy;'&yacy;&scy;&ucy;&jukcy;&shcy;, &yacy;&kcy; &vcy;&iukcy;&ncy; &ocy;&rcy;&gcy;&acy;&ncy;&iukcy;&zcy;&ocy;&vcy;&acy;&ncy;&icy;&jcy;.
+              </p>
+              <ol>
+                <li>
+                  &Zcy;&ncy;&acy;&jcy;&dcy;&icy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&iukcy; &dcy;&acy;&ncy;&iukcy; &scy;&tcy;&rcy;&acy;&vcy;. &YAcy;&kcy;&iukcy; &vcy;&lcy;&acy;&scy;&tcy;&icy;&vcy;&ocy;&scy;&tcy;&iukcy; &mcy;&acy;&jukcy; &kcy;&ocy;&zhcy;&iecy;&ncy; &ocy;&bcy;'&jukcy;&kcy;&tcy;?
+                </li>
+                <li>
+                  &Zcy;&ncy;&acy;&jcy;&dcy;&icy;
+                  <code>
+                    filterDishes()
+                  </code>
+                  ,
+                  <code>
+                    applyFilters()
+                  </code>
+                  &iukcy;
+                  <code>
+                    renderMenu()
+                  </code>
+                  . &Zcy;&acy; &shchcy;&ocy; &vcy;&iukcy;&dcy;&pcy;&ocy;&vcy;&iukcy;&dcy;&acy;&jukcy; &kcy;&ocy;&zhcy;&ncy;&acy; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yacy;?
+                </li>
+                <li>
+                  &Zcy;&ncy;&acy;&jcy;&dcy;&icy;, &yacy;&kcy; &kcy;&ncy;&ocy;&pcy;&kcy;&acy; &laquo;&Zcy;&acy;&mcy;&ocy;&vcy;&icy;&tcy;&icy;&raquo; &pcy;&iecy;&rcy;&iecy;&dcy;&acy;&jukcy; &vcy;&icy;&bcy;&rcy;&acy;&ncy;&ucy; &scy;&tcy;&rcy;&acy;&vcy;&ucy; &dcy;&ocy;
+                  <code>
+                    selectDish()
+                  </code>
+                  .
+                </li>
+                <li>
+                  &Zcy;&ncy;&acy;&jcy;&dcy;&icy; &vcy;
+                  <code>
+                    order.js
+                  </code>
+                  &ucy;&scy;&iukcy; &pcy;&ocy;&zcy;&ncy;&acy;&chcy;&kcy;&icy;
+                  <code>
+                    TODO
+                  </code>
+                  &tcy;&acy; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yucy;
+                  <code>
+                    isValidQuantity()
+                  </code>
+                  .
+                </li>
+                <li>
+                  &Pcy;&ocy;&yacy;&scy;&ncy;&icy;, &yacy;&kcy;&iukcy; &chcy;&acy;&scy;&tcy;&icy;&ncy;&icy; &kcy;&ocy;&dcy;&ucy; &vcy;&zhcy;&iecy; &pcy;&rcy;&acy;&tscy;&yucy;&yucy;&tcy;&softcy; &iukcy; &chcy;&ocy;&mcy;&ucy; &ncy;&iecy; &vcy;&acy;&rcy;&tcy;&ocy; &pcy;&iecy;&rcy;&iecy;&pcy;&icy;&scy;&ucy;&vcy;&acy;&tcy;&icy; &chcy;&ocy;&tcy;&icy;&rcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;.
+                </li>
+              </ol>
+              <p>
+                <strong>
+                  &Ocy;&rcy;&iukcy;&jukcy;&ncy;&tcy;&icy;&rcy;&icy; &vcy; &kcy;&ocy;&dcy;&iukcy; (&ncy;&iecy; &gcy;&ocy;&tcy;&ocy;&vcy;&iecy; &rcy;&ocy;&zcy;&vcy;'&yacy;&zcy;&acy;&ncy;&ncy;&yacy;):
+                </strong>
+              </p>
+              <pre><code>function isValidQuantity(value) {
+    // TODO: &ncy;&acy;&pcy;&icy;&shcy;&icy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&ucy; &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ocy;
+    return false;
 }
 
 function selectDish(dish) {
-  // Кнопка «Замовити» передає сюди об'єкт страви.
-}</code></pre><p>У власній відповіді запиши: <strong>функція → призначення → змінювати чи зберегти</strong>.</p></details><label for="s3-code-study">Мій аналіз стартового JS (щонайменше три функції)</label><textarea data-field="s3-code-study" id="s3-code-study" placeholder="Назва функції — що робить — чи потрібно її змінювати" rows="3"></textarea><label for="s3-own">Три мої вимоги (до Copilot)</label><textarea data-field="s3-own" id="s3-own" placeholder="Запиши власні вимоги без ШІ" rows="3"></textarea><details class="prompt-accordion"><summary>ASK · Аналіз</summary><p id="askPrompt">Я працюю над навчальним вебзастосунком «Шкільна їдальня 3.0» на HTML, CSS і JavaScript без бібліотек та бекенду. У застосунку вже працюють чотири фільтри. Потрібна форма навчального замовлення: ім’я, клас, обрана страва, кількість 1–5, необов’язковий коментар. Поясни перевірки, стани й типові помилки. Не пиши код і не змінюй файли.</p><button class="secondary-action" data-copy="askPrompt" type="button">Копіювати промпт</button></details><label for="s3-ask">Що запропонував Copilot і що я перевірив(ла)?</label><textarea data-field="s3-ask" id="s3-ask" placeholder="" rows="3"></textarea><details class="prompt-accordion"><summary>PLAN · Планування</summary><p id="planPrompt">Проаналізуй наявні файли. Склади план із 5–7 кроків реалізації форми, назви функції та файли, тести й ризики. Збережи чотири фільтри. Не додавай бекенд, API, бібліотеки чи LocalStorage до застосунку. Не змінюй код до підтвердження.</p><button class="secondary-action" data-copy="planPrompt" type="button">Копіювати промпт</button></details><label for="s3-plan">Мій перевірений план (5–7 кроків)</label><textarea data-field="s3-plan" id="s3-plan" placeholder="" rows="3"></textarea><label class="task-check"><input data-check="s3-filters" type="checkbox"/> У плані збережено всі чотири фільтри.</label><label class="task-check"><input data-check="s3-validation" type="checkbox"/> План містить валідацію, розрахунок і стани.</label><label class="task-check"><input data-check="s3-approval" type="checkbox"/> Я перевірив(ла) та погодив(ла) план перед AGENT.</label></section></section><section aria-labelledby="title-4" class="stage" data-stage="4" hidden="" id="stage-4"><div class="stage-header"><p class="eyebrow">Етап 04 · 30 хв</p><h2 id="title-4">BUILD WITH AGENT</h2></div><section class="panel"><p>Працюй із <strong>розпакованим ZIP-проєктом у VS Code</strong> (посилання для завантаження — у блоці «Твій робочий простір»). Відкрий <code>js/order.js</code>. Виконуй три інкременти й перевіряй кожен. <a href="starter/index.html" rel="noopener" target="_blank">Переглянути демонстрацію</a>.</p><details><summary>А · Вибір страви · 8 хв</summary><p>Знайди обробник кнопки «Замовити», перевір id страви, передавання назви та ціни.</p><details class="prompt-accordion"><summary>Промпт AGENT</summary><p id="buildAPrompt">Реалізуй зв’язок між кнопкою «Замовити» і формою через id страви та наявний масив даних. Покажи назву і ціну. Збережи всі фільтри; поясни зміни.</p><button class="secondary-action" data-copy="buildAPrompt" type="button">Копіювати промпт</button></details></details><details><summary>Б · Перевірка введення · 12 хв</summary><p>Самостійно напиши isValidQuantity(): порожнє значення, ціле число, діапазон 1–5. Перевір ім’я та клас, показуй помилки біля полів.</p><details class="prompt-accordion"><summary>Промпт AGENT</summary><p id="buildBPrompt">Допоможи реалізувати валідацію імені після trim() (мінімум 2 символи), класу та кількості 1–5. isValidQuantity() я пишу самостійно: не переписуй її. Додай повідомлення біля полів і перевірку submit. Збережи фільтри.</p><button class="secondary-action" data-copy="buildBPrompt" type="button">Копіювати промпт</button></details></details><details><summary>В · Підсумок і стани · 10 хв</summary><p>Обчисли ціну × кількість, покажи навчальний підсумок. Після редагування скинь попередній успіх.</p><details class="prompt-accordion"><summary>Промпт AGENT</summary><p id="buildCPrompt">Після успішної валідації обчисли вартість страви × кількість. Покажи повідомлення «Дані перевірено. Навчальне замовлення сформовано. Замовлення не надіслано». Після редагування скинь успіх. Без API, бекенду, LocalStorage та реального надсилання.</p><button class="secondary-action" data-copy="buildCPrompt" type="button">Копіювати промпт</button></details></details><label class="task-check"><input data-check="s4-a" type="checkbox"/> А: вибір двох різних страв перевірено.</label><label class="task-check"><input data-check="s4-b" type="checkbox"/> Б: isValidQuantity() написано самостійно; порожнє, 0 і 2.5 відхилено.</label><label class="task-check"><input data-check="s4-c" type="checkbox"/> В: підсумок і скидання попереднього успіху працюють.</label><label for="s4-owncode">Яку логіку JavaScript я написав(ла) самостійно?</label><textarea data-field="s4-owncode" id="s4-owncode" placeholder="" rows="3"></textarea><label for="s4-agent">Які зміни Copilot я перевірив(ла) перед прийняттям?</label><textarea data-field="s4-agent" id="s4-agent" placeholder="" rows="3"></textarea></section></section><section aria-labelledby="title-5" class="stage" data-stage="5" hidden="" id="stage-5"><div class="stage-header"><p class="eyebrow">Етап 05 · 15 хв</p><h2 id="title-5">Знайди помилку — виправ її</h2></div><section class="panel"><p><strong>15 хв:</strong> підготовка (2) → функціональні тести (6) → регресія (4) → дефекти (3). Тестуй у власному застосунку, а не лише в цьому чеклісті.</p><div class="callout">Статус «Пройдено» став лише після реальної перевірки. Якщо тест не виконувався, обери «Не виконано». Для помилки запиши фактичну поведінку.</div><h3>10 функціональних тестів</h3><div class="test-grid" id="functionalTests"></div><h3>8 регресійних тестів</h3><div class="test-grid" id="regressionTests"></div><p aria-live="polite" id="testSummary"></p><h3>Діагностика дефекту</h3><details class="prompt-accordion"><summary>ASK · Діагностика</summary><p id="debugPrompt">Не проходить тест [ID]. Очікувано: [опис]. Фактично: [опис]. Знайди можливу причину в JavaScript і запропонуй мінімальне виправлення. Не переписуй весь застосунок. Спочатку поясни причину, потім запропонуй перевірку.</p><button class="secondary-action" data-copy="debugPrompt" type="button">Копіювати промпт</button></details><label for="s5-defect">Виявлений дефект / повторна перевірка</label><textarea data-field="s5-defect" id="s5-defect" placeholder="ID тесту, кроки, фактичний результат, виправлення або наступні дії" rows="3"></textarea><label class="task-check"><input data-check="s5-recorded" type="checkbox"/> Я зафіксував(ла) результати всіх перевірок, включно з невдалими.</label></section></section><section aria-labelledby="title-6" class="stage" data-stage="6" hidden="" id="stage-6"><div class="stage-header"><p class="eyebrow">Етап 06 · 10 хв</p><h2 id="title-6">Підсумки та рефлексія</h2></div><section class="panel"><p><strong>10 хв:</strong> журнал рішень (3) → рефлексія (3) → самооцінка (2) → експорт (2). Запиши щонайменше два рішення; одне обов’язково про самостійну функцію <code>isValidQuantity()</code>.</p><h3>Журнал рішень</h3><div class="demo-grid"><label for="decision-problem">Проблема<input id="decision-problem" placeholder="Проблема" type="text"/></label><label for="decision-solution">Рішення<input id="decision-solution" placeholder="Рішення" type="text"/></label><label for="decision-reason">Підстава<input id="decision-reason" placeholder="Підстава" type="text"/></label><label for="decision-source">Джерело<input id="decision-source" placeholder="Джерело" type="text"/></label><label for="decision-test">Перевірка / ID тесту<input id="decision-test" placeholder="Перевірка / ID тесту" type="text"/></label></div><button class="secondary-action" id="addDecision" type="button">Додати запис</button><p id="decisionStatus" role="status"></p><div id="decisionList"></div><h3>Рефлексія</h3><label for="s6-r1">Яку частину JavaScript-коду я написав(ла) самостійно? Як вона працює?</label><textarea data-field="s6-r1" id="s6-r1" placeholder="" rows="3"></textarea><label for="s6-r2">Яку пропозицію Copilot прийняв(ла), змінив(ла) або відхилив(ла)? Чому?</label><textarea data-field="s6-r2" id="s6-r2" placeholder="" rows="3"></textarea><label for="s6-r3">Який тест підтвердив рішення або виявив помилку?</label><textarea data-field="s6-r3" id="s6-r3" placeholder="" rows="3"></textarea><label for="s6-r4">Що потрібно покращити перед наступною місією?</label><textarea data-field="s6-r4" id="s6-r4" placeholder="" rows="3"></textarea><h3>Самооцінювання · 4 критерії × 3 бали</h3><p>Оберіть рівень за дескрипторами. Це самооцінка; остаточний бал визначає вчитель.</p><label for="rubric1">К1 · Алгоритм і самостійність<small class="rubric-hint">0 — немає перевірки; 1 — часткова з помилками; 2 — основні значення; 3 — самостійно всі межі й пояснення</small><select data-field="rubric1" id="rubric1"><option value="0">0 балів</option><option value="1">1 бал</option><option value="2">2 бали</option><option value="3">3 бали</option></select></label><label for="rubric2">К2 · Функціональність<small class="rubric-hint">0 — не працює; 1 — окремі дії; 2 — основні сценарії з недоліками; 3 — коректні вибір, валідація, сума й стани</small><select data-field="rubric2" id="rubric2"><option value="0">0 балів</option><option value="1">1 бал</option><option value="2">2 бали</option><option value="3">3 бали</option></select></label><label for="rubric3">К3 · Тестування й регресія<small class="rubric-hint">0 — немає тестів; 1 — окремі; 2 — більшість і всі фільтри; 3 — усі сценарії, докази й повторна перевірка</small><select data-field="rubric3" id="rubric3"><option value="0">0 балів</option><option value="1">1 бал</option><option value="2">2 бали</option><option value="3">3 бали</option></select></label><label for="rubric4">К4 · ШІ, рішення й рефлексія<small class="rubric-hint">0 — немає доказів; 1 — уривчасті записи; 2 — план і два записи; 3 — аргументовані рішення, джерела й власний внесок</small><select data-field="rubric4" id="rubric4"><option value="0">0 балів</option><option value="1">1 бал</option><option value="2">2 бали</option><option value="3">3 бали</option></select></label><p><strong>Самооцінка: <span id="score">0</span>/12</strong></p><h3>Подання результатів</h3><label for="studentAlias">Ім’я / псевдонім для звіту (не вводь справжні дані в Copilot)</label><input data-field="studentAlias" id="studentAlias" placeholder="Навчальний псевдонім" type="text"/><label for="repoUrl">Посилання на репозиторій (за наявності)</label><input data-field="repoUrl" id="repoUrl" placeholder="https://github.com/..." type="url"/><div class="export-actions"><button id="exportJson" type="button">Експорт JSON</button><button class="secondary-action" id="exportMd" type="button">Експорт Markdown</button><label class="import-label">Імпорт JSON<input accept=".json,application/json" id="importJson" type="file"/></label></div><p aria-live="polite" class="field-help" id="exportStatus" role="status"></p><details><summary>Що подати в Moodle?</summary><p>Посилання на репозиторій, файл JSON і Markdown-звіт. Публікація сайту — за наявності, якщо не є окремою вимогою вчителя.</p></details></section></section><div class="stage-actions"><button class="secondary-action" id="prevStep" type="button">← Попередній</button><span id="stageCounter">Етап 1 із 6</span><button id="nextStep" type="button">Наступний →</button></div></div></main><footer class="container footer"><p>NextLab · AI Code Challenge · Місія 05. Прогрес зберігається локально на пристрої.</p></footer></body></html>
+    // &Kcy;&ncy;&ocy;&pcy;&kcy;&acy; &laquo;&Zcy;&acy;&mcy;&ocy;&vcy;&icy;&tcy;&icy;&raquo; &pcy;&iecy;&rcy;&iecy;&dcy;&acy;&jukcy; &scy;&yucy;&dcy;&icy; &ocy;&bcy;'&jukcy;&kcy;&tcy; &scy;&tcy;&rcy;&acy;&vcy;&icy;.
+}</code></pre>
+              <p>
+                &Ucy; &vcy;&lcy;&acy;&scy;&ncy;&iukcy;&jcy; &vcy;&iukcy;&dcy;&pcy;&ocy;&vcy;&iukcy;&dcy;&iukcy; &zcy;&acy;&pcy;&icy;&shcy;&icy;:
+                <strong>
+                  &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yacy; &rarr; &pcy;&rcy;&icy;&zcy;&ncy;&acy;&chcy;&iecy;&ncy;&ncy;&yacy; &rarr; &zcy;&mcy;&iukcy;&ncy;&yucy;&vcy;&acy;&tcy;&icy; &chcy;&icy; &zcy;&bcy;&iecy;&rcy;&iecy;&gcy;&tcy;&icy;
+                </strong>
+                .
+              </p>
+            </details>
+            <label for="s3-code-study">
+              &Mcy;&iukcy;&jcy; &acy;&ncy;&acy;&lcy;&iukcy;&zcy; &scy;&tcy;&acy;&rcy;&tcy;&ocy;&vcy;&ocy;&gcy;&ocy; JS (&shchcy;&ocy;&ncy;&acy;&jcy;&mcy;&iecy;&ncy;&shcy;&iecy; &tcy;&rcy;&icy; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yicy;)
+            </label>
+            <textarea data-field="s3-code-study" id="s3-code-study" placeholder="&Ncy;&acy;&zcy;&vcy;&acy; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yicy; &mdash; &shchcy;&ocy; &rcy;&ocy;&bcy;&icy;&tcy;&softcy; &mdash; &chcy;&icy; &pcy;&ocy;&tcy;&rcy;&iukcy;&bcy;&ncy;&ocy; &yicy;&yicy; &zcy;&mcy;&iukcy;&ncy;&yucy;&vcy;&acy;&tcy;&icy;" rows="3"></textarea>
+            <label for="s3-own">
+              &Tcy;&rcy;&icy; &mcy;&ocy;&yicy; &vcy;&icy;&mcy;&ocy;&gcy;&icy; (&dcy;&ocy; Copilot)
+            </label>
+            <textarea data-field="s3-own" id="s3-own" placeholder="&Zcy;&acy;&pcy;&icy;&shcy;&icy; &vcy;&lcy;&acy;&scy;&ncy;&iukcy; &vcy;&icy;&mcy;&ocy;&gcy;&icy; &bcy;&iecy;&zcy; &SHcy;&Iukcy;" rows="3"></textarea>
+            <details class="prompt-accordion">
+              <summary>
+                ASK &middot; &Acy;&ncy;&acy;&lcy;&iukcy;&zcy;
+              </summary>
+              <p id="askPrompt">
+                &YAcy; &pcy;&rcy;&acy;&tscy;&yucy;&yucy; &ncy;&acy;&dcy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&mcy; &vcy;&iecy;&bcy;&zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&kcy;&ocy;&mcy; &laquo;&SHcy;&kcy;&iukcy;&lcy;&softcy;&ncy;&acy; &yicy;&dcy;&acy;&lcy;&softcy;&ncy;&yacy; 3.0&raquo; &ncy;&acy; HTML, CSS &iukcy; JavaScript &bcy;&iecy;&zcy; &bcy;&iukcy;&bcy;&lcy;&iukcy;&ocy;&tcy;&iecy;&kcy; &tcy;&acy; &bcy;&iecy;&kcy;&iecy;&ncy;&dcy;&ucy;. &Ucy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&kcy;&ucy; &vcy;&zhcy;&iecy; &pcy;&rcy;&acy;&tscy;&yucy;&yucy;&tcy;&softcy; &chcy;&ocy;&tcy;&icy;&rcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;. &Pcy;&ocy;&tcy;&rcy;&iukcy;&bcy;&ncy;&acy; &fcy;&ocy;&rcy;&mcy;&acy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&ocy;&gcy;&ocy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;: &iukcy;&mcy;&rsquo;&yacy;, &kcy;&lcy;&acy;&scy;, &ocy;&bcy;&rcy;&acy;&ncy;&acy; &scy;&tcy;&rcy;&acy;&vcy;&acy;, &kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy; 1&ndash;5, &ncy;&iecy;&ocy;&bcy;&ocy;&vcy;&rsquo;&yacy;&zcy;&kcy;&ocy;&vcy;&icy;&jcy; &kcy;&ocy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy;. &Pcy;&ocy;&yacy;&scy;&ncy;&icy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&icy;, &scy;&tcy;&acy;&ncy;&icy; &jcy; &tcy;&icy;&pcy;&ocy;&vcy;&iukcy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&icy;. &Ncy;&iecy; &pcy;&icy;&shcy;&icy; &kcy;&ocy;&dcy; &iukcy; &ncy;&iecy; &zcy;&mcy;&iukcy;&ncy;&yucy;&jcy; &fcy;&acy;&jcy;&lcy;&icy;.
+              </p>
+              <button class="secondary-action" data-copy="askPrompt" type="button">
+                &Kcy;&ocy;&pcy;&iukcy;&yucy;&vcy;&acy;&tcy;&icy; &pcy;&rcy;&ocy;&mcy;&pcy;&tcy;
+              </button>
+            </details>
+            <label for="s3-ask">
+              &SHCHcy;&ocy; &zcy;&acy;&pcy;&rcy;&ocy;&pcy;&ocy;&ncy;&ucy;&vcy;&acy;&vcy; Copilot &iukcy; &shchcy;&ocy; &yacy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&icy;&vcy;(&lcy;&acy;)?
+            </label>
+            <textarea data-field="s3-ask" id="s3-ask" placeholder rows="3"></textarea>
+            <details class="prompt-accordion">
+              <summary>
+                PLAN &middot; &Pcy;&lcy;&acy;&ncy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy;
+              </summary>
+              <p id="planPrompt">
+                &Pcy;&rcy;&ocy;&acy;&ncy;&acy;&lcy;&iukcy;&zcy;&ucy;&jcy; &ncy;&acy;&yacy;&vcy;&ncy;&iukcy; &fcy;&acy;&jcy;&lcy;&icy;. &Scy;&kcy;&lcy;&acy;&dcy;&icy; &pcy;&lcy;&acy;&ncy; &iukcy;&zcy; 5&ndash;7 &kcy;&rcy;&ocy;&kcy;&iukcy;&vcy; &rcy;&iecy;&acy;&lcy;&iukcy;&zcy;&acy;&tscy;&iukcy;&yicy; &fcy;&ocy;&rcy;&mcy;&icy;, &ncy;&acy;&zcy;&vcy;&icy; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yicy; &tcy;&acy; &fcy;&acy;&jcy;&lcy;&icy;, &tcy;&iecy;&scy;&tcy;&icy; &jcy; &rcy;&icy;&zcy;&icy;&kcy;&icy;. &Zcy;&bcy;&iecy;&rcy;&iecy;&zhcy;&icy; &chcy;&ocy;&tcy;&icy;&rcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;. &Ncy;&iecy; &dcy;&ocy;&dcy;&acy;&vcy;&acy;&jcy; &bcy;&iecy;&kcy;&iecy;&ncy;&dcy;, API, &bcy;&iukcy;&bcy;&lcy;&iukcy;&ocy;&tcy;&iecy;&kcy;&icy; &chcy;&icy; LocalStorage &dcy;&ocy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&kcy;&ucy;. &Ncy;&iecy; &zcy;&mcy;&iukcy;&ncy;&yucy;&jcy; &kcy;&ocy;&dcy; &dcy;&ocy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&zhcy;&iecy;&ncy;&ncy;&yacy;.
+              </p>
+              <button class="secondary-action" data-copy="planPrompt" type="button">
+                &Kcy;&ocy;&pcy;&iukcy;&yucy;&vcy;&acy;&tcy;&icy; &pcy;&rcy;&ocy;&mcy;&pcy;&tcy;
+              </button>
+            </details>
+            <label for="s3-plan">
+              &Mcy;&iukcy;&jcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&iecy;&ncy;&icy;&jcy; &pcy;&lcy;&acy;&ncy; (5&ndash;7 &kcy;&rcy;&ocy;&kcy;&iukcy;&vcy;)
+            </label>
+            <textarea data-field="s3-plan" id="s3-plan" placeholder rows="3"></textarea>
+            <label class="task-check">
+              <input data-check="s3-filters" type="checkbox">
+              &Ucy; &pcy;&lcy;&acy;&ncy;&iukcy; &zcy;&bcy;&iecy;&rcy;&iecy;&zhcy;&iecy;&ncy;&ocy; &vcy;&scy;&iukcy; &chcy;&ocy;&tcy;&icy;&rcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;.
+            </label>
+            <label class="task-check">
+              <input data-check="s3-validation" type="checkbox">
+              &Pcy;&lcy;&acy;&ncy; &mcy;&iukcy;&scy;&tcy;&icy;&tcy;&softcy; &vcy;&acy;&lcy;&iukcy;&dcy;&acy;&tscy;&iukcy;&yucy;, &rcy;&ocy;&zcy;&rcy;&acy;&khcy;&ucy;&ncy;&ocy;&kcy; &iukcy; &scy;&tcy;&acy;&ncy;&icy;.
+            </label>
+            <label class="task-check">
+              <input data-check="s3-approval" type="checkbox">
+              &YAcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&icy;&vcy;(&lcy;&acy;) &tcy;&acy; &pcy;&ocy;&gcy;&ocy;&dcy;&icy;&vcy;(&lcy;&acy;) &pcy;&lcy;&acy;&ncy; &pcy;&iecy;&rcy;&iecy;&dcy; AGENT.
+            </label>
+          </section>
+        </section>
+        <section aria-labelledby="title-4" class="stage" data-stage="4" hidden id="stage-4">
+          <div class="stage-header">
+            <p class="eyebrow">
+              &IEcy;&tcy;&acy;&pcy; 04 &middot; 30 &khcy;&vcy;
+            </p>
+            <h2 id="title-4">
+              BUILD WITH AGENT
+            </h2>
+          </div>
+          <section class="panel">
+            <p>
+              &Pcy;&rcy;&acy;&tscy;&yucy;&jcy; &iukcy;&zcy;
+              <strong>
+                &rcy;&ocy;&zcy;&pcy;&acy;&kcy;&ocy;&vcy;&acy;&ncy;&icy;&mcy; ZIP-&pcy;&rcy;&ocy;&jukcy;&kcy;&tcy;&ocy;&mcy; &ucy; VS Code
+              </strong>
+              (&pcy;&ocy;&scy;&icy;&lcy;&acy;&ncy;&ncy;&yacy; &dcy;&lcy;&yacy; &zcy;&acy;&vcy;&acy;&ncy;&tcy;&acy;&zhcy;&iecy;&ncy;&ncy;&yacy; &mdash; &ucy; &bcy;&lcy;&ocy;&tscy;&iukcy; &laquo;&Tcy;&vcy;&iukcy;&jcy; &rcy;&ocy;&bcy;&ocy;&chcy;&icy;&jcy; &pcy;&rcy;&ocy;&scy;&tcy;&iukcy;&rcy;&raquo;). &Vcy;&iukcy;&dcy;&kcy;&rcy;&icy;&jcy;
+              <code>
+                js/order.js
+              </code>
+              . &Vcy;&icy;&kcy;&ocy;&ncy;&ucy;&jcy; &tcy;&rcy;&icy; &iukcy;&ncy;&kcy;&rcy;&iecy;&mcy;&iecy;&ncy;&tcy;&icy; &jcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&yacy;&jcy; &kcy;&ocy;&zhcy;&iecy;&ncy;.
+              <a href="starter/index.html" rel="noopener" target="_blank">
+                &Pcy;&iecy;&rcy;&iecy;&gcy;&lcy;&yacy;&ncy;&ucy;&tcy;&icy; &dcy;&iecy;&mcy;&ocy;&ncy;&scy;&tcy;&rcy;&acy;&tscy;&iukcy;&yucy;
+              </a>
+              .
+            </p>
+            <details>
+              <summary>
+                &Acy; &middot; &Vcy;&icy;&bcy;&iukcy;&rcy; &scy;&tcy;&rcy;&acy;&vcy;&icy; &middot; 8 &khcy;&vcy;
+              </summary>
+              <p>
+                &Zcy;&ncy;&acy;&jcy;&dcy;&icy; &ocy;&bcy;&rcy;&ocy;&bcy;&ncy;&icy;&kcy; &kcy;&ncy;&ocy;&pcy;&kcy;&icy; &laquo;&Zcy;&acy;&mcy;&ocy;&vcy;&icy;&tcy;&icy;&raquo;, &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy; id &scy;&tcy;&rcy;&acy;&vcy;&icy;, &pcy;&iecy;&rcy;&iecy;&dcy;&acy;&vcy;&acy;&ncy;&ncy;&yacy; &ncy;&acy;&zcy;&vcy;&icy; &tcy;&acy; &tscy;&iukcy;&ncy;&icy;.
+              </p>
+              <details class="prompt-accordion">
+                <summary>
+                  &Pcy;&rcy;&ocy;&mcy;&pcy;&tcy; AGENT
+                </summary>
+                <p id="buildAPrompt">
+                  &Rcy;&iecy;&acy;&lcy;&iukcy;&zcy;&ucy;&jcy; &zcy;&vcy;&rsquo;&yacy;&zcy;&ocy;&kcy; &mcy;&iukcy;&zhcy; &kcy;&ncy;&ocy;&pcy;&kcy;&ocy;&yucy; &laquo;&Zcy;&acy;&mcy;&ocy;&vcy;&icy;&tcy;&icy;&raquo; &iukcy; &fcy;&ocy;&rcy;&mcy;&ocy;&yucy; &chcy;&iecy;&rcy;&iecy;&zcy; id &scy;&tcy;&rcy;&acy;&vcy;&icy; &tcy;&acy; &ncy;&acy;&yacy;&vcy;&ncy;&icy;&jcy; &mcy;&acy;&scy;&icy;&vcy; &dcy;&acy;&ncy;&icy;&khcy;. &Pcy;&ocy;&kcy;&acy;&zhcy;&icy; &ncy;&acy;&zcy;&vcy;&ucy; &iukcy; &tscy;&iukcy;&ncy;&ucy;. &Zcy;&bcy;&iecy;&rcy;&iecy;&zhcy;&icy; &vcy;&scy;&iukcy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;; &pcy;&ocy;&yacy;&scy;&ncy;&icy; &zcy;&mcy;&iukcy;&ncy;&icy;.
+                </p>
+                <button class="secondary-action" data-copy="buildAPrompt" type="button">
+                  &Kcy;&ocy;&pcy;&iukcy;&yucy;&vcy;&acy;&tcy;&icy; &pcy;&rcy;&ocy;&mcy;&pcy;&tcy;
+                </button>
+              </details>
+            </details>
+            <details>
+              <summary>
+                &Bcy; &middot; &Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy; &vcy;&vcy;&iecy;&dcy;&iecy;&ncy;&ncy;&yacy; &middot; 12 &khcy;&vcy;
+              </summary>
+              <p>
+                &Scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ocy; &ncy;&acy;&pcy;&icy;&shcy;&icy; isValidQuantity(): &pcy;&ocy;&rcy;&ocy;&zhcy;&ncy;&jukcy; &zcy;&ncy;&acy;&chcy;&iecy;&ncy;&ncy;&yacy;, &tscy;&iukcy;&lcy;&iecy; &chcy;&icy;&scy;&lcy;&ocy;, &dcy;&iukcy;&acy;&pcy;&acy;&zcy;&ocy;&ncy; 1&ndash;5. &Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy; &iukcy;&mcy;&rsquo;&yacy; &tcy;&acy; &kcy;&lcy;&acy;&scy;, &pcy;&ocy;&kcy;&acy;&zcy;&ucy;&jcy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&icy; &bcy;&iukcy;&lcy;&yacy; &pcy;&ocy;&lcy;&iukcy;&vcy;.
+              </p>
+              <details class="prompt-accordion">
+                <summary>
+                  &Pcy;&rcy;&ocy;&mcy;&pcy;&tcy; AGENT
+                </summary>
+                <p id="buildBPrompt">
+                  &Dcy;&ocy;&pcy;&ocy;&mcy;&ocy;&zhcy;&icy; &rcy;&iecy;&acy;&lcy;&iukcy;&zcy;&ucy;&vcy;&acy;&tcy;&icy; &vcy;&acy;&lcy;&iukcy;&dcy;&acy;&tscy;&iukcy;&yucy; &iukcy;&mcy;&iecy;&ncy;&iukcy; &pcy;&iukcy;&scy;&lcy;&yacy; trim() (&mcy;&iukcy;&ncy;&iukcy;&mcy;&ucy;&mcy; 2 &scy;&icy;&mcy;&vcy;&ocy;&lcy;&icy;), &kcy;&lcy;&acy;&scy;&ucy; &tcy;&acy; &kcy;&iukcy;&lcy;&softcy;&kcy;&ocy;&scy;&tcy;&iukcy; 1&ndash;5. isValidQuantity() &yacy; &pcy;&icy;&shcy;&ucy; &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ocy;: &ncy;&iecy; &pcy;&iecy;&rcy;&iecy;&pcy;&icy;&scy;&ucy;&jcy; &yicy;&yicy;. &Dcy;&ocy;&dcy;&acy;&jcy; &pcy;&ocy;&vcy;&iukcy;&dcy;&ocy;&mcy;&lcy;&iecy;&ncy;&ncy;&yacy; &bcy;&iukcy;&lcy;&yacy; &pcy;&ocy;&lcy;&iukcy;&vcy; &iukcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&ucy; submit. &Zcy;&bcy;&iecy;&rcy;&iecy;&zhcy;&icy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;.
+                </p>
+                <button class="secondary-action" data-copy="buildBPrompt" type="button">
+                  &Kcy;&ocy;&pcy;&iukcy;&yucy;&vcy;&acy;&tcy;&icy; &pcy;&rcy;&ocy;&mcy;&pcy;&tcy;
+                </button>
+              </details>
+            </details>
+            <details>
+              <summary>
+                &Vcy; &middot; &Pcy;&iukcy;&dcy;&scy;&ucy;&mcy;&ocy;&kcy; &iukcy; &scy;&tcy;&acy;&ncy;&icy; &middot; 10 &khcy;&vcy;
+              </summary>
+              <p>
+                &Ocy;&bcy;&chcy;&icy;&scy;&lcy;&icy; &tscy;&iukcy;&ncy;&ucy; &times; &kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy;, &pcy;&ocy;&kcy;&acy;&zhcy;&icy; &ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &pcy;&iukcy;&dcy;&scy;&ucy;&mcy;&ocy;&kcy;. &Pcy;&iukcy;&scy;&lcy;&yacy; &rcy;&iecy;&dcy;&acy;&gcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy; &scy;&kcy;&icy;&ncy;&softcy; &pcy;&ocy;&pcy;&iecy;&rcy;&iecy;&dcy;&ncy;&iukcy;&jcy; &ucy;&scy;&pcy;&iukcy;&khcy;.
+              </p>
+              <details class="prompt-accordion">
+                <summary>
+                  &Pcy;&rcy;&ocy;&mcy;&pcy;&tcy; AGENT
+                </summary>
+                <p id="buildCPrompt">
+                  &Pcy;&iukcy;&scy;&lcy;&yacy; &ucy;&scy;&pcy;&iukcy;&shcy;&ncy;&ocy;&yicy; &vcy;&acy;&lcy;&iukcy;&dcy;&acy;&tscy;&iukcy;&yicy; &ocy;&bcy;&chcy;&icy;&scy;&lcy;&icy; &vcy;&acy;&rcy;&tcy;&iukcy;&scy;&tcy;&softcy; &scy;&tcy;&rcy;&acy;&vcy;&icy; &times; &kcy;&iukcy;&lcy;&softcy;&kcy;&iukcy;&scy;&tcy;&softcy;. &Pcy;&ocy;&kcy;&acy;&zhcy;&icy; &pcy;&ocy;&vcy;&iukcy;&dcy;&ocy;&mcy;&lcy;&iecy;&ncy;&ncy;&yacy; &laquo;&Dcy;&acy;&ncy;&iukcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&iecy;&ncy;&ocy;. &Ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&iecy; &zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &scy;&fcy;&ocy;&rcy;&mcy;&ocy;&vcy;&acy;&ncy;&ocy;. &Zcy;&acy;&mcy;&ocy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &ncy;&iecy; &ncy;&acy;&dcy;&iukcy;&scy;&lcy;&acy;&ncy;&ocy;&raquo;. &Pcy;&iukcy;&scy;&lcy;&yacy; &rcy;&iecy;&dcy;&acy;&gcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy; &scy;&kcy;&icy;&ncy;&softcy; &ucy;&scy;&pcy;&iukcy;&khcy;. &Bcy;&iecy;&zcy; API, &bcy;&iecy;&kcy;&iecy;&ncy;&dcy;&ucy;, LocalStorage &tcy;&acy; &rcy;&iecy;&acy;&lcy;&softcy;&ncy;&ocy;&gcy;&ocy; &ncy;&acy;&dcy;&scy;&icy;&lcy;&acy;&ncy;&ncy;&yacy;.
+                </p>
+                <button class="secondary-action" data-copy="buildCPrompt" type="button">
+                  &Kcy;&ocy;&pcy;&iukcy;&yucy;&vcy;&acy;&tcy;&icy; &pcy;&rcy;&ocy;&mcy;&pcy;&tcy;
+                </button>
+              </details>
+            </details>
+            <label class="task-check">
+              <input data-check="s4-a" type="checkbox">
+              &Acy;: &vcy;&icy;&bcy;&iukcy;&rcy; &dcy;&vcy;&ocy;&khcy; &rcy;&iukcy;&zcy;&ncy;&icy;&khcy; &scy;&tcy;&rcy;&acy;&vcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&iecy;&ncy;&ocy;.
+            </label>
+            <label class="task-check">
+              <input data-check="s4-b" type="checkbox">
+              &Bcy;: isValidQuantity() &ncy;&acy;&pcy;&icy;&scy;&acy;&ncy;&ocy; &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ocy;; &pcy;&ocy;&rcy;&ocy;&zhcy;&ncy;&jukcy;, 0 &iukcy; 2.5 &vcy;&iukcy;&dcy;&khcy;&icy;&lcy;&iecy;&ncy;&ocy;.
+            </label>
+            <label class="task-check">
+              <input data-check="s4-c" type="checkbox">
+              &Vcy;: &pcy;&iukcy;&dcy;&scy;&ucy;&mcy;&ocy;&kcy; &iukcy; &scy;&kcy;&icy;&dcy;&acy;&ncy;&ncy;&yacy; &pcy;&ocy;&pcy;&iecy;&rcy;&iecy;&dcy;&ncy;&softcy;&ocy;&gcy;&ocy; &ucy;&scy;&pcy;&iukcy;&khcy;&ucy; &pcy;&rcy;&acy;&tscy;&yucy;&yucy;&tcy;&softcy;.
+            </label>
+            <label for="s4-owncode">
+              &YAcy;&kcy;&ucy; &lcy;&ocy;&gcy;&iukcy;&kcy;&ucy; JavaScript &yacy; &ncy;&acy;&pcy;&icy;&scy;&acy;&vcy;(&lcy;&acy;) &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ocy;?
+            </label>
+            <textarea data-field="s4-owncode" id="s4-owncode" placeholder rows="3"></textarea>
+            <label for="s4-agent">
+              &YAcy;&kcy;&iukcy; &zcy;&mcy;&iukcy;&ncy;&icy; Copilot &yacy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&icy;&vcy;(&lcy;&acy;) &pcy;&iecy;&rcy;&iecy;&dcy; &pcy;&rcy;&icy;&jcy;&ncy;&yacy;&tcy;&tcy;&yacy;&mcy;?
+            </label>
+            <textarea data-field="s4-agent" id="s4-agent" placeholder rows="3"></textarea>
+          </section>
+        </section>
+        <section aria-labelledby="title-5" class="stage" data-stage="5" hidden id="stage-5">
+          <div class="stage-header">
+            <p class="eyebrow">
+              &IEcy;&tcy;&acy;&pcy; 05 &middot; 15 &khcy;&vcy;
+            </p>
+            <h2 id="title-5">
+              &Zcy;&ncy;&acy;&jcy;&dcy;&icy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&ucy; &mdash; &vcy;&icy;&pcy;&rcy;&acy;&vcy; &yicy;&yicy;
+            </h2>
+          </div>
+          <section class="panel">
+            <p>
+              <strong>
+                15 &khcy;&vcy;:
+              </strong>
+              &pcy;&iukcy;&dcy;&gcy;&ocy;&tcy;&ocy;&vcy;&kcy;&acy; (2) &rarr; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&ocy;&ncy;&acy;&lcy;&softcy;&ncy;&iukcy; &tcy;&iecy;&scy;&tcy;&icy; (6) &rarr; &rcy;&iecy;&gcy;&rcy;&iecy;&scy;&iukcy;&yacy; (4) &rarr; &dcy;&iecy;&fcy;&iecy;&kcy;&tcy;&icy; (3). &Tcy;&iecy;&scy;&tcy;&ucy;&jcy; &ucy; &vcy;&lcy;&acy;&scy;&ncy;&ocy;&mcy;&ucy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&kcy;&ucy;, &acy; &ncy;&iecy; &lcy;&icy;&shcy;&iecy; &vcy; &tscy;&softcy;&ocy;&mcy;&ucy; &chcy;&iecy;&kcy;&lcy;&iukcy;&scy;&tcy;&iukcy;.
+            </p>
+            <div class="callout">
+              &Scy;&tcy;&acy;&tcy;&ucy;&scy; &laquo;&Pcy;&rcy;&ocy;&jcy;&dcy;&iecy;&ncy;&ocy;&raquo; &scy;&tcy;&acy;&vcy; &lcy;&icy;&shcy;&iecy; &pcy;&iukcy;&scy;&lcy;&yacy; &rcy;&iecy;&acy;&lcy;&softcy;&ncy;&ocy;&yicy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&icy;. &YAcy;&kcy;&shchcy;&ocy; &tcy;&iecy;&scy;&tcy; &ncy;&iecy; &vcy;&icy;&kcy;&ocy;&ncy;&ucy;&vcy;&acy;&vcy;&scy;&yacy;, &ocy;&bcy;&iecy;&rcy;&icy; &laquo;&Ncy;&iecy; &vcy;&icy;&kcy;&ocy;&ncy;&acy;&ncy;&ocy;&raquo;. &Dcy;&lcy;&yacy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&icy; &zcy;&acy;&pcy;&icy;&shcy;&icy; &fcy;&acy;&kcy;&tcy;&icy;&chcy;&ncy;&ucy; &pcy;&ocy;&vcy;&iecy;&dcy;&iukcy;&ncy;&kcy;&ucy;.
+            </div>
+            <h3>
+              10 &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&ocy;&ncy;&acy;&lcy;&softcy;&ncy;&icy;&khcy; &tcy;&iecy;&scy;&tcy;&iukcy;&vcy;
+            </h3>
+            <div class="test-grid" id="functionalTests">
+            </div>
+            <h3>
+              8 &rcy;&iecy;&gcy;&rcy;&iecy;&scy;&iukcy;&jcy;&ncy;&icy;&khcy; &tcy;&iecy;&scy;&tcy;&iukcy;&vcy;
+            </h3>
+            <div class="test-grid" id="regressionTests">
+            </div>
+            <p aria-live="polite" id="testSummary">
+            </p>
+            <h3>
+              &Dcy;&iukcy;&acy;&gcy;&ncy;&ocy;&scy;&tcy;&icy;&kcy;&acy; &dcy;&iecy;&fcy;&iecy;&kcy;&tcy;&ucy;
+            </h3>
+            <details class="prompt-accordion">
+              <summary>
+                ASK &middot; &Dcy;&iukcy;&acy;&gcy;&ncy;&ocy;&scy;&tcy;&icy;&kcy;&acy;
+              </summary>
+              <p id="debugPrompt">
+                &Ncy;&iecy; &pcy;&rcy;&ocy;&khcy;&ocy;&dcy;&icy;&tcy;&softcy; &tcy;&iecy;&scy;&tcy; [ID]. &Ocy;&chcy;&iukcy;&kcy;&ucy;&vcy;&acy;&ncy;&ocy;: [&ocy;&pcy;&icy;&scy;]. &Fcy;&acy;&kcy;&tcy;&icy;&chcy;&ncy;&ocy;: [&ocy;&pcy;&icy;&scy;]. &Zcy;&ncy;&acy;&jcy;&dcy;&icy; &mcy;&ocy;&zhcy;&lcy;&icy;&vcy;&ucy; &pcy;&rcy;&icy;&chcy;&icy;&ncy;&ucy; &vcy; JavaScript &iukcy; &zcy;&acy;&pcy;&rcy;&ocy;&pcy;&ocy;&ncy;&ucy;&jcy; &mcy;&iukcy;&ncy;&iukcy;&mcy;&acy;&lcy;&softcy;&ncy;&iecy; &vcy;&icy;&pcy;&rcy;&acy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy;. &Ncy;&iecy; &pcy;&iecy;&rcy;&iecy;&pcy;&icy;&scy;&ucy;&jcy; &vcy;&iecy;&scy;&softcy; &zcy;&acy;&scy;&tcy;&ocy;&scy;&ucy;&ncy;&ocy;&kcy;. &Scy;&pcy;&ocy;&chcy;&acy;&tcy;&kcy;&ucy; &pcy;&ocy;&yacy;&scy;&ncy;&icy; &pcy;&rcy;&icy;&chcy;&icy;&ncy;&ucy;, &pcy;&ocy;&tcy;&iukcy;&mcy; &zcy;&acy;&pcy;&rcy;&ocy;&pcy;&ocy;&ncy;&ucy;&jcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&ucy;.
+              </p>
+              <button class="secondary-action" data-copy="debugPrompt" type="button">
+                &Kcy;&ocy;&pcy;&iukcy;&yucy;&vcy;&acy;&tcy;&icy; &pcy;&rcy;&ocy;&mcy;&pcy;&tcy;
+              </button>
+            </details>
+            <label for="s5-defect">
+              &Vcy;&icy;&yacy;&vcy;&lcy;&iecy;&ncy;&icy;&jcy; &dcy;&iecy;&fcy;&iecy;&kcy;&tcy; / &pcy;&ocy;&vcy;&tcy;&ocy;&rcy;&ncy;&acy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy;
+            </label>
+            <textarea data-field="s5-defect" id="s5-defect" placeholder="ID &tcy;&iecy;&scy;&tcy;&ucy;, &kcy;&rcy;&ocy;&kcy;&icy;, &fcy;&acy;&kcy;&tcy;&icy;&chcy;&ncy;&icy;&jcy; &rcy;&iecy;&zcy;&ucy;&lcy;&softcy;&tcy;&acy;&tcy;, &vcy;&icy;&pcy;&rcy;&acy;&vcy;&lcy;&iecy;&ncy;&ncy;&yacy; &acy;&bcy;&ocy; &ncy;&acy;&scy;&tcy;&ucy;&pcy;&ncy;&iukcy; &dcy;&iukcy;&yicy;" rows="3"></textarea>
+            <label class="task-check">
+              <input data-check="s5-recorded" type="checkbox">
+              &YAcy; &zcy;&acy;&fcy;&iukcy;&kcy;&scy;&ucy;&vcy;&acy;&vcy;(&lcy;&acy;) &rcy;&iecy;&zcy;&ucy;&lcy;&softcy;&tcy;&acy;&tcy;&icy; &vcy;&scy;&iukcy;&khcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&ocy;&kcy;, &vcy;&kcy;&lcy;&yucy;&chcy;&ncy;&ocy; &zcy; &ncy;&iecy;&vcy;&dcy;&acy;&lcy;&icy;&mcy;&icy;.
+            </label>
+          </section>
+        </section>
+        <section aria-labelledby="title-6" class="stage" data-stage="6" hidden id="stage-6">
+          <div class="stage-header">
+            <p class="eyebrow">
+              &IEcy;&tcy;&acy;&pcy; 06 &middot; 10 &khcy;&vcy;
+            </p>
+            <h2 id="title-6">
+              &Pcy;&iukcy;&dcy;&scy;&ucy;&mcy;&kcy;&icy; &tcy;&acy; &rcy;&iecy;&fcy;&lcy;&iecy;&kcy;&scy;&iukcy;&yacy;
+            </h2>
+          </div>
+          <section class="panel">
+            <p>
+              <strong>
+                10 &khcy;&vcy;:
+              </strong>
+              &zhcy;&ucy;&rcy;&ncy;&acy;&lcy; &rcy;&iukcy;&shcy;&iecy;&ncy;&softcy; (3) &rarr; &rcy;&iecy;&fcy;&lcy;&iecy;&kcy;&scy;&iukcy;&yacy; (3) &rarr; &scy;&acy;&mcy;&ocy;&ocy;&tscy;&iukcy;&ncy;&kcy;&acy; (2) &rarr; &iecy;&kcy;&scy;&pcy;&ocy;&rcy;&tcy; (2). &Zcy;&acy;&pcy;&icy;&shcy;&icy; &shchcy;&ocy;&ncy;&acy;&jcy;&mcy;&iecy;&ncy;&shcy;&iecy; &dcy;&vcy;&acy; &rcy;&iukcy;&shcy;&iecy;&ncy;&ncy;&yacy;; &ocy;&dcy;&ncy;&iecy; &ocy;&bcy;&ocy;&vcy;&rsquo;&yacy;&zcy;&kcy;&ocy;&vcy;&ocy; &pcy;&rcy;&ocy; &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ucy; &fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&yucy;
+              <code>
+                isValidQuantity()
+              </code>
+              .
+            </p>
+            <h3>
+              &ZHcy;&ucy;&rcy;&ncy;&acy;&lcy; &rcy;&iukcy;&shcy;&iecy;&ncy;&softcy;
+            </h3>
+            <div class="demo-grid">
+              <label for="decision-problem">
+                &Pcy;&rcy;&ocy;&bcy;&lcy;&iecy;&mcy;&acy;
+                <input id="decision-problem" placeholder="&Pcy;&rcy;&ocy;&bcy;&lcy;&iecy;&mcy;&acy;" type="text">
+              </label>
+              <label for="decision-solution">
+                &Rcy;&iukcy;&shcy;&iecy;&ncy;&ncy;&yacy;
+                <input id="decision-solution" placeholder="&Rcy;&iukcy;&shcy;&iecy;&ncy;&ncy;&yacy;" type="text">
+              </label>
+              <label for="decision-reason">
+                &Pcy;&iukcy;&dcy;&scy;&tcy;&acy;&vcy;&acy;
+                <input id="decision-reason" placeholder="&Pcy;&iukcy;&dcy;&scy;&tcy;&acy;&vcy;&acy;" type="text">
+              </label>
+              <label for="decision-source">
+                &Dcy;&zhcy;&iecy;&rcy;&iecy;&lcy;&ocy;
+                <input id="decision-source" placeholder="&Dcy;&zhcy;&iecy;&rcy;&iecy;&lcy;&ocy;" type="text">
+              </label>
+              <label for="decision-test">
+                &Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy; / ID &tcy;&iecy;&scy;&tcy;&ucy;
+                <input id="decision-test" placeholder="&Pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy; / ID &tcy;&iecy;&scy;&tcy;&ucy;" type="text">
+              </label>
+            </div>
+            <button class="secondary-action" id="addDecision" type="button">
+              &Dcy;&ocy;&dcy;&acy;&tcy;&icy; &zcy;&acy;&pcy;&icy;&scy;
+            </button>
+            <p id="decisionStatus" role="status">
+            </p>
+            <div id="decisionList">
+            </div>
+            <h3>
+              &Rcy;&iecy;&fcy;&lcy;&iecy;&kcy;&scy;&iukcy;&yacy;
+            </h3>
+            <label for="s6-r1">
+              &YAcy;&kcy;&ucy; &chcy;&acy;&scy;&tcy;&icy;&ncy;&ucy; JavaScript-&kcy;&ocy;&dcy;&ucy; &yacy; &ncy;&acy;&pcy;&icy;&scy;&acy;&vcy;(&lcy;&acy;) &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ocy;? &YAcy;&kcy; &vcy;&ocy;&ncy;&acy; &pcy;&rcy;&acy;&tscy;&yucy;&jukcy;?
+            </label>
+            <textarea data-field="s6-r1" id="s6-r1" placeholder rows="3"></textarea>
+            <label for="s6-r2">
+              &YAcy;&kcy;&ucy; &pcy;&rcy;&ocy;&pcy;&ocy;&zcy;&icy;&tscy;&iukcy;&yucy; Copilot &pcy;&rcy;&icy;&jcy;&ncy;&yacy;&vcy;(&lcy;&acy;), &zcy;&mcy;&iukcy;&ncy;&icy;&vcy;(&lcy;&acy;) &acy;&bcy;&ocy; &vcy;&iukcy;&dcy;&khcy;&icy;&lcy;&icy;&vcy;(&lcy;&acy;)? &CHcy;&ocy;&mcy;&ucy;?
+            </label>
+            <textarea data-field="s6-r2" id="s6-r2" placeholder rows="3"></textarea>
+            <label for="s6-r3">
+              &YAcy;&kcy;&icy;&jcy; &tcy;&iecy;&scy;&tcy; &pcy;&iukcy;&dcy;&tcy;&vcy;&iecy;&rcy;&dcy;&icy;&vcy; &rcy;&iukcy;&shcy;&iecy;&ncy;&ncy;&yacy; &acy;&bcy;&ocy; &vcy;&icy;&yacy;&vcy;&icy;&vcy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&ucy;?
+            </label>
+            <textarea data-field="s6-r3" id="s6-r3" placeholder rows="3"></textarea>
+            <label for="s6-r4">
+              &SHCHcy;&ocy; &pcy;&ocy;&tcy;&rcy;&iukcy;&bcy;&ncy;&ocy; &pcy;&ocy;&kcy;&rcy;&acy;&shchcy;&icy;&tcy;&icy; &pcy;&iecy;&rcy;&iecy;&dcy; &ncy;&acy;&scy;&tcy;&ucy;&pcy;&ncy;&ocy;&yucy; &mcy;&iukcy;&scy;&iukcy;&jukcy;&yucy;?
+            </label>
+            <textarea data-field="s6-r4" id="s6-r4" placeholder rows="3"></textarea>
+            <h3>
+              &Scy;&acy;&mcy;&ocy;&ocy;&tscy;&iukcy;&ncy;&yucy;&vcy;&acy;&ncy;&ncy;&yacy; &middot; 4 &kcy;&rcy;&icy;&tcy;&iecy;&rcy;&iukcy;&yicy; &times; 3 &bcy;&acy;&lcy;&icy;
+            </h3>
+            <p>
+              &Ocy;&bcy;&iecy;&rcy;&iukcy;&tcy;&softcy; &rcy;&iukcy;&vcy;&iecy;&ncy;&softcy; &zcy;&acy; &dcy;&iecy;&scy;&kcy;&rcy;&icy;&pcy;&tcy;&ocy;&rcy;&acy;&mcy;&icy;. &TScy;&iecy; &scy;&acy;&mcy;&ocy;&ocy;&tscy;&iukcy;&ncy;&kcy;&acy;; &ocy;&scy;&tcy;&acy;&tcy;&ocy;&chcy;&ncy;&icy;&jcy; &bcy;&acy;&lcy; &vcy;&icy;&zcy;&ncy;&acy;&chcy;&acy;&jukcy; &vcy;&chcy;&icy;&tcy;&iecy;&lcy;&softcy;.
+            </p>
+            <label for="rubric1">
+              &Kcy;1 &middot; &Acy;&lcy;&gcy;&ocy;&rcy;&icy;&tcy;&mcy; &iukcy; &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&iukcy;&scy;&tcy;&softcy;
+              <small class="rubric-hint">
+                0 &mdash; &ncy;&iecy;&mcy;&acy;&jukcy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&icy;; 1 &mdash; &chcy;&acy;&scy;&tcy;&kcy;&ocy;&vcy;&acy; &zcy; &pcy;&ocy;&mcy;&icy;&lcy;&kcy;&acy;&mcy;&icy;; 2 &mdash; &ocy;&scy;&ncy;&ocy;&vcy;&ncy;&iukcy; &zcy;&ncy;&acy;&chcy;&iecy;&ncy;&ncy;&yacy;; 3 &mdash; &scy;&acy;&mcy;&ocy;&scy;&tcy;&iukcy;&jcy;&ncy;&ocy; &vcy;&scy;&iukcy; &mcy;&iecy;&zhcy;&iukcy; &jcy; &pcy;&ocy;&yacy;&scy;&ncy;&iecy;&ncy;&ncy;&yacy;
+              </small>
+              <select data-field="rubric1" id="rubric1">
+                <option value="0">
+                  0 &bcy;&acy;&lcy;&iukcy;&vcy;
+                </option>
+                <option value="1">
+                  1 &bcy;&acy;&lcy;
+                </option>
+                <option value="2">
+                  2 &bcy;&acy;&lcy;&icy;
+                </option>
+                <option value="3">
+                  3 &bcy;&acy;&lcy;&icy;
+                </option>
+              </select>
+            </label>
+            <label for="rubric2">
+              &Kcy;2 &middot; &Fcy;&ucy;&ncy;&kcy;&tscy;&iukcy;&ocy;&ncy;&acy;&lcy;&softcy;&ncy;&iukcy;&scy;&tcy;&softcy;
+              <small class="rubric-hint">
+                0 &mdash; &ncy;&iecy; &pcy;&rcy;&acy;&tscy;&yucy;&jukcy;; 1 &mdash; &ocy;&kcy;&rcy;&iecy;&mcy;&iukcy; &dcy;&iukcy;&yicy;; 2 &mdash; &ocy;&scy;&ncy;&ocy;&vcy;&ncy;&iukcy; &scy;&tscy;&iecy;&ncy;&acy;&rcy;&iukcy;&yicy; &zcy; &ncy;&iecy;&dcy;&ocy;&lcy;&iukcy;&kcy;&acy;&mcy;&icy;; 3 &mdash; &kcy;&ocy;&rcy;&iecy;&kcy;&tcy;&ncy;&iukcy; &vcy;&icy;&bcy;&iukcy;&rcy;, &vcy;&acy;&lcy;&iukcy;&dcy;&acy;&tscy;&iukcy;&yacy;, &scy;&ucy;&mcy;&acy; &jcy; &scy;&tcy;&acy;&ncy;&icy;
+              </small>
+              <select data-field="rubric2" id="rubric2">
+                <option value="0">
+                  0 &bcy;&acy;&lcy;&iukcy;&vcy;
+                </option>
+                <option value="1">
+                  1 &bcy;&acy;&lcy;
+                </option>
+                <option value="2">
+                  2 &bcy;&acy;&lcy;&icy;
+                </option>
+                <option value="3">
+                  3 &bcy;&acy;&lcy;&icy;
+                </option>
+              </select>
+            </label>
+            <label for="rubric3">
+              &Kcy;3 &middot; &Tcy;&iecy;&scy;&tcy;&ucy;&vcy;&acy;&ncy;&ncy;&yacy; &jcy; &rcy;&iecy;&gcy;&rcy;&iecy;&scy;&iukcy;&yacy;
+              <small class="rubric-hint">
+                0 &mdash; &ncy;&iecy;&mcy;&acy;&jukcy; &tcy;&iecy;&scy;&tcy;&iukcy;&vcy;; 1 &mdash; &ocy;&kcy;&rcy;&iecy;&mcy;&iukcy;; 2 &mdash; &bcy;&iukcy;&lcy;&softcy;&shcy;&iukcy;&scy;&tcy;&softcy; &iukcy; &vcy;&scy;&iukcy; &fcy;&iukcy;&lcy;&softcy;&tcy;&rcy;&icy;; 3 &mdash; &ucy;&scy;&iukcy; &scy;&tscy;&iecy;&ncy;&acy;&rcy;&iukcy;&yicy;, &dcy;&ocy;&kcy;&acy;&zcy;&icy; &jcy; &pcy;&ocy;&vcy;&tcy;&ocy;&rcy;&ncy;&acy; &pcy;&iecy;&rcy;&iecy;&vcy;&iukcy;&rcy;&kcy;&acy;
+              </small>
+              <select data-field="rubric3" id="rubric3">
+                <option value="0">
+                  0 &bcy;&acy;&lcy;&iukcy;&vcy;
+                </option>
+                <option value="1">
+                  1 &bcy;&acy;&lcy;
+                </option>
+                <option value="2">
+                  2 &bcy;&acy;&lcy;&icy;
+                </option>
+                <option value="3">
+                  3 &bcy;&acy;&lcy;&icy;
+                </option>
+              </select>
+            </label>
+            <label for="rubric4">
+              &Kcy;4 &middot; &SHcy;&Iukcy;, &rcy;&iukcy;&shcy;&iecy;&ncy;&ncy;&yacy; &jcy; &rcy;&iecy;&fcy;&lcy;&iecy;&kcy;&scy;&iukcy;&yacy;
+              <small class="rubric-hint">
+                0 &mdash; &ncy;&iecy;&mcy;&acy;&jukcy; &dcy;&ocy;&kcy;&acy;&zcy;&iukcy;&vcy;; 1 &mdash; &ucy;&rcy;&icy;&vcy;&chcy;&acy;&scy;&tcy;&iukcy; &zcy;&acy;&pcy;&icy;&scy;&icy;; 2 &mdash; &pcy;&lcy;&acy;&ncy; &iukcy; &dcy;&vcy;&acy; &zcy;&acy;&pcy;&icy;&scy;&icy;; 3 &mdash; &acy;&rcy;&gcy;&ucy;&mcy;&iecy;&ncy;&tcy;&ocy;&vcy;&acy;&ncy;&iukcy; &rcy;&iukcy;&shcy;&iecy;&ncy;&ncy;&yacy;, &dcy;&zhcy;&iecy;&rcy;&iecy;&lcy;&acy; &jcy; &vcy;&lcy;&acy;&scy;&ncy;&icy;&jcy; &vcy;&ncy;&iecy;&scy;&ocy;&kcy;
+              </small>
+              <select data-field="rubric4" id="rubric4">
+                <option value="0">
+                  0 &bcy;&acy;&lcy;&iukcy;&vcy;
+                </option>
+                <option value="1">
+                  1 &bcy;&acy;&lcy;
+                </option>
+                <option value="2">
+                  2 &bcy;&acy;&lcy;&icy;
+                </option>
+                <option value="3">
+                  3 &bcy;&acy;&lcy;&icy;
+                </option>
+              </select>
+            </label>
+            <p>
+              <strong>
+                &Scy;&acy;&mcy;&ocy;&ocy;&tscy;&iukcy;&ncy;&kcy;&acy;:
+                <span id="score">
+                  0
+                </span>
+                /12
+              </strong>
+            </p>
+            <h3>
+              &Pcy;&ocy;&dcy;&acy;&ncy;&ncy;&yacy; &rcy;&iecy;&zcy;&ucy;&lcy;&softcy;&tcy;&acy;&tcy;&iukcy;&vcy;
+            </h3>
+            <label for="studentAlias">
+              &Iukcy;&mcy;&rsquo;&yacy; / &pcy;&scy;&iecy;&vcy;&dcy;&ocy;&ncy;&iukcy;&mcy; &dcy;&lcy;&yacy; &zcy;&vcy;&iukcy;&tcy;&ucy; (&ncy;&iecy; &vcy;&vcy;&ocy;&dcy;&softcy; &scy;&pcy;&rcy;&acy;&vcy;&zhcy;&ncy;&iukcy; &dcy;&acy;&ncy;&iukcy; &vcy; Copilot)
+            </label>
+            <input data-field="studentAlias" id="studentAlias" placeholder="&Ncy;&acy;&vcy;&chcy;&acy;&lcy;&softcy;&ncy;&icy;&jcy; &pcy;&scy;&iecy;&vcy;&dcy;&ocy;&ncy;&iukcy;&mcy;" type="text">
+            <label for="repoUrl">
+              &Pcy;&ocy;&scy;&icy;&lcy;&acy;&ncy;&ncy;&yacy; &ncy;&acy; &rcy;&iecy;&pcy;&ocy;&zcy;&icy;&tcy;&ocy;&rcy;&iukcy;&jcy; (&zcy;&acy; &ncy;&acy;&yacy;&vcy;&ncy;&ocy;&scy;&tcy;&iukcy;)
+            </label>
+            <input data-field="repoUrl" id="repoUrl" placeholder="https://github.com/..." type="url">
+            <div class="export-actions">
+              <button id="exportJson" type="button">
+                &IEcy;&kcy;&scy;&pcy;&ocy;&rcy;&tcy; JSON
+              </button>
+              <button class="secondary-action" id="exportMd" type="button">
+                &IEcy;&kcy;&scy;&pcy;&ocy;&rcy;&tcy; Markdown
+              </button>
+              <label class="import-label">
+                &Iukcy;&mcy;&pcy;&ocy;&rcy;&tcy; JSON
+                <input accept=".json,application/json" id="importJson" type="file">
+              </label>
+            </div>
+            <p aria-live="polite" class="field-help" id="exportStatus" role="status">
+            </p>
+            <details>
+              <summary>
+                &SHCHcy;&ocy; &pcy;&ocy;&dcy;&acy;&tcy;&icy; &vcy; Moodle?
+              </summary>
+              <p>
+                &Pcy;&ocy;&scy;&icy;&lcy;&acy;&ncy;&ncy;&yacy; &ncy;&acy; &rcy;&iecy;&pcy;&ocy;&zcy;&icy;&tcy;&ocy;&rcy;&iukcy;&jcy;, &fcy;&acy;&jcy;&lcy; JSON &iukcy; Markdown-&zcy;&vcy;&iukcy;&tcy;. &Pcy;&ucy;&bcy;&lcy;&iukcy;&kcy;&acy;&tscy;&iukcy;&yacy; &scy;&acy;&jcy;&tcy;&ucy; &mdash; &zcy;&acy; &ncy;&acy;&yacy;&vcy;&ncy;&ocy;&scy;&tcy;&iukcy;, &yacy;&kcy;&shchcy;&ocy; &ncy;&iecy; &jukcy; &ocy;&kcy;&rcy;&iecy;&mcy;&ocy;&yucy; &vcy;&icy;&mcy;&ocy;&gcy;&ocy;&yucy; &vcy;&chcy;&icy;&tcy;&iecy;&lcy;&yacy;.
+              </p>
+            </details>
+          </section>
+        </section>
+        <div class="stage-actions">
+          <button class="secondary-action" id="prevStep" type="button">
+            &larr; &Pcy;&ocy;&pcy;&iecy;&rcy;&iecy;&dcy;&ncy;&iukcy;&jcy;
+          </button>
+          <span id="stageCounter">
+            &IEcy;&tcy;&acy;&pcy; 1 &iukcy;&zcy; 6
+          </span>
+          <button id="nextStep" type="button">
+            &Ncy;&acy;&scy;&tcy;&ucy;&pcy;&ncy;&icy;&jcy; &rarr;
+          </button>
+        </div>
+      </div>
+    </main>
+    <footer class="container footer">
+      <p>
+        NextLab &middot; AI Code Challenge &middot; &Mcy;&iukcy;&scy;&iukcy;&yacy; 05. &Pcy;&rcy;&ocy;&gcy;&rcy;&iecy;&scy; &zcy;&bcy;&iecy;&rcy;&iukcy;&gcy;&acy;&jukcy;&tcy;&softcy;&scy;&yacy; &lcy;&ocy;&kcy;&acy;&lcy;&softcy;&ncy;&ocy; &ncy;&acy; &pcy;&rcy;&icy;&scy;&tcy;&rcy;&ocy;&yicy;.
+      </p>
+    </footer>
+  </body>
+</html>
