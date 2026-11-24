@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Навчальний демонстраційний сайт шкільної їдальні: меню та асинхронне завантаження даних.">
+  <title>Шкільна їдальня | NextLab</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти до вмісту</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Шкільна їдальня — головна"> <span class="brand-icon" aria-hidden="true">✳</span><span>NextLab <small>/ Canteen Lab</small></span></a>
+      <nav aria-label="Основна навігація"><ul class="nav-list"><li><a href="#about">Про їдальню</a></li><li><a href="#menu">Меню</a></li><li><a href="#how-it-works">Як це працює</a></li></ul></nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-content"><p class="eyebrow">Навчальний вебпроєкт · 11 клас</p><h1 id="hero-title">Смачно. Зручно.<br><span>Щодня.</span></h1><p class="lead">Сучасна сторінка шкільної їдальні. Переглядай меню, знайомся зі стравами та досліджуй, як JavaScript отримує дані асинхронно.</p><a class="primary-link" href="#menu">Переглянути меню <span aria-hidden="true">↗</span></a><p class="hero-note">Демонстраційний проєкт: меню та ціни вигадані для навчання.</p></div>
+      <div class="hero-art" aria-hidden="true"><div class="plate"><span class="food food-a">🥗</span><span class="food food-b">🥕</span><span class="food food-c">🥔</span></div><div class="art-caption">Свіжі ідеї — щодня</div></div>
+    </section>
+    <section id="about" class="section container" aria-labelledby="about-title"><div class="section-heading"><p class="eyebrow">Про проєкт</p><h2 id="about-title">Обід без зайвих запитань</h2></div><div class="feature-grid"><article class="feature"><span class="feature-icon" aria-hidden="true">01</span><h3>Меню в один клік</h3><p>Завантажуй перелік страв без перезавантаження сторінки.</p></article><article class="feature"><span class="feature-icon" aria-hidden="true">02</span><h3>Зрозумілі стани</h3><p>Бачиш, коли система очікує відповідь, а коли дані вже готові.</p></article><article class="feature"><span class="feature-icon" aria-hidden="true">03</span><h3>Помилки під контролем</h3><p>Навіть якщо завантаження не вдалося, можна повторити спробу.</p></article></div></section>
+    <section id="menu" class="menu-section" aria-labelledby="menu-title"><div class="container"><div class="menu-header"><div><p class="eyebrow">Меню їдальні</p><h2 id="menu-title">Що сьогодні на обід?</h2><p class="muted">Досліджуємо живий пошук і комбіновану фільтрацію на JavaScript.</p></div><span class="demo-tag">ДЕМО · без сервера</span></div>
+      <div class="menu-toolbar"><div class="toolbar-copy"><strong>Меню дня</strong><span>Натисни кнопку, щоб імітувати отримання даних</span></div><div class="toolbar-actions"><button id="loadMenuBtn" class="button button-primary" type="button">Завантажити меню</button><button id="errorBtn" class="button button-outline" type="button">Імітувати помилку</button></div></div>
+      <div class="filters-panel" aria-label="Фільтри меню">
+        <div class="filter-field"><label for="searchInput">Пошук за назвою</label><input id="searchInput" type="search" placeholder="Назва страви" disabled></div>
+        <div class="filter-field"><label for="categoryFilter">Категорія</label><select id="categoryFilter" disabled><option value="all">Усі категорії</option><option value="Перша страва">Перша страва</option><option value="Основна страва">Основна страва</option><option value="Гарнір">Гарнір</option><option value="Салат">Салат</option><option value="Напій">Напій</option></select></div>
+        <div class="filter-field"><label for="priceFilter">Максимальна ціна</label><select id="priceFilter" disabled><option value="all">Будь-яка</option><option value="30">До 30 грн</option><option value="50">До 50 грн</option><option value="75">До 75 грн</option><option value="100">До 100 грн</option></select></div>
+        <label class="filter-check"><input id="vegetarianFilter" type="checkbox" disabled> Лише вегетаріанські страви</label>
+        <button id="resetFiltersBtn" class="button button-outline" type="button" disabled>Скинути фільтри</button>
+      </div>
+      <p id="resultCount" class="muted" aria-live="polite">Завантажте меню, щоб почати пошук.</p>
+      <p id="menuStatus" class="status" role="status" aria-live="polite">Меню ще не завантажено.</p><div id="menuResults" class="menu-grid" aria-live="polite" aria-busy="false"></div><div id="menuError" class="error-panel" role="alert" hidden><strong>Не вдалося отримати меню.</strong><p>Це навчальна імітація помилки. Спробуй завантажити меню ще раз.</p></div>
+      </div></section>
+    <section id="how-it-works" class="section container" aria-labelledby="how-title"><div class="section-heading"><p class="eyebrow">За лаштунками</p><h2 id="how-title">Що відбувається після натискання?</h2></div><ol class="steps"><li><strong>Запит</strong><p>JavaScript запускає асинхронну функцію.</p></li><li><strong>Очікування</strong><p>Promise імітує затримку 1500 мс, а кнопки блокуються.</p></li><li><strong>Результат</strong><p>Меню відображається або помилка обробляється через catch.</p></li><li><strong>Відновлення</strong><p>finally повертає інтерфейс до робочого стану.</p></li></ol></section>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><span>NextLab · AI Code Challenge</span><span>Навчальний прототип · 2026</span></div></footer>
+</body>
+</html>
